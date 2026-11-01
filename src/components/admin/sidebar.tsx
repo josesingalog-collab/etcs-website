@@ -3,12 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, ExternalLink, FileText, FolderKanban, LayoutDashboard, LogOut, Mail, Menu, Newspaper, Settings, X } from "lucide-react";
+import { Building2, ExternalLink, FileText, FolderKanban, LayoutDashboard, LogOut, Mail, Menu, Newspaper, Settings, Users, X } from "lucide-react";
 
 const links = [
   { href: "/admin", label: "Tableau de bord", icon: LayoutDashboard },
   { href: "/admin/realisations", label: "Réalisations", icon: FolderKanban },
   { href: "/admin/services", label: "Services", icon: Building2 },
+  { href: "/admin/equipe", label: "Équipe", icon: Users },
   { href: "/admin/actualites", label: "Actualités", icon: Newspaper },
   { href: "/admin/demandes", label: "Demandes de devis", icon: FileText },
   { href: "/admin/messages", label: "Messages", icon: Mail },

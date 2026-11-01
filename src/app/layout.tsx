@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
-import { Manrope, Oswald } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const manrope = Manrope({
-  variable: "--font-manrope",
-  subsets: ["latin"],
-});
-
-const oswald = Oswald({
-  variable: "--font-oswald",
-  subsets: ["latin"],
+const poppins = localFont({
+  src: [
+    { path: "../fonts/Poppins-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../fonts/Poppins-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../fonts/Poppins-SemiBold.ttf", weight: "600", style: "normal" },
+    { path: "../fonts/Poppins-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../fonts/Poppins-ExtraBold.ttf", weight: "800", style: "normal" },
+  ],
+  variable: "--font-poppins",
+  display: "swap",
+  fallback: ["Arial", "sans-serif"],
+  adjustFontFallback: false,
 });
 
 export const instant = false;
@@ -27,7 +31,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="fr"
-      className={`${manrope.variable} ${oswald.variable} h-full antialiased`}
+      className={`${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

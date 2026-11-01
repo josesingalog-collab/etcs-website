@@ -8,7 +8,7 @@ export function SectionHeading({ eyebrow, title, text, align = "left", light = f
       <p className={`flex items-center gap-3 text-xs font-bold tracking-[.22em] text-royal ${align === "center" ? "justify-center" : ""} ${light ? "!text-gold" : ""}`}>
         <span className="h-px w-8 bg-current" />{eyebrow}
       </p>
-      <h2 className={`display mt-4 text-4xl uppercase leading-[1] md:text-5xl ${light ? "text-white" : "text-anthracite"}`}>{title}</h2>
+      <h2 className={`display mt-4 text-4xl uppercase leading-[1.1] md:text-5xl ${light ? "text-white" : "text-anthracite"}`}>{title}</h2>
       {text && <p className={`mt-4 leading-7 ${light ? "text-slate-300" : "text-slate-600"}`}>{text}</p>}
     </div>
   );
@@ -51,17 +51,18 @@ export function EmptyState({ title, text, ctaHref, ctaLabel, illustration = fals
 export function CtaSection({ title, text, primaryLabel = "Demander un devis", primaryHref = "/devis" }: { title: string; text: string; primaryLabel?: string; primaryHref?: string }) {
   return (
     <section className="px-6 py-24 lg:px-8">
-      <div className="grid-lines relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-gradient-to-br from-royal-deep via-royal to-royal-deep px-6 py-16 text-center text-white shadow-2xl shadow-royal/30 sm:px-12 lg:px-16">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-3xl bg-gradient-to-br from-royal-dark via-royal to-royal-deep px-6 py-16 text-center text-white shadow-2xl shadow-royal/40 ring-1 ring-inset ring-gold/15 sm:px-12 lg:px-16">
+        <span className="grid-lines absolute inset-0 opacity-30" aria-hidden="true" />
         <span className="absolute -right-10 -top-10 h-44 w-44 rounded-full bg-gold/20 blur-3xl" aria-hidden="true" />
         <span className="absolute -bottom-12 -left-8 h-44 w-44 rounded-full bg-white/10 blur-3xl" aria-hidden="true" />
-        <p className="text-xs font-bold tracking-[.22em] text-gold">TRAVAILLONS ENSEMBLE</p>
-        <h2 className="display mx-auto mt-4 max-w-2xl text-4xl uppercase leading-[1.05] md:text-5xl">{title}</h2>
-        <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-slate-200">{text}</p>
-        <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-          <Link href={primaryHref} className="focus-ring inline-flex items-center gap-2 rounded-lg bg-gold px-7 py-4 text-sm font-bold text-anthracite shadow-lg shadow-black/20 transition hover:bg-white">
+        <p className="relative text-xs font-bold tracking-[.22em] text-gold">TRAVAILLONS ENSEMBLE</p>
+        <h2 className="display relative mx-auto mt-4 max-w-2xl text-4xl uppercase leading-[1.1] md:text-5xl">{title}</h2>
+        <p className="relative mx-auto mt-5 max-w-xl text-sm leading-7 text-slate-200">{text}</p>
+        <div className="relative mt-9 flex flex-wrap items-center justify-center gap-4">
+          <Link href={primaryHref} className="focus-ring inline-flex items-center gap-2 rounded-lg bg-gold px-7 py-4 text-sm font-bold text-anthracite shadow-lg shadow-black/20 transition duration-300 hover:-translate-y-0.5 hover:bg-white">
             {primaryLabel}<ArrowRight className="h-4 w-4" />
           </Link>
-          <Link href="/contact" className="rounded-lg border border-white/40 px-7 py-4 text-sm font-bold transition hover:border-white hover:bg-white/10">
+          <Link href="/contact" className="inline-flex items-center gap-2 rounded-lg border border-white/40 px-7 py-4 text-sm font-bold transition duration-300 hover:border-white hover:bg-white/10">
             Nous contacter
           </Link>
         </div>

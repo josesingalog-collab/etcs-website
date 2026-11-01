@@ -73,7 +73,7 @@ export default async function Home() {
               <p className="rise flex items-center gap-3 text-xs font-bold tracking-[.24em] text-gold">
                 <span className="h-px w-10 bg-gold" />GTGC SARL — KINSHASA, RDC
               </p>
-              <h1 className="rise rise-1 display mt-7 uppercase leading-[0.95] text-[clamp(2rem,9vw,6rem)]">
+              <h1 className="rise rise-1 display mt-7 uppercase leading-[1.02] text-[clamp(1.5rem,7.6vw,5rem)]">
                 Bâtir aujourd&apos;hui<br />les infrastructures<br /><span className="text-gold">de demain.</span>
               </h1>
               <p className="rise rise-2 mt-8 max-w-xl text-lg leading-8 text-slate-200">{intro}</p>

@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { articleSchema, projectSchema, requestStatus, serviceSchema, settingsSchema } from "@/lib/validation";
+import { articleSchema, projectSchema, requestStatus, serviceSchema, settingsSchema, teamSchema } from "@/lib/validation";
 
 function values(formData: FormData) { return Object.fromEntries(formData) as Record<string, string>; }
 function invalid(): never { throw new Error("Données administratives invalides."); }
@@ -42,6 +42,13 @@ export async function saveArticle(formData: FormData) {
   refresh("/actualites", "/admin/actualites"); redirect("/admin/actualites?saved=1");
 }
 export async function deleteArticle(formData: FormData) { await requireAdmin(); await prisma.article.delete({ where: { id: String(formData.get("id")) } }); refresh("/actualites", "/admin/actualites"); }
+
+export async function saveTeamMember(formData: FormData) {
+  await requireAdmin(); const id = formData.get("id")?.toString(); const parsed = teamSchema.safeParse(values(formData)); if (!parsed.success) invalid();
+  if (id) await prisma.teamMember.update({ where: { id }, data: parsed.data }); else await prisma.teamMember.create({ data: parsed.data });
+  refresh("/a-propos", "/admin/equipe"); redirect("/admin/equipe?saved=1");
+}
+export async function deleteTeamMember(formData: FormData) { await requireAdmin(); await prisma.teamMember.delete({ where: { id: String(formData.get("id")) } }); refresh("/a-propos", "/admin/equipe"); }
 
 export async function updateQuoteStatus(formData: FormData) { await requireAdmin(); const status = requestStatus.safeParse(formData.get("status")); if (!status.success) invalid(); await prisma.quoteRequest.update({ where: { id: String(formData.get("id")) }, data: { status: status.data as RequestStatus } }); refresh("/admin/demandes"); }
 export async function updateMessageStatus(formData: FormData) { await requireAdmin(); const status = requestStatus.safeParse(formData.get("status")); if (!status.success) invalid(); await prisma.contactMessage.update({ where: { id: String(formData.get("id")) }, data: { status: status.data as RequestStatus } }); refresh("/admin/messages"); }

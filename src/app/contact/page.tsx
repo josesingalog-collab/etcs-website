@@ -49,7 +49,7 @@ export default async function Contact() {
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Horaires</p>
                     <p className="mt-1 font-semibold text-anthracite">Lundi – Vendredi · 8h00 – 17h00</p>
-                    <p className="text-sm text-slate-500">Kinshasa, RDC</p>
+                    <p className="text-sm text-slate-600">Kinshasa, RDC</p>
                   </div>
                 </div>
               </div>

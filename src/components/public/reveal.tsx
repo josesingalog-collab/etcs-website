@@ -1,7 +1,11 @@
 "use client";
 
-import { motion } from "motion/react";
+import { motion, MotionConfig } from "motion/react";
 import type { ReactNode } from "react";
+
+export function MotionProvider({ children }: { children: ReactNode }) {
+  return <MotionConfig reducedMotion="user">{children}</MotionConfig>;
+}
 
 export function Reveal({ children, delay = 0, className }: { children: ReactNode; delay?: number; className?: string }) {
   return (

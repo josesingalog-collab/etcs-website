@@ -11,7 +11,7 @@ export function PageHero({ eyebrow, title, text, image }: { eyebrow: string; tit
           <p className="flex items-center gap-3 text-xs font-bold tracking-[.22em] text-gold">
             <span className="h-px w-10 bg-gold" />{eyebrow}
           </p>
-          <h1 className="display mt-6 max-w-3xl text-5xl uppercase leading-[.95] md:text-6xl lg:text-7xl">{title}</h1>
+          <h1 className="display mt-6 max-w-3xl text-4xl uppercase leading-[1.05] md:text-5xl lg:text-6xl">{title}</h1>
           {text && <p className="mt-6 max-w-xl text-base leading-7 text-slate-300">{text}</p>}
         </div>
       </div>

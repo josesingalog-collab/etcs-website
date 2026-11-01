@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MapPin, Phone, Mail, Facebook, Linkedin, Instagram, Twitter, Youtube } from "lucide-react";
+import { MapPin, Phone, Mail, Facebook, Linkedin, Instagram, Twitter, Youtube, Lock } from "lucide-react";
 import type { SiteSettings } from "@prisma/client";
 import { Logo } from "@/components/logo";
 
@@ -81,6 +81,10 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
             <Link href="/mentions-legales" className="transition hover:text-gold">Mentions légales</Link>
             <Link href="/politique-confidentialite" className="transition hover:text-gold">Confidentialité</Link>
           </p>
+          <Link href="/admin/login" aria-label="Espace administrateur" title="Espace administrateur"
+            className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400 transition hover:border-gold hover:text-gold">
+            <Lock className="h-3 w-3" />Espace admin
+          </Link>
         </div>
       </div>
     </footer>

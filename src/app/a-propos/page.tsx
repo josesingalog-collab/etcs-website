@@ -5,11 +5,14 @@ import { SiteShell } from "@/components/site-shell";
 import { getSiteSettings } from "@/lib/site-settings";
 import { SectionHeading, CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
+import { prisma } from "@/lib/prisma";
 
 export const metadata = { title: "À propos" };
 export const instant = false;
 
 const fallbackImage = "https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1600&q=85";
+
+const initialsOf = (name: string) => name.trim().split(/\s+/).slice(0, 2).map((part) => part[0] ?? "").join("").toUpperCase();
 
 const pillars = [
   { icon: Target, title: "Notre mission", text: "Réaliser des ouvrages de génie civil fiables et durables, en apportant à chaque client une exécution technique irréprochable et une relation claire, du devis à la réception." },
@@ -19,7 +22,10 @@ const pillars = [
 
 export default async function About() {
   const settings = await getSiteSettings();
-  const text = settings?.aboutText || "Grand Travaux de Génie Civil (GTGC SARL) se positionne autour de la qualité d'exécution, de la précision technique et du dialogue avec ses partenaires.";
+  const [text, members] = await Promise.all([
+    Promise.resolve(settings?.aboutText || "Grand Travaux de Génie Civil (GTGC SARL) se positionne autour de la qualité d'exécution, de la précision technique et du dialogue avec ses partenaires."),
+    prisma.teamMember.findMany({ where: { publicationStatus: "PUBLISHED" }, orderBy: [{ position: "asc" }, { name: "asc" }] }),
+  ]);
   const image = settings?.heroImageUrl || fallbackImage;
 
   return (
@@ -62,6 +68,36 @@ export default async function About() {
             </div>
           </div>
         </section>
+
+        {members.length > 0 && (
+          <section className="bg-white py-24">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <Reveal><SectionHeading align="center" eyebrow="NOTRE ÉQUIPE" title="Les femmes et hommes qui portent vos projets" /></Reveal>
+              <div className="mt-14 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+                {members.map((member, index) => (
+                  <Reveal key={member.id} delay={(index % 3) * 0.07}>
+                    <article className="card-hover h-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm">
+                      <div className="relative aspect-[4/5] overflow-hidden bg-royal-deep">
+                        {member.photo ? (
+                          <Image src={member.photo} alt={member.name} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-[1.04]" />
+                        ) : (
+                          <span className="grid-lines absolute inset-0 grid place-items-center opacity-80">
+                            <span className="display text-6xl text-gold/90">{initialsOf(member.name)}</span>
+                          </span>
+                        )}
+                      </div>
+                      <div className="relative p-6">
+                        <h3 className="display text-lg uppercase tracking-wide text-anthracite">{member.name}</h3>
+                        <p className="mt-1 text-xs font-bold uppercase tracking-[.15em] text-royal">{member.role}</p>
+                        {member.bio && <p className="mt-3 text-sm leading-6 text-slate-600">{member.bio}</p>}
+                      </div>
+                    </article>
+                  </Reveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
         <section className="relative isolate overflow-hidden bg-anthracite py-24 text-white">
           <div className="grid-lines"><div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-8">

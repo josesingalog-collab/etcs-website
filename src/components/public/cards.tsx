@@ -36,8 +36,9 @@ export function ServiceCard({ service, index }: { service: Service; index: numbe
         {service.image ? (
           <Image src={service.image} alt={service.title} fill sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
         ) : (
-          <div className="grid-lines flex h-full w-full items-center justify-center bg-gradient-to-br from-royal-deep via-royal to-royal-deep">
-            <span className="display text-6xl text-gold/90">{String(index + 1).padStart(2, "0")}</span>
+          <div className="relative flex h-full w-full items-center justify-center overflow-hidden bg-gradient-to-br from-royal-deep via-royal to-royal-deep">
+            <span className="grid-lines absolute inset-0 opacity-30" aria-hidden="true" />
+            <span className="display relative text-6xl text-gold/90">{String(index + 1).padStart(2, "0")}</span>
           </div>
         )}
       </div>

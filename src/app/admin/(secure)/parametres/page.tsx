@@ -25,8 +25,8 @@ export default async function Settings({ searchParams }: { searchParams: Promise
           <div className="mt-5 grid gap-5">
             <Field label="Texte de présentation" hint="Utilisé sur la page d'accueil et la page À propos"><textarea className={inputClass} name="aboutText" rows={7} defaultValue={settings?.aboutText ?? ""} /></Field>
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Logo (URL HTTPS)"><input className={inputClass} name="logoUrl" type="url" defaultValue={settings?.logoUrl ?? ""} /></Field>
-              <Field label="Image principale (URL HTTPS)" hint="Hero et bannières de pages"><input className={inputClass} name="heroImageUrl" type="url" defaultValue={settings?.heroImageUrl ?? ""} /></Field>
+              <Field label="Logo (URL HTTPS)" hint="Affiché dans l'en-tête et le pied de page"><input className={inputClass} name="logoUrl" type="url" defaultValue={settings?.logoUrl ?? ""} /></Field>
+              <Field label="Image principale (URL HTTPS)" hint="Arrière-plan de l'accueil et bannières des pages"><input className={inputClass} name="heroImageUrl" type="url" defaultValue={settings?.heroImageUrl ?? ""} /></Field>
             </div>
           </div>
         </section>

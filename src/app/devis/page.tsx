@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { InquiryForm } from "@/components/inquiry-form";
@@ -27,7 +29,7 @@ export default async function Quote() {
           text="Décrivez votre besoin : les informations transmises sont destinées uniquement à GTGC pour traiter votre demande."
           image={settings?.heroImageUrl || fallbackImage}
         />
-        <section className="bg-white py-20">
+        <section id="form-devis" className="scroll-mt-24 bg-white py-20">
           <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[0.85fr_1.15fr] lg:px-8">
             <Reveal>
               <div>
@@ -54,12 +56,18 @@ export default async function Quote() {
             <Reveal delay={0.08}><InquiryForm type="quote" /></Reveal>
           </div>
         </section>
-        <section className="relative isolate overflow-hidden">
-          <div className="h-[380px] w-full sm:h-[460px]">
+        <section className="relative isolate overflow-hidden bg-anthracite">
+          <div className="relative h-[420px] w-full sm:h-[480px]">
             <Image src={settings?.heroImageUrl || fallbackImage} alt="Chantier GTGC" fill sizes="100vw" className="object-cover" />
-            <div className="absolute inset-0 bg-anthracite/55" />
-            <div className="absolute inset-0 grid place-items-center px-6 text-center">
-              <h2 className="display max-w-2xl text-3xl uppercase leading-tight text-white md:text-5xl">Votre projet mérite une écoute attentive.</h2>
+            <div className="absolute inset-0 bg-gradient-to-t from-anthracite via-anthracite/75 to-anthracite/35" />
+            <div className="relative flex h-full flex-col items-center justify-center gap-5 px-6 text-center">
+              <p className="flex items-center gap-3 text-xs font-bold tracking-[.24em] text-gold">
+                <span className="h-px w-8 bg-gold" />PARLONS DE VOTRE PROJET<span className="h-px w-8 bg-gold" />
+              </p>
+              <h2 className="display max-w-2xl text-3xl uppercase leading-[1.1] text-white md:text-5xl">Votre projet mérite une écoute attentive.</h2>
+              <Link href="#form-devis" className="focus-ring mt-2 inline-flex items-center gap-2 rounded-lg bg-gold px-7 py-4 text-sm font-bold text-anthracite shadow-lg shadow-black/30 transition hover:bg-white">
+                Demander mon devis <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
           </div>
         </section>
