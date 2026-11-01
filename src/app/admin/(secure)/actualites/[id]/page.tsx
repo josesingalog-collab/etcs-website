@@ -1,0 +1,1 @@
+import { notFound } from "next/navigation"; import { ArticleForm } from "@/components/admin/article-form"; import { prisma } from "@/lib/prisma"; export default async function EditArticle({params}:{params:Promise<{id:string}>}){const {id}=await params;const article=await prisma.article.findUnique({where:{id}});if(!article)notFound();return <ArticleForm article={article}/>}
