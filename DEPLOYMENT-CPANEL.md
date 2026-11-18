@@ -117,6 +117,8 @@ Vérifier que les tables existent via cPanel → **phpMyAdmin** (tables `User`, 
 
 ## 7. Build de production
 
+> **Important (WHC/CloudLinux)** : les liaisons natives Turbopack ne sont pas disponibles sur le serveur mutualisé. Utiliser **`npm run build:webpack`** (webpack) sur le serveur ; `npm run build` (Turbopack) reste réservé à la machine de développement.
+
 Deux méthodes — commencer par la A, basculer sur la B en cas d'échec.
 
 ### Méthode A — build sur le serveur
@@ -124,7 +126,7 @@ Deux méthodes — commencer par la A, basculer sur la B en cas d'échec.
 Dans l'environnement virtuel :
 
 ```bash
-npm run build
+npm run build:webpack
 ```
 
 > Le forfait Pro dispose de ~1,5 Go de RAM. Si le build échoue (process killed / OOM), utiliser la méthode B.
@@ -239,7 +241,7 @@ cd ~/etcs-website
 git pull
 npm ci
 npx prisma migrate deploy
-npm run build          # ou méthode B (build local + SFTP) si le serveur manque de RAM
+npm run build:webpack   # ou méthode B (build local + SFTP) si le serveur manque de RAM
 ```
 
 Puis dans cPanel → Setup Node.js App → **Restart**, et vérifier le site (checklist 11).
