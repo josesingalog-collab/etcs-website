@@ -84,8 +84,10 @@ source /home/UTILISATEUR/nodevenv/etcs-website/20/bin/activate && cd /home/UTILI
 Puis installer les dépendances **dans cet environnement** :
 
 ```bash
-npm ci
+npm ci --include=dev
 ```
+
+> **Important** : l'environnement cPanel définit `NODE_ENV=production`, ce qui fait ignorer les `devDependencies` par défaut. L'option `--include=dev` force leur installation — elles sont nécessaires au build (TypeScript, `@tailwindcss/postcss`).
 
 ---
 
@@ -239,7 +241,7 @@ Sur la machine de développement, pousser les modifications (`git push`), puis e
 ```bash
 cd ~/etcs-website
 git pull
-npm ci
+npm ci --include=dev
 npx prisma migrate deploy
 npm run build:webpack   # ou méthode B (build local + SFTP) si le serveur manque de RAM
 ```
