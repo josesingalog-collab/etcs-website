@@ -44,3 +44,7 @@ next-env.d.ts
 *.log
 error.log
 
+# fichiers importes via l'admin (stockes sur le serveur uniquement)
+/public/uploads/*
+!/public/uploads/.gitkeep
+

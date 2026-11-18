@@ -2,6 +2,7 @@ import { Save } from "lucide-react";
 import { saveSettings } from "@/app/admin/actions";
 import { Field, inputClass, submitClass } from "@/components/admin/form-fields";
 import { AdminHeader, SavedBanner } from "@/components/admin/ui";
+import { UploadField } from "@/components/admin/upload-field";
 import { prisma } from "@/lib/prisma";
 
 export default async function Settings({ searchParams }: { searchParams: Promise<{ saved?: string }> }) {
@@ -25,8 +26,8 @@ export default async function Settings({ searchParams }: { searchParams: Promise
           <div className="mt-5 grid gap-5">
             <Field label="Texte de présentation" hint="Utilisé sur la page d'accueil et la page À propos"><textarea className={inputClass} name="aboutText" rows={7} defaultValue={settings?.aboutText ?? ""} /></Field>
             <div className="grid gap-5 sm:grid-cols-2">
-              <Field label="Logo (URL HTTPS)" hint="Affiché dans l'en-tête et le pied de page"><input className={inputClass} name="logoUrl" type="url" defaultValue={settings?.logoUrl ?? ""} /></Field>
-              <Field label="Image principale (URL HTTPS)" hint="Arrière-plan de l'accueil et bannières des pages"><input className={inputClass} name="heroImageUrl" type="url" defaultValue={settings?.heroImageUrl ?? ""} /></Field>
+              <UploadField name="logoUrl" label="Logo" hint="Affiché dans l'en-tête et le pied de page — importez un fichier (PNG/JPEG/WebP/GIF, 5 Mo max.) ou collez une URL HTTPS." defaultValue={settings?.logoUrl ?? ""} />
+              <UploadField name="heroImageUrl" label="Image principale" hint="Arrière-plan de l'accueil et bannières des pages — importez un fichier ou collez une URL HTTPS." defaultValue={settings?.heroImageUrl ?? ""} />
             </div>
           </div>
         </section>
