@@ -4,7 +4,7 @@ const http = require("http");
 if (fs.existsSync(".env")) {
   for (const line of fs.readFileSync(".env", "utf8").split(/\r?\n/)) {
     const m = line.match(/^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=\s*"?([^"]*)"?\s*$/);
-    if (m && process.env[m[1]] === undefined) process.env[m[1]] = m[2];
+    if (m) process.env[m[1]] = m[2];
   }
 }
 
