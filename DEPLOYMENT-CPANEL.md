@@ -75,16 +75,19 @@ cd ~/etcs-website 2>/dev/null || { mkdir ~/etcs-website && cd ~/etcs-website; }
 git clone https://github.com/josesingalog-collab/etcs-website.git .
 ```
 
-Activer l'environnement Node de l'application — la commande exacte est affichée par cPanel en haut de la page de l'application (« **Enter to the virtual environment** »), du type :
+Activer l'environnement Node de l'application — la commande exacte est affichée par cPanel en haut de la page de l'application (« **Enter to the virtual environment** ») :
 
 ```bash
-source /home/UTILISATEUR/nodevenv/etcs-website/20/bin/activate && cd /home/UTILISATEUR/etcs-website
+source /home/etcsinge/nodevenv/etcs-website/22/bin/activate && cd /home/etcsinge/etcs-website
+unset NODE_PATH
 ```
 
-Puis installer les dépendances **dans cet environnement** :
+> **`unset NODE_PATH` est indispensable** : le venv exporte un `NODE_PATH` vers son propre dossier `lib/node_modules`. Si des paquets s'y retrouvent (comportement du npm du venv), React est chargé en double et le build échoue avec `Cannot read properties of null (reading 'useContext')`.
+
+Puis installer les dépendances avec le **npm système** (le npm du venv est une enveloppe CloudLinux qui installe ailleurs que dans le dossier du projet) :
 
 ```bash
-npm ci --include=dev
+/opt/alt/alt-nodejs22/root/bin/npm ci --include=dev
 ```
 
 > **Important** : l'environnement cPanel définit `NODE_ENV=production`, ce qui fait ignorer les `devDependencies` par défaut. L'option `--include=dev` force leur installation — elles sont nécessaires au build (TypeScript, `@tailwindcss/postcss`).
@@ -119,16 +122,16 @@ Vérifier que les tables existent via cPanel → **phpMyAdmin** (tables `User`, 
 
 ## 7. Build de production
 
-> **Important (WHC/CloudLinux)** : les liaisons natives Turbopack ne sont pas disponibles sur le serveur mutualisé. Utiliser **`npm run build:webpack`** (webpack) sur le serveur ; `npm run build` (Turbopack) reste réservé à la machine de développement.
+> **Important (WHC/CloudLinux)** : les liaisons natives Turbopack ne sont pas disponibles sur le serveur mutualisé (glibc trop ancien). Utiliser **webpack** sur le serveur ; le build Turbopack reste réservé à la machine de développement.
 
 Deux méthodes — commencer par la A, basculer sur la B en cas d'échec.
 
 ### Méthode A — build sur le serveur
 
-Dans l'environnement virtuel :
+Dans l'environnement virtuel (avec `NODE_PATH` désactivé) :
 
 ```bash
-npm run build:webpack
+/opt/alt/alt-nodejs22/root/bin/node node_modules/.bin/next build --webpack
 ```
 
 > Le forfait Pro dispose de ~1,5 Go de RAM. Si le build échoue (process killed / OOM), utiliser la méthode B.
@@ -240,19 +243,39 @@ Sur la machine de développement, pousser les modifications (`git push`), puis e
 
 ```bash
 cd ~/etcs-website
+source ~/nodevenv/etcs-website/22/bin/activate
+unset NODE_PATH
 git pull
-npm ci --include=dev
-npx prisma migrate deploy
-npm run build:webpack   # ou méthode B (build local + SFTP) si le serveur manque de RAM
+/opt/alt/alt-nodejs22/root/bin/npm ci --include=dev   # seulement si package-lock.json a change
+npx prisma generate                                    # seulement si prisma/schema.prisma a change
+npx prisma migrate deploy                              # seulement si une migration a ete ajoutee
+/opt/alt/alt-nodejs22/root/bin/node node_modules/.bin/next build --webpack
 ```
 
 Puis dans cPanel → Setup Node.js App → **Restart**, et vérifier le site (checklist 11).
 
 ---
 
-## 13. Sécurité — rappels permanents
+## 13. Dépannage — problèmes connus (retours d'expérience)
 
-- Ne jamais versionner `.env` (déjà exclu via `.gitignore`) ; en production, utiliser les **variables d'environnement cPanel** (section 4).
+| Symptôme | Cause | Correction |
+|---|---|---|
+| `Cannot find module 'next'` | `node_modules` absent/cassé (la suppression de l'app cPanel nettoie les dépendances) | `unset NODE_PATH` puis `/opt/alt/alt-nodejs22/root/bin/npm ci --include=dev` |
+| Build OK mais `Cannot read properties of null (reading 'useContext')` | React chargé en double via le `NODE_PATH` du venv | `unset NODE_PATH`, `rm -rf .next`, rebuild |
+| `ln: failed to create symbolic link .../nodevenv/.../lib/package.json` | venv cPanel recréé incomplet (après delete/create de l'app) | `mkdir -p ~/nodevenv/etcs-website/22/lib` puis installer avec le npm système |
+| 503 sur tout le site | Passenger ne trouve pas l'app ou `.htaccess` absent | Vérifier `~/public_html/.htaccess` (PassengerAppRoot/BaseURI) et **Restart** |
+| 200 mais page d'erreur Next (`__next_error__`) | Erreur applicative — consulter `~/etcs-website/error.log` | Le fichier `error.log` contient la trace complète (via `instrumentation.ts` + `app.js`) |
+| Prisma « the URL must start with the protocol mysql:// » | `DATABASE_URL` absent/corrompu dans l'environnement Passenger | Corrigé : `app.js` charge `~/etcs-website/.env` en priorité ; vérifier ce fichier |
+| Prisma « Query engine library not found » | Détection de plateforme différente sous Passenger (debian vs rhel) | Corrigé : `binaryTargets` multiples dans `prisma/schema.prisma` + `npx prisma generate` |
+| `npm run build` : « Turbopack is not supported on this platform » | glibc du serveur trop ancien pour Turbopack | Build avec `--webpack` (voir section 7) |
+
+> **Ne jamais** supprimer l'application dans cPanel pour « repartir à zéro » : cela efface le venv **et les dépendances installées**. En cas de venv cassé : recréer `lib/` (voir tableau) et réinstaller avec le npm système.
+
+---
+
+## 14. Sécurité — rappels permanents
+
+- Ne jamais versionner `.env` (déjà exclu via `.gitignore`) ; en production, la configuration vit dans `~/etcs-website/.env` (chmod 600) — les variables d'environnement cPanel sont optionnelles (le `.env` a la priorité).
 - `AUTH_SECRET` **unique** en production, différent du local ; rotation en cas de doute.
 - Mot de passe administrateur robuste (gestionnaire de secrets) ; changement régulier depuis `/admin`.
 - Sauvegardes : activer/ Télécharger les sauvegardes cPanel (base **et** fichiers) régulièrement ; tester une restauration.
@@ -261,7 +284,7 @@ Puis dans cPanel → Setup Node.js App → **Restart**, et vérifier le site (ch
 
 ---
 
-## 14. Développement local (après la migration MySQL)
+## 15. Développement local (après la migration MySQL)
 
 La base locale est désormais **MySQL/MariaDB** (l'ancienne URL PostgreSQL est archivée dans `.env.postgresql.bak`) :
 
