@@ -35,5 +35,8 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json({ error: "Écriture impossible sur le serveur." }, { status: 500 });
   }
-  return NextResponse.json({ url: `/uploads/${name}` });
+  const proto = request.headers.get("x-forwarded-proto") ?? "https";
+  const host = request.headers.get("host");
+  const origin = host ? `${proto}://${host}` : new URL(request.url).origin;
+  return NextResponse.json({ url: `${origin}/uploads/${name}` });
 }
