@@ -8,10 +8,10 @@ export function Logo({ light = false, companyName = "ETCS", logoUrl }: { light?:
         <Image
           src={logoUrl}
           alt={companyName}
-          width={120}
-          height={60}
+          width={160}
+          height={80}
           priority
-          className={`h-14 w-auto shrink-0 ${light ? "rounded-lg bg-white px-3 py-2 shadow-md" : ""}`}
+          className={`h-16 w-auto shrink-0 ${light ? "rounded-lg bg-white px-3 py-2 shadow-md" : ""}`}
         />
       </Link>
     );
