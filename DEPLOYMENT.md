@@ -33,11 +33,11 @@ nginx -v
 ## 2. Récupération du projet
 
 ```bash
-git clone <URL_DU_DEPOT> etcs-website
+git clone https://github.com/josesingalog-collab/etcs-website.git etcs-website
 cd etcs-website
 ```
 
-`<URL_DU_DEPOT>` est à remplacer par l'adresse réelle du dépôt GitHub ou GitLab (ex. `git@github.com:org/etcs-website.git`).
+Le dépôt peut être cloné en HTTPS (ci-dessus) ou en SSH (`git@github.com:josesingalog-collab/etcs-website.git`) selon la configuration du serveur.
 
 Installer exactement les dépendances déclarées dans `package-lock.json` :
 
@@ -53,7 +53,7 @@ Créer un fichier `.env` *(variable `.env.production` non nécessaire : seul `.e
 
 ```env
 DATABASE_URL="postgresql://<UTILISATEUR>:<MOT_DE_PASSE>@127.0.0.1:5432/etcs_website?schema=public"
-AUTH_SECRET="<SECRET_GENERE_N impedance=1_PLACEHOLDER>"
+AUTH_SECRET="<SECRET_GENERE_AVEC_OPENSSL_RAND>"
 NODE_ENV="production"
 ```
 
