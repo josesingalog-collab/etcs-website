@@ -1,9 +1,9 @@
-import { Save } from "lucide-react";
 import { saveSettings } from "@/app/admin/actions";
-import { Field, inputClass, submitClass } from "@/components/admin/form-fields";
+import { Field, inputClass } from "@/components/admin/form-fields";
 import { AdminHeader, SavedBanner } from "@/components/admin/ui";
 import { UploadField } from "@/components/admin/upload-field";
 import { prisma } from "@/lib/prisma";
+import { SubmitButton } from "@/components/submit-button";
 
 export default async function Settings({ searchParams }: { searchParams: Promise<{ saved?: string }> }) {
   const [settings, params] = await Promise.all([prisma.siteSettings.findUnique({ where: { id: 1 } }), searchParams]);
@@ -50,7 +50,7 @@ export default async function Settings({ searchParams }: { searchParams: Promise
           </div>
         </section>
         <div className="border-t border-slate-100 pt-8">
-          <button type="submit" className={submitClass}><Save className="h-4 w-4" />Enregistrer les paramètres</button>
+          <SubmitButton label="Enregistrer les paramètres" />
         </div>
       </form>
     </>

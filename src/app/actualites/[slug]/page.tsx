@@ -33,7 +33,7 @@ export default async function Article({ params }: { params: Promise<{ slug: stri
               <Image src={article.coverImage} alt={article.title} fill priority sizes="(max-width:768px) 100vw, 48rem" className="object-cover" />
             </div>
           )}
-          <div className="whitespace-pre-wrap text-base leading-8 text-slate-700">{article.content}</div>
+          <div className="whitespace-pre-wrap text-justify text-base leading-8 text-slate-700">{article.content}</div>
         </article>
         {related.length > 0 && (
           <section className="mt-8 border-t border-slate-200 bg-mist py-16">

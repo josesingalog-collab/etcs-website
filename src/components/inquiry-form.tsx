@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CheckCircle2, Send, AlertCircle } from "lucide-react";
+import { CheckCircle2, Send, AlertCircle, Loader2 } from "lucide-react";
 
 const inputClass = "focus-ring w-full rounded-lg border border-slate-300 bg-white px-3.5 py-3 text-sm font-normal text-anthracite outline-none placeholder:text-slate-400";
 
@@ -58,7 +58,7 @@ export function InquiryForm({ type }: { type: "quote" | "contact" }) {
         disabled={state === "sending"}
         className="focus-ring mt-1 inline-flex w-fit items-center gap-2 rounded-lg bg-royal px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-royal/25 transition hover:bg-royal-deep disabled:opacity-60"
       >
-        <Send className="h-4 w-4" />
+        {state === "sending" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
         {state === "sending" ? "Envoi en cours…" : type === "quote" ? "Envoyer ma demande" : "Envoyer le message"}
       </button>
       {state === "error" && (

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AlertCircle, Lock } from "lucide-react";
+import { AlertCircle, Lock, Loader2 } from "lucide-react";
 
 export default function Login() {
   const router = useRouter();
@@ -63,7 +63,7 @@ export default function Login() {
               </p>
             )}
             <button type="submit" disabled={pending} className="focus-ring inline-flex items-center justify-center gap-2 rounded-lg bg-gold px-6 py-3.5 text-sm font-bold text-anthracite shadow-lg shadow-black/30 transition hover:bg-white disabled:opacity-60">
-              {pending ? "Connexion…" : (<><Lock className="h-4 w-4" />Se connecter</>)}
+              {pending ? (<><Loader2 className="h-4 w-4 animate-spin" />Connexion…</>) : (<><Lock className="h-4 w-4" />Se connecter</>)}
             </button>
           </form>
           <p className="mt-6 text-center text-xs text-slate-500">Session sécurisée de 8 heures · ETCS SARL © 2026</p>

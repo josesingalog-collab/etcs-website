@@ -44,7 +44,7 @@ export default async function About() {
             </Reveal>
             <Reveal delay={0.1}>
               <SectionHeading eyebrow="NOTRE ENGAGEMENT" title="Faire avancer chaque projet avec exigence" />
-              <p className="mt-6 whitespace-pre-wrap leading-8 text-slate-600">{text}</p>
+              <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600">{text}</p>
               <div className="mt-10 grid gap-6 border-t border-slate-200 pt-8 sm:grid-cols-3">
                 <div><p className="text-sm font-black uppercase tracking-wide text-royal">Rigueur</p><p className="mt-1 text-sm text-slate-500">à chaque étape du chantier</p></div>
                 <div><p className="text-sm font-black uppercase tracking-wide text-royal">Écoute</p><p className="mt-1 text-sm text-slate-500">de chaque besoin exprimé</p></div>

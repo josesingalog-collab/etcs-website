@@ -38,7 +38,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
               <Reveal>
                 <article>
                   <h2 className="display text-2xl uppercase text-anthracite md:text-3xl">Le projet</h2>
-                  <div className="mt-6 whitespace-pre-wrap text-base leading-8 text-slate-600">{project.description}</div>
+                  <div className="mt-6 whitespace-pre-wrap text-justify text-base leading-8 text-slate-600">{project.description}</div>
                 </article>
               </Reveal>
               <Reveal delay={0.1}>

@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Article } from "@prisma/client";
 import { saveArticle } from "@/app/admin/actions";
-import { Field, inputClass, submitClass } from "@/components/admin/form-fields";
+import { Field, inputClass } from "@/components/admin/form-fields";
+import { SubmitButton } from "@/components/submit-button";
 
 export function ArticleForm({ article }: { article?: Article }) {
   const date = article?.publishedAt?.toISOString().slice(0, 10) ?? "";
@@ -30,7 +31,7 @@ export function ArticleForm({ article }: { article?: Article }) {
             </select>
           </Field>
         </div>
-        <button type="submit" className={submitClass}><Save className="h-4 w-4" />Enregistrer</button>
+        <SubmitButton />
       </form>
     </>
   );

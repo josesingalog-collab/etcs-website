@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Service } from "@prisma/client";
 import { saveService } from "@/app/admin/actions";
-import { Field, inputClass, submitClass } from "@/components/admin/form-fields";
+import { Field, inputClass } from "@/components/admin/form-fields";
+import { SubmitButton } from "@/components/submit-button";
 
 export function ServiceForm({ service }: { service?: Service }) {
   return (
@@ -28,7 +29,7 @@ export function ServiceForm({ service }: { service?: Service }) {
             </select>
           </Field>
         </div>
-        <button type="submit" className={submitClass}><Save className="h-4 w-4" />Enregistrer</button>
+        <SubmitButton />
       </form>
     </>
   );

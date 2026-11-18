@@ -72,7 +72,7 @@ export default async function Home() {
               <h1 className="rise rise-1 display mt-7 leading-[1.1] text-[clamp(1.7rem,3.8vw,3.4rem)]">
                 Bâtir et rénover<br />les infrastructures<br />de la République.
               </h1>
-              <p className="rise rise-2 mt-8 max-w-xl text-base leading-8 text-slate-100">{intro}</p>
+              <p className="rise rise-2 mt-8 max-w-xl text-justify text-base leading-8 text-slate-100">{intro}</p>
               <div className="rise rise-3 mt-10 flex flex-wrap gap-4">
                 <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy">
                   Découvrir nos services <ArrowRight className="h-4 w-4" />
@@ -110,7 +110,7 @@ export default async function Home() {
               </h2>
               <div className="mt-6">
                 {(settings?.aboutText?.trim() || presentationFallback).split(/\r?\n\s*\r?\n/).map((paragraph, index) => (
-                  <p key={index} className={`leading-8 text-slate-600 ${index > 0 ? "mt-4" : ""}`}>{paragraph}</p>
+                  <p key={index} className={`text-justify leading-8 text-slate-600 ${index > 0 ? "mt-4" : ""}`}>{paragraph}</p>
                 ))}
               </div>
               <ul className="mt-8 divide-y divide-slate-100 border-y border-slate-100">

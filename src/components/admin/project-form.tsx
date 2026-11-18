@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Project, ProjectImage } from "@prisma/client";
 import { saveProject } from "@/app/admin/actions";
-import { Field, inputClass, submitClass } from "@/components/admin/form-fields";
+import { Field, inputClass } from "@/components/admin/form-fields";
+import { SubmitButton } from "@/components/submit-button";
 
 export function ProjectForm({ project }: { project?: Project & { images: ProjectImage[] } }) {
   const date = project?.projectDate?.toISOString().slice(0, 10) ?? "";
@@ -35,7 +36,7 @@ export function ProjectForm({ project }: { project?: Project & { images: Project
           </Field>
         </div>
         <p className="text-xs leading-5 text-slate-500">Les images sont référencées par URL HTTPS afin de rester compatibles avec un stockage objet de production. Les URLs non sécurisées sont refusées.</p>
-        <button type="submit" className={submitClass}><Save className="h-4 w-4" />Enregistrer</button>
+        <SubmitButton />
       </form>
     </>
   );

@@ -15,11 +15,11 @@ export function ProjectCard({ project, priority = false, featured = false, ctaLa
         )}
         <span className="absolute left-4 top-4 rounded-md bg-anthracite/85 px-3 py-1 text-[10px] font-bold uppercase tracking-[.14em] text-gold backdrop-blur">{project.category}</span>
       </div>
-      <div className="p-6">
+      <div className="flex grow flex-col p-6">
         <p className="flex items-center gap-2 text-xs font-semibold text-slate-500"><MapPin className="h-3.5 w-3.5 text-royal" />{project.location}</p>
         <h3 className="mt-2 text-lg font-extrabold leading-snug text-anthracite transition group-hover:text-royal">{project.title}</h3>
         <span className="mt-3 block" aria-hidden="true" />
-        <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{project.description}</p>
+        <p className="mt-3 line-clamp-2 grow text-sm leading-6 text-slate-500">{project.description}</p>
         <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-royal">
           {ctaLabel}
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
