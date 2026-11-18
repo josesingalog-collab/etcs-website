@@ -55,7 +55,7 @@ export default async function ProjectDetail({ params }: { params: Promise<{ slug
                       </div>
                     ))}
                   </dl>
-                  <Link href="/devis" className="focus-ring mt-7 block rounded-lg bg-gold px-6 py-3.5 text-center text-sm font-bold text-anthracite shadow-md shadow-gold/30 transition hover:bg-anthracite hover:text-white">
+                  <Link href="/devis" className="focus-ring mt-7 block rounded-full bg-vinci px-6 py-3.5 text-center text-sm font-bold text-white shadow-md shadow-vinci/30 transition hover:bg-vinci-navy">
                     Un projet similaire ? Parlons-en <ArrowRight className="ml-1 inline h-4 w-4" />
                   </Link>
                 </aside>

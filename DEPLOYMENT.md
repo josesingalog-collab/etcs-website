@@ -1,8 +1,8 @@
-# Déploiement — Site GTGC SARL (gtgc-website)
+# Déploiement — Site ETCS SARL (etcs-website)
 
-Guide d'installation sur un serveur de production pour **https://gtgc-sarl.com**.
+Guide d'installation sur un serveur de production pour **https://etcsrdcongo.com**.
 
-Stack du projet : **Next.js 16 (Node.js), PostgreSQL, Prisma 6, npm** ; authentification admin par JWT (cookie `gtgc_admin`, secret `AUTH_SECRET`) ; reverse proxy **Nginx** avec **HTTPS**.
+Stack du projet : **Next.js 16 (Node.js), PostgreSQL, Prisma 6, npm** ; authentification admin par JWT (cookie `etcs_admin`, secret `AUTH_SECRET`) ; reverse proxy **Nginx** avec **HTTPS**.
 
 > Ce guide ne modifie aucun fichier applicatif. Tous les emplacements entre `<...>` sont à adapter. Aucun secret réel ne doit être écrit dans ce document ou dans le dépôt Git.
 
@@ -33,11 +33,11 @@ nginx -v
 ## 2. Récupération du projet
 
 ```bash
-git clone <URL_DU_DEPOT> gtgc-website
-cd gtgc-website
+git clone <URL_DU_DEPOT> etcs-website
+cd etcs-website
 ```
 
-`<URL_DU_DEPOT>` est à remplacer par l'adresse réelle du dépôt GitHub ou GitLab (ex. `git@github.com:org/gtgc-website.git`).
+`<URL_DU_DEPOT>` est à remplacer par l'adresse réelle du dépôt GitHub ou GitLab (ex. `git@github.com:org/etcs-website.git`).
 
 Installer exactement les dépendances déclarées dans `package-lock.json` :
 
@@ -52,7 +52,7 @@ npm ci
 Créer un fichier `.env` *(variable `.env.production` non nécessaire : seul `.env` est lu)* à la racine du projet :
 
 ```env
-DATABASE_URL="postgresql://<UTILISATEUR>:<MOT_DE_PASSE>@127.0.0.1:5432/gtgc_website?schema=public"
+DATABASE_URL="postgresql://<UTILISATEUR>:<MOT_DE_PASSE>@127.0.0.1:5432/etcs_website?schema=public"
 AUTH_SECRET="<SECRET_GENERE_N impedance=1_PLACEHOLDER>"
 NODE_ENV="production"
 ```
@@ -79,9 +79,9 @@ sudo -u postgres psql
 ```
 
 ```sql
-CREATE ROLE gtgc_app WITH LOGIN PASSWORD '<MOT_DE_PASSE_FORT>';
-CREATE DATABASE gtgc_website OWNER gtgc_app;
-GRANT ALL PRIVILEGES ON DATABASE gtgc_website TO gtgc_app;
+CREATE ROLE etcs_app WITH LOGIN PASSWORD '<MOT_DE_PASSE_FORT>';
+CREATE DATABASE etcs_website OWNER etcs_app;
+GRANT ALL PRIVILEGES ON DATABASE etcs_website TO etcs_app;
 \q
 ```
 
@@ -123,7 +123,7 @@ npm run admin:status
 Si aucun compte n'existe, le créer avec demain des valeurs saisies à la volée (terminal Linux) — jamais en ligne de commande visible dans l'historique :
 
 ```bash
-ADMIN_EMAIL="admin@gtgc-sarl.com" ADMIN_PASSWORD="<MOT_DE_PASSE_FORT>" npm run admin:init
+ADMIN_EMAIL="admin@etcsrdcongo.com" ADMIN_PASSWORD="<MOT_DE_PASSE_FORT>" npm run admin:init
 ```
 
 - Le mot de passe doit être **robuste** (long, aléatoire, unique) et conservé dans un gestionnaire de secrets.
@@ -154,17 +154,17 @@ curl -s http://127.0.0.1:3000/robots.txt
 
 ## 8. Service permanent (systemd)
 
-Empêcher Next.js de s'éteindre à la fermeture SSH : créer `/etc/systemd/system/gtgc.service` :
+Empêcher Next.js de s'éteindre à la fermeture SSH : créer `/etc/systemd/system/etcs.service` :
 
 ```ini
 [Unit]
-Description=GTGC Next.js Application
+Description=ETCS Next.js Application
 After=network.target
 
 [Service]
 Type=simple
 User=<UTILISATEUR_SYSTEME>
-WorkingDirectory=/var/www/gtgc-website
+WorkingDirectory=/var/www/etcs-website
 Environment=NODE_ENV=production
 ExecStart=/usr/bin/npm run start
 Restart=always
@@ -177,29 +177,29 @@ WantedBy=multi-user.target
 Adaptations requises :
 
 - `` `which npm` `` : `which npm` donne le chemin réel (souvent `/usr/bin/npm` ou `~/.nvm/.../npm`) — corriger `ExecStart` si nécessaire.
-- `<UTILISATEUR_SYSTEME>` : un compte non-admin prévu à cet effet (ex. `gtgc`), propriétaire de `/var/www/gtgc-website`.
+- `<UTILISATEUR_SYSTEME>` : un compte non-admin prévu à cet effet (ex. `etcs`), propriétaire de `/var/www/etcs-website`.
 
 Activation :
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable gtgc
-sudo systemctl start gtgc
-sudo systemctl status gtgc
+sudo systemctl enable etcs
+sudo systemctl start etcs
+sudo systemctl status etcs
 ```
 
- Logs applicatifs : `journalctl -u gtgc -f`.
+ Logs applicatifs : `journalctl -u etcs -f`.
 
 ---
 
 ## 9. Nginx (reverse proxy)
 
-Exemple de configuration `/etc/nginx/sites-available/gtgc` :
+Exemple de configuration `/etc/nginx/sites-available/etcs` :
 
 ```nginx
 server {
     listen 80;
-    server_name gtgc-sarl.com www.gtgc-sarl.com;
+    server_name etcsrdcongo.com www.etcsrdcongo.com;
 
     client_max_body_size 20M;
 
@@ -221,7 +221,7 @@ server {
 Activer et valider :
 
 ```bash
-sudo ln -s /etc/nginx/sites-available/gtgc /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/etcs /etc/nginx/sites-enabled/
 sudo nginx -t
 sudo systemctl reload nginx
 ```
@@ -234,12 +234,12 @@ sudo systemctl reload nginx
 sudo apt update && sudo apt install -y certbot python3-certbot-nginx
 ```
 
-> **Préalable indispensable : le DNS doit déjà pointer vers ce serveur** (section 11) — contrôler avec `dig +short gtgc-sarl.com` (réponse = IP du serveur).
+> **Préalable indispensable : le DNS doit déjà pointer vers ce serveur** (section 11) — contrôler avec `dig +short etcsrdcongo.com` (réponse = IP du serveur).
 
 Obtenir le certificat (inclut la redirection HTTPS) :
 
 ```bash
-sudo certbot --nginx -d gtgc-sarl.com -d www.gtgc-sarl.com
+sudo certbot --nginx -d etcsrdcongo.com -d www.etcsrdcongo.com
 ```
 
 Vérifier le renouvellement automatique :
@@ -256,7 +256,7 @@ sudo systemctl status certbot.timer
 - [ ] Enregistrement **A** `@` → IP publique du serveur.
 - [ ] Enregistrement **A** (ou **CNAME** vers le domaine principal) `www`.
 - [ ] Attendre la propagation (quelques minutes à quelques heures).
-- [ ] Vérifier avant de demander le certificat : `dig +short gtgc-sarl.com` et `dig +short www.gtgc-sarl.com` doivent renvoyer l'IP du serveur.
+- [ ] Vérifier avant de demander le certificat : `dig +short etcsrdcongo.com` et `dig +short www.etcsrdcongo.com` doivent renvoyer l'IP du serveur.
 
 ---
 
@@ -264,29 +264,29 @@ sudo systemctl status certbot.timer
 
 ### Site public
 
-- [ ] `https://gtgc-sarl.com/`
-- [ ] `https://gtgc-sarl.com/a-propos`
-- [ ] `https://gtgc-sarl.com/services`
-- [ ] `https://gtgc-sarl.com/services/<slug>` (une fiche)
-- [ ] `https://gtgc-sarl.com/realisations`
-- [ ] `https://gtgc-sarl.com/actualites`
-- [ ] `https://gtgc-sarl.com/contact`
-- [ ] `https://gtgc-sarl.com/devis`
+- [ ] `https://etcsrdcongo.com/`
+- [ ] `https://etcsrdcongo.com/a-propos`
+- [ ] `https://etcsrdcongo.com/services`
+- [ ] `https://etcsrdcongo.com/services/<slug>` (une fiche)
+- [ ] `https://etcsrdcongo.com/realisations`
+- [ ] `https://etcsrdcongo.com/actualites`
+- [ ] `https://etcsrdcongo.com/contact`
+- [ ] `https://etcsrdcongo.com/devis`
 
 ### Administration
 
-- [ ] `https://gtgc-sarl.com/admin` (redirige vers la connexion si non connecté)
-- [ ] `https://gtgc-sarl.com/admin/login`
+- [ ] `https://etcsrdcongo.com/admin` (redirige vers la connexion si non connecté)
+- [ ] `https://etcsrdcongo.com/admin/login`
 - [ ] Connexion administrateur, puis vérification de l'écran « Paramètres »
 - [ ] Déconnexion
 
 ### Technique
 
-- [ ] `https://gtgc-sarl.com` visitable directement (HTTPS actif, cadenas)
-- [ ] `http://gtgc-sarl.com` redirige vers HTTPS
-- [ ] Cookie `gtgc_admin` avec attribut **Secure/HttpOnly** (outils dev navigateur)
-- [ ] `https://gtgc-sarl.com/robots.txt` (doit exclure `/admin`)
-- [ ] `https://gtgc-sarl.com/sitemap.xml`
+- [ ] `https://etcsrdcongo.com` visitable directement (HTTPS actif, cadenas)
+- [ ] `http://etcsrdcongo.com` redirige vers HTTPS
+- [ ] Cookie `etcs_admin` avec attribut **Secure/HttpOnly** (outils dev navigateur)
+- [ ] `https://etcsrdcongo.com/robots.txt` (doit exclure `/admin`)
+- [ ] `https://etcsrdcongo.com/sitemap.xml`
 
 ---
 
@@ -297,7 +297,7 @@ sudo systemctl status certbot.timer
 - Mot de passe administrateur robuste, stocké dans un gestionnaire de secrets ; changement régulier.
 - Maintenir Node.js et les dépendances à jour (`npm audit` pour les vulnérabilités).
 - **Sauvegardes PostgreSQL automatiques** (ex. cron + `pg_dump`), testées sur un environnement de restauration.
-- Surveiller les logs : `journalctl -u gtgc -f`, `/var/log/nginx/error.log`.
+- Surveiller les logs : `journalctl -u etcs -f`, `/var/log/nginx/error.log`.
 - **Restreindre PostgreSQL au localhost** (écriture de `postgresql.conf` : `listen_addresses = 'localhost'`) et au besoin via `pg_hba.conf`.
 - **Ne jamais exposer le port 5432** sur Internet (pare-feu : `sudo ufw allow 'Nginx Full'`, `sudo ufw deny 5432`).
 
@@ -306,13 +306,13 @@ sudo systemctl status certbot.timer
 ## 14. Mise à jour ultérieure du site
 
 ```bash
-cd /var/www/gtgc-website
+cd /var/www/etcs-website
 git pull
 npm ci
 npx prisma migrate deploy
 npm run build
-sudo systemctl restart gtgc
-sudo systemctl status gtgc   # vérifier "active (running)" après CHAQUE mise à jour
+sudo systemctl restart etcs
+sudo systemctl status etcs   # vérifier "active (running)" après CHAQUE mise à jour
 ```
 
-En cas d'échec, consulter `journalctl -u gtgc -n 50` et, si besoin, revenir au commit précédent (`git checkout <tag>`), reconstruire, redémarrer.
+En cas d'échec, consulter `journalctl -u etcs -n 50` et, si besoin, revenir au commit précédent (`git checkout <tag>`), reconstruire, redémarrer.

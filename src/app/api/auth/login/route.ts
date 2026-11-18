@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     const secret = new TextEncoder().encode(process.env.AUTH_SECRET);
     const token = await new SignJWT({ role: "admin" }).setProtectedHeader({ alg: "HS256" }).setSubject(user.id).setIssuedAt().setExpirationTime("8h").sign(secret);
     const response = NextResponse.json({ ok: true });
-    response.cookies.set("gtgc_admin", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 8 });
+    response.cookies.set("etcs_admin", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 8 });
     return response;
   } catch {
     return NextResponse.json({ error: "Service d'authentification indisponible." }, { status: 503 });

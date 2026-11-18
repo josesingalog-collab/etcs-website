@@ -5,7 +5,7 @@ import { jwtVerify } from "jose";
 const secret = () => new TextEncoder().encode(process.env.AUTH_SECRET);
 
 export async function isAdmin() {
-  const token = (await cookies()).get("gtgc_admin")?.value;
+  const token = (await cookies()).get("etcs_admin")?.value;
   if (!token || !process.env.AUTH_SECRET) return false;
   try {
     const { payload } = await jwtVerify(token, secret());
@@ -16,7 +16,7 @@ export async function isAdmin() {
 }
 
 export async function adminUserId() {
-  const token = (await cookies()).get("gtgc_admin")?.value;
+  const token = (await cookies()).get("etcs_admin")?.value;
   if (!token || !process.env.AUTH_SECRET) return null;
   try {
     const { payload } = await jwtVerify(token, secret());

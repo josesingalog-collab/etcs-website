@@ -36,7 +36,7 @@ export default function Login() {
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80)" }} />
         <div className="absolute inset-0 bg-gradient-to-t from-royal-deep/90 via-anthracite/60 to-anthracite/70" />
         <div className="grid-lines relative flex h-full flex-col justify-end p-14">
-          <p className="text-[11px] font-bold uppercase tracking-[.24em] text-gold">GTGC SARL</p>
+          <p className="text-[11px] font-bold uppercase tracking-[.24em] text-gold">ETCS SARL</p>
           <h2 className="display mt-4 max-w-md text-5xl uppercase leading-[.95]">Piloter le contenu du site en toute simplicité.</h2>
           <p className="mt-5 max-w-sm text-sm leading-7 text-slate-300">Réalisations, services, actualités, demandes : gérez tout depuis un espace sécurisé.</p>
         </div>
@@ -44,9 +44,9 @@ export default function Login() {
       <section className="grid place-items-center p-6">
         <div className="w-full max-w-sm">
           <div className="text-center">
-            <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-royal to-royal-deep text-lg font-black shadow-xl">GT</span>
+            <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-royal to-royal-deep text-lg font-black shadow-xl">ET</span>
             <h1 className="mt-6 text-2xl font-extrabold">Espace administration</h1>
-            <p className="mt-2 text-sm text-slate-400">Accès réservé à l&apos;équipe GTGC.</p>
+            <p className="mt-2 text-sm text-slate-400">Accès réservé à l&apos;équipe ETCS.</p>
           </div>
           <form action={submit} className="mt-8 grid gap-5 rounded-2xl border border-white/10 bg-white/5 p-7 backdrop-blur">
             <label className="grid gap-2 text-sm font-bold text-slate-100">
@@ -66,7 +66,7 @@ export default function Login() {
               {pending ? "Connexion…" : (<><Lock className="h-4 w-4" />Se connecter</>)}
             </button>
           </form>
-          <p className="mt-6 text-center text-xs text-slate-500">Session sécurisée de 8 heures · GTGC SARL © 2026</p>
+          <p className="mt-6 text-center text-xs text-slate-500">Session sécurisée de 8 heures · ETCS SARL © 2026</p>
         </div>
       </section>
     </main>

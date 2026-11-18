@@ -1,5 +1,6 @@
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
+import { company } from "@/lib/content";
 
 export const metadata = { title: "Mentions légales" };
 export const instant = false;
@@ -12,11 +13,25 @@ export default function Legal() {
         <section className="rounded-2xl border border-slate-200 bg-white p-8 shadow-sm">
           <h2 className="display text-xl uppercase text-royal">Éditeur</h2>
           <p className="mt-4 text-sm leading-8 text-slate-600">
-            GTGC SARL — Grand Travaux de Génie Civil. Adresse : 15, Mayala, Musey, Ngaliema, Kinshasa, RDC. Les informations juridiques définitives doivent être complétées avant mise en ligne publique.
+            {company.name} — {company.fullName}, entreprise générale. Siège social : {company.address}. Bureau : {company.office}.
           </p>
-          <h2 className="display mt-10 text-xl uppercase text-royal">Contenus</h2>
+          <h2 className="display mt-10 text-xl uppercase text-royal">Identification légale</h2>
+          <dl className="mt-4 grid gap-2 text-sm leading-8 text-slate-600 sm:grid-cols-[auto_1fr] sm:gap-x-6">
+            <dt className="font-bold text-anthracite">RCCM :</dt><dd>{company.rccm}</dd>
+            <dt className="font-bold text-anthracite">ID NAT :</dt><dd>{company.idNat}</dd>
+            <dt className="font-bold text-anthracite">Numéro d&apos;impôt :</dt><dd>{company.tax}</dd>
+          </dl>
+          <h2 className="display mt-10 text-xl uppercase text-royal">Contact</h2>
           <p className="mt-4 text-sm leading-8 text-slate-600">
-            Les contenus de démonstration et visuels provisoires ne constituent pas des références commerciales ni des affirmations contractuelles.
+            Téléphone fixe : {company.phoneFixed} · Mobile : {company.phone} / {company.phoneAlt}
+            <br />
+            Email : <a className="font-semibold text-royal" href={`mailto:${company.email}`}>{company.email}</a> / <a className="font-semibold text-royal" href={`mailto:${company.emailAlt}`}>{company.emailAlt}</a>
+            <br />
+            Site Internet : {company.website}
+          </p>
+          <h2 className="display mt-10 text-xl uppercase text-royal">Présence internationale</h2>
+          <p className="mt-4 text-sm leading-8 text-slate-600">
+            À l&apos;international, ETCS dispose d&apos;une filiale en Europe, précisément en France dans la région parisienne, immatriculée au registre du commerce et des sociétés et fonctionnant en tant que bureau d&apos;études de génie civil, de bâtiments et de travaux publics.
           </p>
         </section>
       </article>

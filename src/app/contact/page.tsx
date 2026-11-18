@@ -45,7 +45,7 @@ export default async function Contact() {
                   </div>
                 ))}
                 <div className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-mist p-5">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-anthracite"><Clock className="h-5 w-5 text-gold" /></span>
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-vinci"><Clock className="h-5 w-5 text-vinci-sky" /></span>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Horaires</p>
                     <p className="mt-1 font-semibold text-anthracite">Lundi – Vendredi · 8h00 – 17h00</p>
@@ -66,7 +66,7 @@ export default async function Contact() {
               src={settings?.mapEmbedUrl ?? ""}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Carte — localisation de GTGC"
+              title="Carte — localisation de ETCS"
               className="h-[420px] w-full border-0"
             />
           </section>

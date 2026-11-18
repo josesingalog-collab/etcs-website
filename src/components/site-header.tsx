@@ -39,9 +39,9 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
   const solid = scrolled || open;
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${solid ? "bg-white/95 shadow-lg shadow-anthracite/5 backdrop-blur" : "bg-gradient-to-b from-anthracite/60 to-transparent"}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 bg-white transition-all duration-300 ${solid ? "shadow-lg shadow-vinci-navy/10" : "shadow-none"}`}>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Logo light={!solid} companyName={companyName ?? "GTGC SARL"} logoUrl={logoUrl} />
+        <Logo light={false} companyName={companyName ?? "ETCS SARL"} logoUrl={logoUrl} />
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navigation principale">
           {links.map(([label, href]) => {
             const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -49,24 +49,24 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
               <Link
                 key={href}
                 href={href}
-                className={`relative text-sm font-bold transition ${solid ? "text-anthracite hover:text-royal" : "text-white/90 hover:text-gold"} ${active ? (solid ? "text-royal" : "text-gold") : ""}`}
+                className={`relative text-sm font-bold transition ${active ? "text-vinci" : "text-vinci-navy hover:text-vinci-mid"}`}
               >
                 {label}
-                {active && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-gold" />}
+                {active && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-vinci" />}
               </Link>
             );
           })}
         </nav>
         <div className="flex items-center gap-3">
-          <Link href="/devis" className="focus-ring hidden rounded-lg bg-gold px-5 py-2.5 text-sm font-bold text-anthracite shadow-md shadow-gold/30 transition hover:bg-white sm:block">
-            Demander un devis
+          <Link href="/devis" className="focus-ring inline-flex items-center gap-2 rounded-full bg-vinci px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-vinci/30 transition hover:bg-vinci-navy sm:block">
+            Demander un devis <ArrowRight className="h-4 w-4" />
           </Link>
           <button
             type="button"
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            className={`focus-ring grid h-11 w-11 place-items-center rounded-lg border transition lg:hidden ${solid ? "border-slate-200 text-anthracite" : "border-white/30 text-white"}`}
+            className={`focus-ring grid h-11 w-11 place-items-center rounded-lg border transition lg:hidden ${solid ? "border-slate-200 text-anthracite" : "border-vinci-navy/20 text-vinci-navy"}`}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -84,7 +84,7 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
                 </Link>
               );
             })}
-            <Link href="/devis" onClick={() => setOpen(false)} className="mt-4 rounded-xl bg-gold px-4 py-4 text-center text-base font-bold text-anthracite shadow-md shadow-gold/30">
+            <Link href="/devis" onClick={() => setOpen(false)} className="mt-4 rounded-full bg-vinci px-4 py-4 text-center text-base font-bold text-white shadow-md shadow-vinci/30">
               Demander un devis
             </Link>
           </nav>

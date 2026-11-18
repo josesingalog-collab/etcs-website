@@ -18,7 +18,7 @@ export function ProjectCard({ project, priority = false, featured = false, ctaLa
       <div className="p-6">
         <p className="flex items-center gap-2 text-xs font-semibold text-slate-500"><MapPin className="h-3.5 w-3.5 text-royal" />{project.location}</p>
         <h3 className="mt-2 text-lg font-extrabold leading-snug text-anthracite transition group-hover:text-royal">{project.title}</h3>
-        <span className="mt-3 block h-1 w-8 rounded-full bg-gold" aria-hidden="true" />
+        <span className="mt-3 block" aria-hidden="true" />
         <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-500">{project.description}</p>
         <span className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-royal">
           {ctaLabel}
@@ -45,7 +45,7 @@ export function ServiceCard({ service, index }: { service: Service; index: numbe
       <div className="flex grow flex-col p-6">
         <span className="text-[10px] font-bold uppercase tracking-[.18em] text-royal">EXPERTISE {String(index + 1).padStart(2, "0")}</span>
       <h3 className="mt-2 text-lg font-extrabold leading-snug text-anthracite transition group-hover:text-royal">{service.title}</h3>
-      <span className="mt-3 block h-1 w-8 rounded-full bg-gold" aria-hidden="true" />
+      <span className="mt-3 block" aria-hidden="true" />
       <p className="mt-3 line-clamp-3 grow text-sm leading-6 text-slate-500">{service.excerpt}</p>
         <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-royal">
           En savoir plus <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />

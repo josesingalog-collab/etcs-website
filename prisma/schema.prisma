@@ -113,7 +113,7 @@ model TeamMember {
 
 model SiteSettings {
   id           Int      @id @default(1)
-  companyName  String   @default("GTGC SARL")
+  companyName  String   @default("ETCS SARL")
   phone        String
   email        String
   address      String

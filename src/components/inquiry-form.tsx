@@ -36,7 +36,7 @@ export function InquiryForm({ type }: { type: "quote" | "contact" }) {
       <div role="status" aria-live="polite" className="grid place-items-center gap-4 rounded-2xl border border-green-200 bg-green-50 p-10 text-center">
         <CheckCircle2 className="h-10 w-10 text-green-600" />
         <p className="text-base font-bold text-green-900">Votre demande a bien été reçue.</p>
-        <p className="max-w-sm text-sm leading-6 text-green-800">L&apos;équipe GTGC vous répondra dans les plus brefs délais.</p>
+        <p className="max-w-sm text-sm leading-6 text-green-800">L&apos;équipe ETCS vous répondra dans les plus brefs délais.</p>
       </div>
     );
   }

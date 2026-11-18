@@ -43,11 +43,11 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
               </Reveal>
               <Reveal delay={0.1}>
                 <aside className="flex flex-col gap-6">
-                  <div className="rounded-2xl bg-gradient-to-br from-royal-deep to-royal p-8 text-white shadow-xl shadow-royal/25">
-                    <p className="text-xs font-bold tracking-[.2em] text-gold">DEVIS GRATUIT</p>
-                    <h3 className="display mt-3 text-2xl uppercase leading-tight">Demander une offre pour ce service</h3>
+                  <div className="rounded-2xl bg-vinci-navy p-8 text-white shadow-xl shadow-vinci-navy/25">
+                    <p className="text-xs font-bold tracking-[.2em] text-vinci-sky">DEVIS GRATUIT</p>
+                    <h3 className="display mt-3 text-2xl leading-tight">Demander une offre pour ce service</h3>
                     <p className="mt-3 text-sm leading-6 text-slate-200">Recevez une proposition adaptée à votre projet.</p>
-                    <Link href="/devis" className="focus-ring mt-6 block rounded-lg bg-gold px-6 py-3.5 text-center text-sm font-bold text-anthracite transition hover:bg-white">
+                    <Link href="/devis" className="focus-ring mt-6 block rounded-full bg-white px-6 py-3.5 text-center text-sm font-bold text-vinci shadow-md transition hover:bg-vinci-sky hover:text-vinci-navy">
                       Demander un devis
                     </Link>
                   </div>

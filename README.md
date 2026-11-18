@@ -1,6 +1,6 @@
-# GTGC Website
+# ETCS Website
 
-Site vitrine Next.js de Grand Travaux de Génie Civil (GTGC SARL), créé dans un projet indépendant.
+Site vitrine Next.js de Etudes Techniques Conceptions des Structures (ETCS SARL), créé dans un projet indépendant.
 
 ## Démarrage
 

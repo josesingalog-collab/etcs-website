@@ -16,7 +16,7 @@ export default async function News() {
       <main>
         <PageHero
           eyebrow="JOURNAL"
-          title="Les actualités de GTGC"
+          title="Les actualités de ETCS"
           text="Vie de l'entreprise, chantiers en cours et annonces institutionnelles."
           image={settings?.heroImageUrl}
         />
@@ -41,7 +41,7 @@ export default async function News() {
                 </div>
               )
             ) : (
-              <EmptyState title="Aucune actualité publiée" text="Les communiqués et nouvelles de l'entreprise seront publiés ici par l'équipe GTGC." />
+              <EmptyState title="Aucune actualité publiée" text="Les communiqués et nouvelles de l'entreprise seront publiés ici par l'équipe ETCS." />
             )}
           </div>
         </section>

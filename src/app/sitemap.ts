@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
 import { publishedArticles, publishedProjects, publishedServices } from "@/lib/public-content";
-const baseUrl = "https://gtgc-sarl.com";
+const baseUrl = "https://etcsrdcongo.com";
 const routes=["","/a-propos","/services","/realisations","/actualites","/devis","/contact","/mentions-legales","/politique-confidentialite"];
 export default async function sitemap():Promise<MetadataRoute.Sitemap>{const [projects,services,articles]=await Promise.all([publishedProjects(),publishedServices(),publishedArticles()]);return [...routes.map(route=>({url:`${baseUrl}${route}`,lastModified:new Date(),changeFrequency:"monthly" as const,priority:route===""?1:.7})),...projects.map(project=>({url:`${baseUrl}/realisations/${project.slug}`,lastModified:project.updatedAt,changeFrequency:"monthly" as const,priority:.8})),...services.map(service=>({url:`${baseUrl}/services/${service.slug}`,lastModified:service.updatedAt,changeFrequency:"monthly" as const,priority:.8})),...articles.map(article=>({url:`${baseUrl}/actualites/${article.slug}`,lastModified:article.updatedAt,changeFrequency:"monthly" as const,priority:.7}))]}
