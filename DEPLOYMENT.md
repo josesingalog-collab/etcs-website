@@ -1,8 +1,10 @@
 # Déploiement — Site ETCS SARL (etcs-website)
 
-Guide d'installation sur un serveur de production pour **https://etcs-ingenierie.com**.
+Guide d'installation sur un **serveur dédié/VPS Ubuntu** pour **https://etcs-ingenierie.com**.
 
-Stack du projet : **Next.js 16 (Node.js), PostgreSQL, Prisma 6, npm** ; authentification admin par JWT (cookie `etcs_admin`, secret `AUTH_SECRET`) ; reverse proxy **Nginx** avec **HTTPS**.
+> **Hébergement WHC mutualisé (cPanel) ?** Suivre plutôt **`DEPLOYMENT-CPANEL.md`** — le présent guide concerne les serveurs avec accès root.
+
+Stack du projet : **Next.js 16 (Node.js), MySQL/MariaDB, Prisma 6, npm** ; authentification admin par JWT (cookie `etcs_admin`, secret `AUTH_SECRET`) ; reverse proxy **Nginx** avec **HTTPS**.
 
 > Ce guide ne modifie aucun fichier applicatif. Tous les emplacements entre `<...>` sont à adapter. Aucun secret réel ne doit être écrit dans ce document ou dans le dépôt Git.
 
@@ -13,7 +15,7 @@ Stack du projet : **Next.js 16 (Node.js), PostgreSQL, Prisma 6, npm** ; authenti
 - **Linux Ubuntu LTS** (22.04 ou 24.04) recommandé, avec accès SSH.
 - **Node.js** compatible : le projet utilise **Next.js 16**, qui requiert **Node.js ≥ 20.9** — installer la LTS **20** ou **22** (via `apt` ou [nvm](https://github.com/nvm-sh/nvm)).
 - **npm** (livré avec Node.js).
-- **PostgreSQL** (14+) — le projet utilise Prisma 6, pilote PostgreSQL.
+- **MySQL 8+ ou MariaDB 10.6+** — le projet utilise Prisma 6, pilote MySQL/MariaDB.
 - **Git**.
 - **Nginx** comme reverse proxy.
 - **Certificat SSL** (Certbot/Let's Encrypt, section 10).
@@ -23,7 +25,7 @@ Vérification de l'environnement :
 ```bash
 node -v        # attendu : v20.9 ou v22.x
 npm -v
-psql --version
+mysql --version
 git --version
 nginx -v
 ```
@@ -52,7 +54,7 @@ npm ci
 Créer un fichier `.env` *(variable `.env.production` non nécessaire : seul `.env` est lu)* à la racine du projet :
 
 ```env
-DATABASE_URL="postgresql://<UTILISATEUR>:<MOT_DE_PASSE>@127.0.0.1:5432/etcs_website?schema=public"
+DATABASE_URL="mysql://etcs_app:<MOT_DE_PASSE>@127.0.0.1:3306/etcs_website"
 AUTH_SECRET="<SECRET_GENERE_AVEC_OPENSSL_RAND>"
 NODE_ENV="production"
 ```
@@ -70,19 +72,20 @@ Règles impératives :
 
 ---
 
-## 4. Base de données PostgreSQL
+## 4. Base de données MySQL/MariaDB
 
 Créer un utilisateur dédié (droits limités à cette base) puis la base :
 
 ```bash
-sudo -u postgres psql
+sudo mysql
 ```
 
 ```sql
-CREATE ROLE etcs_app WITH LOGIN PASSWORD '<MOT_DE_PASSE_FORT>';
-CREATE DATABASE etcs_website OWNER etcs_app;
-GRANT ALL PRIVILEGES ON DATABASE etcs_website TO etcs_app;
-\q
+CREATE USER 'etcs_app'@'localhost' IDENTIFIED BY '<MOT_DE_PASSE_FORT>';
+CREATE DATABASE etcs_website CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+GRANT ALL PRIVILEGES ON etcs_website.* TO 'etcs_app'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
 ```
 
 - Reportez ces identifiants dans `DATABASE_URL` (section 3).
@@ -296,10 +299,10 @@ sudo systemctl status certbot.timer
 - `AUTH_SECRET` **unique** en production (différent du local) ; rotation en cas de doute.
 - Mot de passe administrateur robuste, stocké dans un gestionnaire de secrets ; changement régulier.
 - Maintenir Node.js et les dépendances à jour (`npm audit` pour les vulnérabilités).
-- **Sauvegardes PostgreSQL automatiques** (ex. cron + `pg_dump`), testées sur un environnement de restauration.
+- **Sauvegardes MySQL automatiques** (ex. cron + `mysqldump`), testées sur un environnement de restauration.
 - Surveiller les logs : `journalctl -u etcs -f`, `/var/log/nginx/error.log`.
-- **Restreindre PostgreSQL au localhost** (écriture de `postgresql.conf` : `listen_addresses = 'localhost'`) et au besoin via `pg_hba.conf`.
-- **Ne jamais exposer le port 5432** sur Internet (pare-feu : `sudo ufw allow 'Nginx Full'`, `sudo ufw deny 5432`).
+- **Restreindre MySQL/MariaDB au localhost** (fichier `mysqld.cnf` : `bind-address = 127.0.0.1`).
+- **Ne jamais exposer le port 3306** sur Internet (pare-feu : `sudo ufw allow 'Nginx Full'`, `sudo ufw deny 3306`).
 
 ---
 

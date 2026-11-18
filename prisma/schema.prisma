@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -32,10 +32,10 @@ model Project {
   id                String            @id @default(cuid())
   title             String
   slug              String            @unique
-  description       String
-  location          String
-  category          String
-  status            String
+  description       String            @db.Text
+  location          String            @db.VarChar(300)
+  category          String            @db.VarChar(300)
+  status            String            @db.VarChar(300)
   projectDate       DateTime?
   publicationStatus PublicationStatus @default(DRAFT)
   images            ProjectImage[]
@@ -45,8 +45,8 @@ model Project {
 
 model ProjectImage {
   id        String  @id @default(cuid())
-  url       String
-  alt       String?
+  url       String  @db.VarChar(1000)
+  alt       String? @db.VarChar(500)
   position  Int     @default(0)
   projectId String
   project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -56,9 +56,9 @@ model Service {
   id                String            @id @default(cuid())
   title             String
   slug              String            @unique
-  excerpt           String
-  description       String
-  image             String?
+  excerpt           String            @db.Text
+  description       String            @db.Text
+  image             String?           @db.VarChar(1000)
   publicationStatus PublicationStatus @default(DRAFT)
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
@@ -68,9 +68,9 @@ model Article {
   id                String            @id @default(cuid())
   title             String
   slug              String            @unique
-  excerpt           String
-  content           String
-  coverImage        String?
+  excerpt           String            @db.Text
+  content           String            @db.Text
+  coverImage        String?           @db.VarChar(1000)
   publicationStatus PublicationStatus @default(DRAFT)
   publishedAt       DateTime?
   createdAt         DateTime          @default(now())
@@ -82,8 +82,8 @@ model QuoteRequest {
   name      String
   email     String
   phone     String
-  subject   String
-  message   String
+  subject   String        @db.VarChar(500)
+  message   String        @db.Text
   status    RequestStatus @default(NEW)
   createdAt DateTime      @default(now())
 }
@@ -93,8 +93,8 @@ model ContactMessage {
   name      String
   email     String
   phone     String
-  subject   String
-  message   String
+  subject   String        @db.VarChar(500)
+  message   String        @db.Text
   status    RequestStatus @default(NEW)
   createdAt DateTime      @default(now())
 }
@@ -102,9 +102,9 @@ model ContactMessage {
 model TeamMember {
   id                String            @id @default(cuid())
   name              String
-  role              String
-  bio               String?
-  photo             String?
+  role              String            @db.VarChar(300)
+  bio               String?           @db.Text
+  photo             String?           @db.VarChar(1000)
   position          Int               @default(0)
   publicationStatus PublicationStatus @default(PUBLISHED)
   createdAt         DateTime          @default(now())
@@ -116,12 +116,12 @@ model SiteSettings {
   companyName  String   @default("ETCS SARL")
   phone        String
   email        String
-  address      String
-  aboutText    String?
+  address      String   @db.VarChar(500)
+  aboutText    String?  @db.Text
   socialLinks  Json?
   keyStats      Json?
-  mapEmbedUrl   String?
-  logoUrl      String?
-  heroImageUrl String?
+  mapEmbedUrl   String? @db.VarChar(1000)
+  logoUrl       String? @db.VarChar(1000)
+  heroImageUrl String? @db.VarChar(1000)
   updatedAt    DateTime @updatedAt
 }

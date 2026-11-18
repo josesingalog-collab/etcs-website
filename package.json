@@ -1,11 +1,15 @@
 {
-  "name": "gtgc-website",
+  "name": "etcs-website",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "start:passenger": "node app.js",
     "lint": "eslint",
     "admin:init": "node scripts/init-admin.mjs",
     "admin:status": "node scripts/admin-status.mjs"
@@ -18,6 +22,7 @@
     "lucide-react": "^0.511.0",
     "motion": "^12.12.1",
     "next": "16.4.3",
+    "prisma": "^6.7.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-hook-form": "^7.58.1",
@@ -34,7 +39,6 @@
     "@types/topojson-client": "^3.1.5",
     "eslint": "^9",
     "eslint-config-next": "16.4.3",
-    "prisma": "^6.7.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
