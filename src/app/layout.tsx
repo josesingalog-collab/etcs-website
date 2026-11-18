@@ -32,7 +32,7 @@ const encode = localFont({
 export const instant = false;
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://etcsrdcongo.com"),
+  metadataBase: new URL("https://etcs-ingenierie.com"),
   title: { default: "ETCS | Etudes Techniques Conceptions des Structures", template: "%s | ETCS" },
   description: "ETCS SARL (Etudes Techniques Conceptions des Structures), entreprise générale d'ingénierie, de génie civil et de travaux publics à Kinshasa, RDC.",
   alternates: { canonical: "/" },

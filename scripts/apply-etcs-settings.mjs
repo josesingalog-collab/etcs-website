@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const ETCS = {
   companyName: "ETCS SARL",
   phone: "+243 824 074 869",
-  email: "etsinfo@etcsrdcongo.com",
+  email: "etsinfo@etcs-ingenierie.com",
   address: "14, Avenue du Marché, Commune de la Gombe, Kinshasa, RDC",
   aboutText: [
     "ETCS SARL (Etudes Techniques Conceptions des Structures) est une entreprise congolaise d'ingénierie et une entreprise générale, dont le siège social est établi à Kinshasa, 14, Avenue du Marché, commune de la Gombe.",

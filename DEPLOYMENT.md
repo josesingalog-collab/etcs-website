@@ -1,6 +1,6 @@
 # Déploiement — Site ETCS SARL (etcs-website)
 
-Guide d'installation sur un serveur de production pour **https://etcsrdcongo.com**.
+Guide d'installation sur un serveur de production pour **https://etcs-ingenierie.com**.
 
 Stack du projet : **Next.js 16 (Node.js), PostgreSQL, Prisma 6, npm** ; authentification admin par JWT (cookie `etcs_admin`, secret `AUTH_SECRET`) ; reverse proxy **Nginx** avec **HTTPS**.
 
@@ -123,7 +123,7 @@ npm run admin:status
 Si aucun compte n'existe, le créer avec demain des valeurs saisies à la volée (terminal Linux) — jamais en ligne de commande visible dans l'historique :
 
 ```bash
-ADMIN_EMAIL="admin@etcsrdcongo.com" ADMIN_PASSWORD="<MOT_DE_PASSE_FORT>" npm run admin:init
+ADMIN_EMAIL="admin@etcs-ingenierie.com" ADMIN_PASSWORD="<MOT_DE_PASSE_FORT>" npm run admin:init
 ```
 
 - Le mot de passe doit être **robuste** (long, aléatoire, unique) et conservé dans un gestionnaire de secrets.
@@ -199,7 +199,7 @@ Exemple de configuration `/etc/nginx/sites-available/etcs` :
 ```nginx
 server {
     listen 80;
-    server_name etcsrdcongo.com www.etcsrdcongo.com;
+    server_name etcs-ingenierie.com www.etcs-ingenierie.com;
 
     client_max_body_size 20M;
 
@@ -234,12 +234,12 @@ sudo systemctl reload nginx
 sudo apt update && sudo apt install -y certbot python3-certbot-nginx
 ```
 
-> **Préalable indispensable : le DNS doit déjà pointer vers ce serveur** (section 11) — contrôler avec `dig +short etcsrdcongo.com` (réponse = IP du serveur).
+> **Préalable indispensable : le DNS doit déjà pointer vers ce serveur** (section 11) — contrôler avec `dig +short etcs-ingenierie.com` (réponse = IP du serveur).
 
 Obtenir le certificat (inclut la redirection HTTPS) :
 
 ```bash
-sudo certbot --nginx -d etcsrdcongo.com -d www.etcsrdcongo.com
+sudo certbot --nginx -d etcs-ingenierie.com -d www.etcs-ingenierie.com
 ```
 
 Vérifier le renouvellement automatique :
@@ -256,7 +256,7 @@ sudo systemctl status certbot.timer
 - [ ] Enregistrement **A** `@` → IP publique du serveur.
 - [ ] Enregistrement **A** (ou **CNAME** vers le domaine principal) `www`.
 - [ ] Attendre la propagation (quelques minutes à quelques heures).
-- [ ] Vérifier avant de demander le certificat : `dig +short etcsrdcongo.com` et `dig +short www.etcsrdcongo.com` doivent renvoyer l'IP du serveur.
+- [ ] Vérifier avant de demander le certificat : `dig +short etcs-ingenierie.com` et `dig +short www.etcs-ingenierie.com` doivent renvoyer l'IP du serveur.
 
 ---
 
@@ -264,29 +264,29 @@ sudo systemctl status certbot.timer
 
 ### Site public
 
-- [ ] `https://etcsrdcongo.com/`
-- [ ] `https://etcsrdcongo.com/a-propos`
-- [ ] `https://etcsrdcongo.com/services`
-- [ ] `https://etcsrdcongo.com/services/<slug>` (une fiche)
-- [ ] `https://etcsrdcongo.com/realisations`
-- [ ] `https://etcsrdcongo.com/actualites`
-- [ ] `https://etcsrdcongo.com/contact`
-- [ ] `https://etcsrdcongo.com/devis`
+- [ ] `https://etcs-ingenierie.com/`
+- [ ] `https://etcs-ingenierie.com/a-propos`
+- [ ] `https://etcs-ingenierie.com/services`
+- [ ] `https://etcs-ingenierie.com/services/<slug>` (une fiche)
+- [ ] `https://etcs-ingenierie.com/realisations`
+- [ ] `https://etcs-ingenierie.com/actualites`
+- [ ] `https://etcs-ingenierie.com/contact`
+- [ ] `https://etcs-ingenierie.com/devis`
 
 ### Administration
 
-- [ ] `https://etcsrdcongo.com/admin` (redirige vers la connexion si non connecté)
-- [ ] `https://etcsrdcongo.com/admin/login`
+- [ ] `https://etcs-ingenierie.com/admin` (redirige vers la connexion si non connecté)
+- [ ] `https://etcs-ingenierie.com/admin/login`
 - [ ] Connexion administrateur, puis vérification de l'écran « Paramètres »
 - [ ] Déconnexion
 
 ### Technique
 
-- [ ] `https://etcsrdcongo.com` visitable directement (HTTPS actif, cadenas)
-- [ ] `http://etcsrdcongo.com` redirige vers HTTPS
+- [ ] `https://etcs-ingenierie.com` visitable directement (HTTPS actif, cadenas)
+- [ ] `http://etcs-ingenierie.com` redirige vers HTTPS
 - [ ] Cookie `etcs_admin` avec attribut **Secure/HttpOnly** (outils dev navigateur)
-- [ ] `https://etcsrdcongo.com/robots.txt` (doit exclure `/admin`)
-- [ ] `https://etcsrdcongo.com/sitemap.xml`
+- [ ] `https://etcs-ingenierie.com/robots.txt` (doit exclure `/admin`)
+- [ ] `https://etcs-ingenierie.com/sitemap.xml`
 
 ---
 
