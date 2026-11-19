@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { company } from "@/lib/content";
 import "./globals.css";
 
 const poppins = localFont({
@@ -38,6 +39,21 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: { type: "website", locale: "fr_CD", siteName: "ETCS SARL", title: "ETCS | Etudes Techniques Conceptions des Structures", description: "Entreprise générale d'ingénierie, de génie civil et de travaux publics à Kinshasa, RDC." },
   twitter: { card: "summary_large_image" },
+  ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
+};
+
+const organization = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: company.name,
+  alternateName: ["ETCS", "ETCS SARL"],
+  legalName: company.fullName,
+  url: "https://etcs-ingenierie.com",
+  logo: "https://etcs-ingenierie.com/logo-etcs.png",
+  email: company.email,
+  telephone: company.phone,
+  address: { "@type": "PostalAddress", streetAddress: company.address, addressLocality: "Kinshasa", addressCountry: "CD" },
+  areaServed: "République Démocratique du Congo",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -46,7 +62,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="fr"
       className={`${poppins.variable} ${encode.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
+        {children}
+      </body>
     </html>
   );
 }
