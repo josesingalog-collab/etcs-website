@@ -8,6 +8,12 @@ if (fs.existsSync(".env")) {
   }
 }
 
+// Hebergement mutualise (CloudLinux/cPanel) : le runtime Tokio du moteur Prisma cree un thread
+// par CPU declare, ce qui sature la limite de processus/threads du compte (panic "timer has gone away").
+// Des limites fixes faibles evitent cela (cf. prisma/prisma#24100).
+process.env.TOKIO_WORKER_THREADS = process.env.TOKIO_WORKER_THREADS || "2";
+process.env.UV_THREADPOOL_SIZE = process.env.UV_THREADPOOL_SIZE || "4";
+
 const next = require("next");
 
 const port = Number(process.env.PORT) || 3000;
