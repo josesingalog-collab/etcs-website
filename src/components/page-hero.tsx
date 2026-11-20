@@ -10,7 +10,7 @@ export function PageHero({ eyebrow, title, text, image }: { eyebrow: string; tit
           {text && <p className="mt-6 max-w-xl text-base leading-7 text-slate-100">{text}</p>}
         </div>
         {image ? (
-          <div className="kenburns-wrap rise relative z-10 hidden lg:block lg:translate-y-24">
+          <div className="kenburns-wrap rise relative z-10 hidden lg:block lg:self-center">
             <div className="relative aspect-[3/2] overflow-hidden bg-vinci-navy shadow-2xl shadow-vinci-navy/40">
               <Image src={image} alt={title} fill sizes="(max-width:1024px) 100vw, 50vw" priority className="kenburns object-cover" />
             </div>
