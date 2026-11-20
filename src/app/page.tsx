@@ -62,7 +62,7 @@ export default async function Home() {
                 </Link>
               </div>
             </div>
-            <div className="rise rise-2 relative z-10 lg:translate-y-24">
+            <div className="rise rise-2 relative z-10 lg:self-center">
               <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-vinci-navy shadow-2xl shadow-vinci-navy/40">
                 <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier ETCS" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
               </div>
