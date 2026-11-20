@@ -3,7 +3,7 @@ import { Eye, Target, Gem, BadgeCheck } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteSettings } from "@/lib/site-settings";
-import { getPageContent } from "@/lib/page-content";
+import { getPageContent, stringList } from "@/lib/page-content";
 import { SectionHeading, CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 import { prisma } from "@/lib/prisma";
@@ -109,7 +109,7 @@ export default async function About() {
             </p>
             <div className="marquee mt-12" role="list" aria-label="Partenaires">
               <div className="marquee-track">
-                {[...about.partners, ...about.partners].map((partner, index) => (
+                {[...stringList(about.partners), ...stringList(about.partners)].map((partner, index) => (
                   <span key={`${partner}-${index}`} role="listitem" className="display flex items-center gap-10 text-xl tracking-[.14em] text-royal">
                     {partner}
                     <span className="h-2 w-2 shrink-0 rounded-full bg-gold" aria-hidden="true" />
@@ -128,14 +128,14 @@ export default async function About() {
                 {about.trainingText}
               </p>
               <ul className="mt-6 grid gap-2 text-sm text-slate-600">
-                {about.trainingPoints.map((point) => (
+                {stringList(about.trainingPoints).map((point) => (
                   <li key={point} className="flex gap-3"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gold" />{point}</li>
                 ))}
               </ul>
             </Reveal>
             <Reveal delay={0.1}>
               <div className="grid gap-4 sm:grid-cols-2">
-                {about.trainingModules.map((module) => (
+                {stringList(about.trainingModules).map((module) => (
                   <span key={module} className="card-hover rounded-2xl border border-slate-200 bg-white px-5 py-4 text-center text-sm font-bold text-anthracite shadow-sm">
                     {module}
                   </span>

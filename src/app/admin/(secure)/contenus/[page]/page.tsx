@@ -7,7 +7,7 @@ import { RepeaterField } from "@/components/admin/repeater";
 import { UploadField } from "@/components/admin/upload-field";
 import { AdminHeader, SavedBanner } from "@/components/admin/ui";
 import { SubmitButton } from "@/components/submit-button";
-import { defaultPageContent, getPageContent, pageKeys, pageMetas, type PageKey } from "@/lib/page-content";
+import { defaultPageContent, getPageContent, labelList, pageKeys, pageMetas, type PageKey } from "@/lib/page-content";
 
 type Props = { params: Promise<{ page: string }>; searchParams: Promise<{ saved?: string }> };
 
@@ -66,7 +66,7 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 addLabel="Ajouter un point fort"
                 itemTitleKey="label"
                 fields={listFields([{ name: "label", label: "Intitulé" }])}
-                items={(list("strengths") as string[]).map((label) => ({ label }))}
+                items={labelList(list("strengths"))}
               />
             </Section>
             <Section title="Domaines d'expertise (affiché si aucun service publié)">
@@ -178,7 +178,7 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 addLabel="Ajouter un partenaire"
                 itemTitleKey="label"
                 fields={listFields([{ name: "label", label: "Nom" }])}
-                items={(list("partners") as string[]).map((label) => ({ label }))}
+                items={labelList(list("partners"))}
               />
             </Section>
             <Section title="Centre de formations">
@@ -193,7 +193,7 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 addLabel="Ajouter un point"
                 itemTitleKey="label"
                 fields={listFields([{ name: "label", label: "Point" }])}
-                items={(list("trainingPoints") as string[]).map((label) => ({ label }))}
+                items={labelList(list("trainingPoints"))}
               />
               <RepeaterField
                 name="trainingModules"
@@ -201,7 +201,7 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 addLabel="Ajouter un module"
                 itemTitleKey="label"
                 fields={listFields([{ name: "label", label: "Module" }])}
-                items={(list("trainingModules") as string[]).map((label) => ({ label }))}
+                items={labelList(list("trainingModules"))}
               />
             </Section>
             <Section title="Qualité & expertise">
@@ -217,7 +217,7 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 addLabel="Ajouter un point"
                 itemTitleKey="label"
                 fields={listFields([{ name: "label", label: "Point" }])}
-                items={(list("qualityPoints") as string[]).map((label) => ({ label }))}
+                items={labelList(list("qualityPoints"))}
               />
             </Section>
             <Section title="Appel à l'action final">

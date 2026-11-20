@@ -307,6 +307,23 @@ export async function getPageContent<K extends PageKey>(page: K): Promise<AllPag
 const MAX_TEXT = 20000;
 const MAX_ITEMS = 20;
 
+/** Normalise une liste pouvant contenir des chaînes ou des objets {label} en tableau de chaînes. */
+export function stringList(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((item) => {
+      if (typeof item === "string") return item;
+      if (typeof item === "object" && item !== null && typeof (item as { label?: unknown }).label === "string") return (item as { label: string }).label;
+      return "";
+    })
+    .filter((item) => item.trim() !== "");
+}
+
+/** Normalise une liste en tableau d'objets {label} pour les répéteurs de l'admin. */
+export function labelList(value: unknown): { label: string }[] {
+  return stringList(value).map((label) => ({ label }));
+}
+
 function sanitize(value: unknown): unknown | null {
   if (typeof value === "string") return value.length <= MAX_TEXT ? value : null;
   if (Array.isArray(value)) {

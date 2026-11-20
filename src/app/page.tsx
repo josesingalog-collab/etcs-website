@@ -4,7 +4,7 @@ import { ArrowRight, Building2, HardHat, DraftingCompass, Route, Droplets, Badge
 import { SiteShell } from "@/components/site-shell";
 import { publishedProjects, publishedServices, publishedArticles } from "@/lib/public-content";
 import { getSiteSettings } from "@/lib/site-settings";
-import { getPageContent } from "@/lib/page-content";
+import { getPageContent, stringList } from "@/lib/page-content";
 import { parseKeyStats } from "@/lib/key-stats";
 import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/components/public/sections";
 import { ProjectCard, ServiceCard, ArticleCard } from "@/components/public/cards";
@@ -94,7 +94,7 @@ export default async function Home() {
                 ))}
               </div>
               <ul className="mt-8 divide-y divide-slate-100 border-y border-slate-100">
-                {home.strengths.map((label, index) => {
+                {stringList(home.strengths).map((label, index) => {
                   const Icon = strengthIcons[index % strengthIcons.length];
                   return (
                     <li key={label} className="flex items-center gap-4 py-3.5">
