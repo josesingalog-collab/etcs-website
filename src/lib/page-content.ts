@@ -2,7 +2,7 @@ import { connection } from "next/server";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
-export const pageKeys = ["home", "about", "services", "contact", "quote", "footer"] as const;
+export const pageKeys = ["home", "about", "services", "contact", "quote", "footer", "typography"] as const;
 export type PageKey = (typeof pageKeys)[number];
 
 export type PageMeta = { key: PageKey; label: string; description: string; publicPath: string };
@@ -13,6 +13,7 @@ export const pageMetas: PageMeta[] = [
   { key: "contact", label: "Contact", description: "Bannière, horaires et textes de la page Contact.", publicPath: "/contact" },
   { key: "quote", label: "Devis", description: "Bannière, étapes du processus et bandeau de la page Devis.", publicPath: "/devis" },
   { key: "footer", label: "Pied de page", description: "Texte de présentation affiché dans le footer de toutes les pages.", publicPath: "/" },
+  { key: "typography", label: "Typographie", description: "Polices des titres et des textes, taille générale, interligne, espacement, justification.", publicPath: "/" },
 ];
 
 export type HomeContent = {
@@ -116,6 +117,81 @@ export type FooterContent = {
   aboutText: string;
 };
 
+export type TypographyContent = {
+  headingFont: string;
+  bodyFont: string;
+  textScale: string;
+  lineHeight: string;
+  letterSpacing: string;
+  justifyText: string;
+};
+
+/** Polices web sûres (aucun téléchargement externe requis). Valeur vide = police du site. */
+export const fontOptions: { value: string; label: string }[] = [
+  { value: "", label: "Police du site (par défaut)" },
+  { value: "Arial, Helvetica, sans-serif", label: "Arial / Helvetica" },
+  { value: "'Segoe UI', system-ui, sans-serif", label: "Segoe UI / Système" },
+  { value: "Verdana, Geneva, sans-serif", label: "Verdana" },
+  { value: "'Trebuchet MS', Tahoma, sans-serif", label: "Trebuchet MS" },
+  { value: "Tahoma, Geneva, sans-serif", label: "Tahoma" },
+  { value: "Georgia, 'Times New Roman', serif", label: "Georgia" },
+  { value: "'Times New Roman', Times, serif", label: "Times New Roman" },
+  { value: "'Palatino Linotype', 'Book Antiqua', serif", label: "Palatino" },
+  { value: "Garamond, 'Times New Roman', serif", label: "Garamond" },
+  { value: "'Courier New', Courier, monospace", label: "Courier New" },
+];
+
+export const textScaleOptions: { value: string; label: string }[] = [
+  { value: "90", label: "Plus petit (90 %)" },
+  { value: "95", label: "Légèrement plus petit (95 %)" },
+  { value: "100", label: "Normal (100 %)" },
+  { value: "105", label: "Légèrement plus grand (105 %)" },
+  { value: "110", label: "Plus grand (110 %)" },
+  { value: "115", label: "Très grand (115 %)" },
+];
+
+export const lineHeightOptions: { value: string; label: string }[] = [
+  { value: "", label: "Interligne du site (par défaut)" },
+  { value: "1.45", label: "Compact (1,45)" },
+  { value: "1.6", label: "Aéré (1,6)" },
+  { value: "1.75", label: "Très aéré (1,75)" },
+];
+
+export const letterSpacingOptions: { value: string; label: string }[] = [
+  { value: "", label: "Espacement du site (par défaut)" },
+  { value: "0", label: "Serré (0)" },
+  { value: ".02em", label: "Espacé (0,02em)" },
+  { value: ".035em", label: "Très espacé (0,035em)" },
+];
+
+export const justifyOptions: { value: string; label: string }[] = [
+  { value: "true", label: "Texte justifié (style actuel du site)" },
+  { value: "false", label: "Aligné à gauche" },
+];
+
+function optionValue(options: { value: string }[], candidate: unknown, fallback = ""): string {
+  const raw = typeof candidate === "string" ? candidate : "";
+  return options.some((option) => option.value === raw) ? raw : fallback;
+}
+
+/** Renvoie le CSS d'application de la typographie (valeurs validées par liste blanche — sans risque d'injection). */
+export function typographyCss(content: TypographyContent): string {
+  const heading = optionValue(fontOptions, content.headingFont);
+  const body = optionValue(fontOptions, content.bodyFont);
+  const scale = Number(content.textScale);
+  const lineHeight = optionValue(lineHeightOptions, content.lineHeight);
+  const letterSpacing = optionValue(letterSpacingOptions, content.letterSpacing);
+  const lines: string[] = [];
+  if (heading) lines.push(`--admin-heading-font:${heading}`);
+  if (body) lines.push(`--admin-body-font:${body}`);
+  if (Number.isFinite(scale) && scale >= 80 && scale <= 130 && scale !== 100) lines.push(`--admin-text-scale:${scale}%`);
+  if (lineHeight) lines.push(`--admin-body-line-height:${lineHeight}`);
+  if (letterSpacing) lines.push(`--admin-body-letter-spacing:${letterSpacing}`);
+  const root = lines.length > 0 ? `:root{${lines.join(";")}}` : "";
+  const justify = content.justifyText === "false" ? ".text-justify{text-align:left!important}" : "";
+  return [root, justify].filter(Boolean).join(" ");
+}
+
 export type AllPageContent = {
   home: HomeContent;
   about: AboutContent;
@@ -123,6 +199,7 @@ export type AllPageContent = {
   contact: ContactContent;
   quote: QuoteContent;
   footer: FooterContent;
+  typography: TypographyContent;
 };
 
 export const defaultHome: HomeContent = {
@@ -263,6 +340,15 @@ export const defaultFooter: FooterContent = {
   aboutText: "ETCS SARL — Etudes Techniques Conceptions des Structures. Ingénierie, génie civil, travaux publics et bâtiments : de l'étude de faisabilité à la mise en service.",
 };
 
+export const defaultTypography: TypographyContent = {
+  headingFont: "",
+  bodyFont: "",
+  textScale: "100",
+  lineHeight: "",
+  letterSpacing: "",
+  justifyText: "true",
+};
+
 export const defaultPageContent: AllPageContent = {
   home: defaultHome,
   about: defaultAbout,
@@ -270,6 +356,7 @@ export const defaultPageContent: AllPageContent = {
   contact: defaultContact,
   quote: defaultQuote,
   footer: defaultFooter,
+  typography: defaultTypography,
 };
 
 export function getPageLabel(page: string) {

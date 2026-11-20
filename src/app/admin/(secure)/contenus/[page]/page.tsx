@@ -7,7 +7,7 @@ import { RepeaterField } from "@/components/admin/repeater";
 import { UploadField } from "@/components/admin/upload-field";
 import { AdminHeader, SavedBanner } from "@/components/admin/ui";
 import { SubmitButton } from "@/components/submit-button";
-import { defaultPageContent, getPageContent, labelList, pageKeys, pageMetas, type PageKey } from "@/lib/page-content";
+import { defaultPageContent, fontOptions, getPageContent, justifyOptions, labelList, letterSpacingOptions, lineHeightOptions, pageKeys, pageMetas, textScaleOptions, type PageKey } from "@/lib/page-content";
 
 type Props = { params: Promise<{ page: string }>; searchParams: Promise<{ saved?: string }> };
 
@@ -310,6 +310,49 @@ export default async function PageContentEditor({ params, searchParams }: Props)
               <textarea className={inputClass} name="aboutText" rows={4} defaultValue={value("aboutText")} />
             </Field>
           </Section>
+        )}
+
+        {page === "typography" && (
+          <>
+            <Section title="Polices">
+              <Field label="Police des titres" hint="S'applique aux titres affichés sur tout le site public.">
+                <select className={inputClass} name="headingFont" defaultValue={value("headingFont")}>
+                  {fontOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+              </Field>
+              <Field label="Police des textes" hint="S'applique aux paragraphes, menus et formulaires du site public.">
+                <select className={inputClass} name="bodyFont" defaultValue={value("bodyFont")}>
+                  {fontOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+              </Field>
+            </Section>
+            <Section title="Taille et rythme">
+              <div className="grid gap-5 sm:grid-cols-3">
+                <Field label="Taille générale du texte">
+                  <select className={inputClass} name="textScale" defaultValue={value("textScale") || "100"}>
+                    {textScaleOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                  </select>
+                </Field>
+                <Field label="Interligne des paragraphes">
+                  <select className={inputClass} name="lineHeight" defaultValue={value("lineHeight")}>
+                    {lineHeightOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                  </select>
+                </Field>
+                <Field label="Espacement des lettres">
+                  <select className={inputClass} name="letterSpacing" defaultValue={value("letterSpacing")}>
+                    {letterSpacingOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                  </select>
+                </Field>
+              </div>
+            </Section>
+            <Section title="Alignement">
+              <Field label="Justification du texte" hint="Le site actuel justifie les longs paragraphes ; choisissez « Aligné à gauche » pour un rendu plus moderne.">
+                <select className={inputClass} name="justifyText" defaultValue={value("justifyText") || "true"}>
+                  {justifyOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
+                </select>
+              </Field>
+            </Section>
+          </>
         )}
 
         <div className="border-t border-slate-100 pt-8">
