@@ -21,7 +21,8 @@ export async function POST(request: Request) {
     const response = NextResponse.json({ ok: true });
     response.cookies.set("etcs_admin", token, { httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge: 60 * 60 * 8 });
     return response;
-  } catch {
+  } catch (error) {
+    try { (await import("fs")).appendFileSync("error.log", `\n[${new Date().toISOString()}] [login] ${error instanceof Error ? error.stack : String(error)}\n`); } catch {}
     return NextResponse.json({ error: "Service d'authentification indisponible." }, { status: 503 });
   }
 }
