@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Building2, FileText, FolderKanban, Mail, Newspaper, Plus, Send, ArrowRight } from "lucide-react";
+import { Building2, FileText, FolderKanban, Mail, Newspaper, PenLine, Plus, Send, ArrowRight } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { AdminHeader, StatCard, RequestStatusBadge } from "@/components/admin/ui";
 
@@ -27,6 +27,7 @@ export default async function Admin() {
         <StatCard icon={Newspaper} label="Actualités" value={articles} href="/admin/actualites" />
         <StatCard icon={FileText} label="Demandes de devis" value={quotes} detail={`${newQuotes} nouvelle${newQuotes === 1 ? "" : "s"}`} href="/admin/demandes" />
         <StatCard icon={Mail} label="Messages reçus" value={messages} href="/admin/messages" />
+        <StatCard icon={PenLine} label="Contenus des pages" value={6} detail="Accueil, À propos, Services…" href="/admin/contenus" />
         <StatCard icon={Send} label="Publication" value={publishedProjects + articles} detail="Contenus en ligne" href="/admin/realisations" />
       </section>
 
@@ -69,8 +70,9 @@ export default async function Admin() {
         </div>
       </section>
 
-      <section className="mt-10 grid gap-5 lg:grid-cols-3">
+      <section className="mt-10 grid gap-5 sm:grid-cols-2">
         {[
+          { title: "Modifier une page du site", text: "Textes et photos de l'accueil, à propos, contact…", href: "/admin/contenus" },
           { title: "Publier une réalisation", text: "Ajouter un projet au portfolio public.", href: "/admin/realisations/nouveau" },
           { title: "Publier un service", text: "Présenter une expertise sur le site.", href: "/admin/services/nouveau" },
           { title: "Rédiger un article", text: "Informer vos partenaires et clients.", href: "/admin/actualites/nouveau" },

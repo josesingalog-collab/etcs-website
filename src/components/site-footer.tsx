@@ -26,7 +26,7 @@ function socials(settings: SiteSettings | null) {
   return Object.entries(settings.socialLinks).filter((entry): entry is [string, string] => typeof entry[1] === "string" && /^https:\/\//.test(entry[1]));
 }
 
-export function Footer({ settings }: { settings: SiteSettings | null }) {
+export function Footer({ settings, aboutText }: { settings: SiteSettings | null; aboutText: string }) {
   const socialLinks = socials(settings);
   const year = new Date().getFullYear();
   return (
@@ -35,7 +35,7 @@ export function Footer({ settings }: { settings: SiteSettings | null }) {
         <div>
           <Logo light companyName={settings?.companyName ?? "ETCS SARL"} logoUrl={settings?.logoUrl} />
           <p className="mt-6 max-w-sm text-sm leading-7 text-slate-100">
-            ETCS SARL — Etudes Techniques Conceptions des Structures. Ingénierie, génie civil, travaux publics et bâtiments : de l&apos;étude de faisabilité à la mise en service.
+            {aboutText}
           </p>
           {socialLinks.length > 0 && (
             <div className="mt-6 flex gap-3">

@@ -40,11 +40,11 @@ export function UploadField({
   }
 
   return (
-    <div className="grid gap-2 text-sm font-bold text-anthracite">
-      <span>{label}</span>
+    <div className="grid gap-2">
+      <span className="text-sm font-bold text-anthracite">{label}</span>
       <div className="flex gap-2">
         <input
-          className="focus-ring w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 font-normal text-anthracite outline-none placeholder:text-slate-400"
+          className="focus-ring w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-normal text-anthracite outline-none transition placeholder:text-slate-400 hover:border-slate-400"
           name={name}
           type="url"
           value={value}
@@ -55,7 +55,7 @@ export function UploadField({
           type="button"
           onClick={() => fileRef.current?.click()}
           disabled={busy}
-          className="focus-ring inline-flex shrink-0 items-center gap-2 rounded-lg border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm font-bold text-anthracite transition hover:bg-slate-100 disabled:opacity-50"
+          className="focus-ring inline-flex shrink-0 items-center gap-2 rounded-xl border border-slate-300 bg-slate-50 px-4 py-2.5 text-sm font-bold text-anthracite transition hover:bg-slate-100 disabled:opacity-50"
         >
           {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ImagePlus className="h-4 w-4" />}
           {busy ? "Import…" : "Importer"}
@@ -69,7 +69,7 @@ export function UploadField({
         </span>
       )}
       {error && <span className="text-xs font-normal text-red-600">{error}</span>}
-      {hint && <span className="text-xs font-normal text-slate-500">{hint}</span>}
+      {hint && <span className="text-xs font-normal leading-5 text-slate-500">{hint}</span>}
     </div>
   );
 }

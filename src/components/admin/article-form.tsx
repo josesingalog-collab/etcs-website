@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { Article } from "@prisma/client";
 import { saveArticle } from "@/app/admin/actions";
 import { Field, inputClass } from "@/components/admin/form-fields";
+import { UploadField } from "@/components/admin/upload-field";
 import { SubmitButton } from "@/components/submit-button";
 
 export function ArticleForm({ article }: { article?: Article }) {
@@ -22,7 +23,7 @@ export function ArticleForm({ article }: { article?: Article }) {
         <Field label="Résumé"><textarea className={inputClass} name="excerpt" rows={3} required defaultValue={article?.excerpt} /></Field>
         <Field label="Contenu"><textarea className={inputClass} name="content" rows={14} required defaultValue={article?.content} /></Field>
         <div className="grid gap-5 border-t border-slate-100 pt-8 sm:grid-cols-3">
-          <Field label="Image de couverture (URL HTTPS)"><input className={inputClass} name="coverImage" type="url" defaultValue={article?.coverImage ?? ""} /></Field>
+          <UploadField name="coverImage" label="Image de couverture" hint="Importez un fichier ou collez une URL HTTPS." defaultValue={article?.coverImage ?? ""} />
           <Field label="Date de publication"><input className={inputClass} name="publishedAt" type="date" defaultValue={date} /></Field>
           <Field label="Visibilité">
             <select className={inputClass} name="publicationStatus" defaultValue={article?.publicationStatus ?? "DRAFT"}>

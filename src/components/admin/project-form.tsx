@@ -25,7 +25,7 @@ export function ProjectForm({ project }: { project?: Project & { images: Project
         </div>
         <Field label="Description"><textarea className={inputClass} name="description" rows={7} required defaultValue={project?.description} /></Field>
         <div className="grid gap-5 border-t border-slate-100 pt-8 sm:grid-cols-2">
-          <Field label="Photographies (une URL HTTPS par ligne)">
+          <Field label="Photographies (une URL HTTPS par ligne)" hint="Astuce : importez d'abord une image via un champ « Importer » (par ex. Paramètres), puis copiez l'URL obtenue ici.">
             <textarea className={inputClass} name="imageUrls" rows={5} defaultValue={project?.images.map((image) => image.url).join("\n")} />
           </Field>
           <Field label="Visibilité">

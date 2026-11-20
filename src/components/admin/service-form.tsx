@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { Service } from "@prisma/client";
 import { saveService } from "@/app/admin/actions";
 import { Field, inputClass } from "@/components/admin/form-fields";
+import { UploadField } from "@/components/admin/upload-field";
 import { SubmitButton } from "@/components/submit-button";
 
 export function ServiceForm({ service }: { service?: Service }) {
@@ -21,7 +22,7 @@ export function ServiceForm({ service }: { service?: Service }) {
         <Field label="Résumé" hint="Visible dans les cartes du site public"><textarea className={inputClass} name="excerpt" rows={3} required defaultValue={service?.excerpt} /></Field>
         <Field label="Description"><textarea className={inputClass} name="description" rows={9} required defaultValue={service?.description} /></Field>
         <div className="grid gap-5 border-t border-slate-100 pt-8 sm:grid-cols-2">
-          <Field label="Image (URL HTTPS)"><input className={inputClass} name="image" type="url" defaultValue={service?.image ?? ""} /></Field>
+          <UploadField name="image" label="Image" hint="Importez un fichier ou collez une URL HTTPS." defaultValue={service?.image ?? ""} />
           <Field label="Visibilité">
             <select className={inputClass} name="publicationStatus" defaultValue={service?.publicationStatus ?? "DRAFT"}>
               <option value="DRAFT">Brouillon</option>

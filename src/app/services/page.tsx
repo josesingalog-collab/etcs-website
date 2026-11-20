@@ -4,16 +4,15 @@ import { ArrowRight } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { publishedServices } from "@/lib/public-content";
 import { services as fallbackServices, company } from "@/lib/content";
+import { getPageContent } from "@/lib/page-content";
 import { CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 
 export const metadata = { title: "Nos services" };
 export const instant = false;
 
-const heroImage = "https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?auto=format&fit=crop&w=2400&q=90";
-
 export default async function Services() {
-  const published = await publishedServices();
+  const [published, services] = await Promise.all([publishedServices(), getPageContent("services")]);
   const items = published.length > 0
     ? published.map((service) => ({ title: service.title, description: service.description, image: service.image }))
     : fallbackServices.map((service) => ({ title: service.title, description: service.excerpt, image: service.image }));
@@ -24,20 +23,19 @@ export default async function Services() {
         <section className="bg-white pt-32">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <p className="rise flex items-center gap-3 text-xs font-bold tracking-[.22em] text-royal">
-              <span />NOS DOMAINES
+              <span />{services.heroEyebrow}
             </p>
             <h1 className="rise rise-1 display mt-6 max-w-4xl text-4xl leading-[1.08] text-anthracite md:text-5xl lg:text-6xl">
-              Ingénierie, génie civil, travaux publics et bâtiments
+              {services.heroTitle}
             </h1>
             <Reveal className="rise rise-2 mt-8 max-w-2xl">
               <p className="text-base leading-8 text-slate-600">
-                Nous rassemblons un ensemble d&apos;expertises complémentaires pour mener vos projets de
-                l&apos;étude de faisabilité à la mise en service, avec une approche globale de tous les métiers du secteur.
+                {services.heroText}
               </p>
             </Reveal>
             <Reveal delay={0.1} className="rise rise-3 mt-12">
               <div className="relative aspect-[3/2] overflow-hidden rounded-3xl bg-mist shadow-2xl shadow-anthracite/15">
-                <Image src={heroImage} alt="Chantier ETCS — génie civil" fill priority sizes="100vw" className="object-cover" />
+                <Image src={services.heroImage} alt="Chantier ETCS — génie civil" fill priority sizes="100vw" className="object-cover" />
               </div>
             </Reveal>
           </div>
@@ -47,9 +45,7 @@ export default async function Services() {
           <div className="mx-auto max-w-4xl px-6 lg:px-8">
             <Reveal>
               <p className="display text-2xl leading-relaxed text-anthracite md:text-3xl md:leading-relaxed">
-                Nous assurons l&apos;ensemble des missions que comportent les études&nbsp;: la maîtrise d&apos;œuvre,
-                la vérification et la conduite des opérations, dans les domaines de la route, des ouvrages d&apos;art,
-                des voies ferrées, des aéroports, des bâtiments et des transports.
+                {services.statement}
               </p>
             </Reveal>
           </div>
@@ -96,14 +92,13 @@ export default async function Services() {
               <div className="grid items-center gap-10 rounded-3xl bg-white p-8 shadow-lg shadow-anthracite/5 sm:p-12 lg:grid-cols-[1.4fr_1fr]">
                 <div>
                   <p className="flex items-center gap-3 text-xs font-bold tracking-[.22em] text-gold">
-                    <span />UNE APPROCHE SUR MESURE
+                    <span />{services.customEyebrow}
                   </p>
                   <h2 className="display mt-4 text-3xl leading-[1.12] text-anthracite md:text-4xl">
-                    Chaque projet a ses contraintes propres.
+                    {services.customTitle}
                   </h2>
                   <p className="mt-5 max-w-2xl text-sm leading-7 text-slate-600">
-                    ETCS met en œuvre des procédés techniques spécifiques à chaque chantier, pour apporter une réponse
-                    en parfaite adéquation avec les exigences du maître d&apos;ouvrage.
+                    {services.customText}
                   </p>
                 </div>
                 <div className="grid gap-3 text-sm">
@@ -115,7 +110,7 @@ export default async function Services() {
           </div>
         </section>
 
-        <CtaSection title="Besoin d'une prestation précise ?" text="Décrivez votre besoin : nous vous répondrons avec une offre claire et adaptée à votre projet." />
+        <CtaSection title={services.ctaTitle} text={services.ctaText} />
       </main>
     </SiteShell>
   );

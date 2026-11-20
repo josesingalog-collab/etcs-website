@@ -3,17 +3,36 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, ExternalLink, FileText, FolderKanban, LayoutDashboard, LogOut, Mail, Menu, Newspaper, Settings, Users, X } from "lucide-react";
+import { Building2, ExternalLink, FileText, FolderKanban, LayoutDashboard, LogOut, Mail, Menu, Newspaper, PenLine, Settings, Users, X } from "lucide-react";
 
-const links = [
-  { href: "/admin", label: "Tableau de bord", icon: LayoutDashboard },
-  { href: "/admin/realisations", label: "Réalisations", icon: FolderKanban },
-  { href: "/admin/services", label: "Services", icon: Building2 },
-  { href: "/admin/equipe", label: "Équipe", icon: Users },
-  { href: "/admin/actualites", label: "Actualités", icon: Newspaper },
-  { href: "/admin/demandes", label: "Demandes de devis", icon: FileText },
-  { href: "/admin/messages", label: "Messages", icon: Mail },
-  { href: "/admin/parametres", label: "Paramètres", icon: Settings },
+const groups: { label: string; links: { href: string; label: string; icon: typeof LayoutDashboard }[] }[] = [
+  {
+    label: "Pilotage",
+    links: [
+      { href: "/admin", label: "Tableau de bord", icon: LayoutDashboard },
+      { href: "/admin/contenus", label: "Contenus des pages", icon: PenLine },
+    ],
+  },
+  {
+    label: "Contenus",
+    links: [
+      { href: "/admin/realisations", label: "Réalisations", icon: FolderKanban },
+      { href: "/admin/services", label: "Services", icon: Building2 },
+      { href: "/admin/equipe", label: "Équipe", icon: Users },
+      { href: "/admin/actualites", label: "Actualités", icon: Newspaper },
+    ],
+  },
+  {
+    label: "Échanges",
+    links: [
+      { href: "/admin/demandes", label: "Demandes de devis", icon: FileText },
+      { href: "/admin/messages", label: "Messages", icon: Mail },
+    ],
+  },
+  {
+    label: "Système",
+    links: [{ href: "/admin/parametres", label: "Paramètres", icon: Settings }],
+  },
 ];
 
 export function AdminSidebar({ adminName }: { adminName: string }) {
@@ -27,24 +46,29 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
   const nav = (
     <>
       <div className="flex items-center gap-3 px-2 pt-1">
-        <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-royal to-royal-deep text-lg font-black text-white shadow-lg">ET</span>
+        <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-royal to-royal-deep text-lg font-black text-white shadow-lg ring-1 ring-white/10">ET</span>
         <div>
           <p className="text-sm font-extrabold tracking-wide">ETCS SARL</p>
           <p className="text-[10px] font-bold uppercase tracking-[.2em] text-gold">Administration</p>
         </div>
       </div>
-      <nav className="mt-10 grid gap-1.5" aria-label="Navigation administration">
-        {links.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            onClick={() => setOpen(false)}
-            aria-current={isActive(href) ? "page" : undefined}
-            className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold transition ${isActive(href) ? "border-l-2 border-gold bg-white/10 text-white" : "text-slate-300 hover:bg-white/5 hover:text-white"}`}
-          >
-            <Icon className={`h-4 w-4 ${isActive(href) ? "text-gold" : "text-slate-400"}`} />
-            {label}
-          </Link>
+      <nav className="mt-9 grid gap-6 overflow-y-auto" aria-label="Navigation administration">
+        {groups.map((group) => (
+          <div key={group.label} className="grid gap-1.5">
+            <p className="px-4 text-[10px] font-black uppercase tracking-[.22em] text-slate-500">{group.label}</p>
+            {group.links.map(({ href, label, icon: Icon }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setOpen(false)}
+                aria-current={isActive(href) ? "page" : undefined}
+                className={`flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-bold transition ${isActive(href) ? "bg-white/10 text-white shadow-[inset_2px_0_0_0_var(--color-gold)]" : "text-slate-300 hover:bg-white/5 hover:text-white"}`}
+              >
+                <Icon className={`h-4 w-4 shrink-0 ${isActive(href) ? "text-gold" : "text-slate-400"}`} />
+                {label}
+              </Link>
+            ))}
+          </div>
         ))}
       </nav>
       <div className="mt-auto grid gap-3 border-t border-white/10 pt-6">
@@ -80,7 +104,7 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
           {nav}
         </div>
       )}
-      <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col bg-anthracite p-6 text-white lg:flex">
+      <aside className="sticky top-0 hidden h-screen w-72 shrink-0 flex-col bg-anthracite p-6 text-white lg:flex lg:border-r lg:border-white/5">
         {nav}
       </aside>
     </>

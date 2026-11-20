@@ -3,6 +3,7 @@ import { ArrowLeft } from "lucide-react";
 import { TeamMember } from "@prisma/client";
 import { saveTeamMember } from "@/app/admin/actions";
 import { Field, inputClass } from "@/components/admin/form-fields";
+import { UploadField } from "@/components/admin/upload-field";
 import { SubmitButton } from "@/components/submit-button";
 
 export function TeamForm({ member }: { member?: TeamMember }) {
@@ -20,7 +21,7 @@ export function TeamForm({ member }: { member?: TeamMember }) {
         </div>
         <Field label="Bio (optionnel)" hint="Une phrase sur la personne, visible dans la carte"><textarea className={inputClass} name="bio" rows={3} defaultValue={member?.bio ?? ""} /></Field>
         <div className="grid gap-5 border-t border-slate-100 pt-8 sm:grid-cols-2">
-          <Field label="Photo (URL HTTPS)" hint="Portrait au format vertical de préférence"><input className={inputClass} name="photo" type="url" defaultValue={member?.photo ?? ""} /></Field>
+          <UploadField name="photo" label="Photo" hint="Portrait au format vertical de préférence. Importez un fichier ou collez une URL HTTPS." defaultValue={member?.photo ?? ""} />
           <Field label="Ordre d'affichage" hint="Les plus petits numéros s'affichent en premier"><input className={inputClass} name="position" type="number" min={0} max={999} defaultValue={member?.position ?? 0} /></Field>
         </div>
         <Field label="Visibilité">

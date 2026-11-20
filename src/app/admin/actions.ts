@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { persistPageContent, pageKeys, type PageKey } from "@/lib/page-content";
 import { articleSchema, projectSchema, requestStatus, serviceSchema, settingsSchema, teamSchema } from "@/lib/validation";
 
 function values(formData: FormData) { return Object.fromEntries(formData) as Record<string, string>; }
@@ -54,8 +55,7 @@ export async function updateQuoteStatus(formData: FormData) { await requireAdmin
 export async function updateMessageStatus(formData: FormData) { await requireAdmin(); const status = requestStatus.safeParse(formData.get("status")); if (!status.success) invalid(); await prisma.contactMessage.update({ where: { id: String(formData.get("id")) }, data: { status: status.data as RequestStatus } }); refresh("/admin/messages"); }
 
 export async function saveSettings(formData: FormData) {
-  await requireAdmin(); const parsed = settingsSchema.safeParse(values(formData)); if (!parsed.success) invalid();
-  let socialLinks: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput = Prisma.JsonNull;
+  await requireAdmin(); const parsed = settingsSchema.safeParse(values(formData)); if (!parsed.success) invalid();  let socialLinks: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput = Prisma.JsonNull;
   if (parsed.data.socialLinks) { try { const value: unknown = JSON.parse(parsed.data.socialLinks); if (!value || Array.isArray(value) || typeof value !== "object") invalid(); socialLinks = value as Record<string, string>; } catch { invalid(); } }
   let keyStats: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput = Prisma.JsonNull;
   if (parsed.data.keyStats) {
@@ -67,4 +67,14 @@ export async function saveSettings(formData: FormData) {
   }
   await prisma.siteSettings.upsert({ where: { id: 1 }, update: { companyName: parsed.data.companyName, phone: parsed.data.phone, email: parsed.data.email, address: parsed.data.address, aboutText: parsed.data.aboutText, logoUrl: parsed.data.logoUrl, heroImageUrl: parsed.data.heroImageUrl, mapEmbedUrl: parsed.data.mapEmbedUrl, socialLinks, keyStats }, create: { id: 1, companyName: parsed.data.companyName, phone: parsed.data.phone, email: parsed.data.email, address: parsed.data.address, aboutText: parsed.data.aboutText, logoUrl: parsed.data.logoUrl, heroImageUrl: parsed.data.heroImageUrl, mapEmbedUrl: parsed.data.mapEmbedUrl, socialLinks, keyStats } });
   refresh("/", "/contact", "/admin/parametres"); redirect("/admin/parametres?saved=1");
+}
+
+export async function savePageContent(formData: FormData) {
+  await requireAdmin();
+  const pageKey = String(formData.get("page"));
+  if (!pageKeys.includes(pageKey as PageKey)) invalid();
+  const page = pageKey as PageKey;
+  await persistPageContent(page, formData);
+  refresh("/", "/a-propos", "/services", "/contact", "/devis", `/admin/contenus/${page}`);
+  redirect(`/admin/contenus/${page}?saved=1`);
 }

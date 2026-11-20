@@ -112,6 +112,13 @@ model TeamMember {
   updatedAt         DateTime          @updatedAt
 }
 
+model PageContent {
+  id        Int      @id @default(autoincrement())
+  page      String   @unique @db.VarChar(50)
+  data      Json
+  updatedAt DateTime @updatedAt
+}
+
 model SiteSettings {
   id           Int      @id @default(1)
   companyName  String   @default("ETCS SARL")

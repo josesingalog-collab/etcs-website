@@ -12,7 +12,9 @@ export default async function AdminLayout({ children }: Readonly<{ children: Rea
   return (
     <div className="min-h-screen bg-mist text-anthracite lg:flex">
       <AdminSidebar adminName={adminName} />
-      <div className="min-w-0 flex-1">{children}</div>
+      <div className="min-w-0 flex-1 px-5 pb-16 pt-8 sm:px-8 lg:px-10 lg:py-10 xl:px-14">
+        <div className="mx-auto max-w-7xl">{children}</div>
+      </div>
     </div>
   );
 }

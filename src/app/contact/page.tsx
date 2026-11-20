@@ -3,6 +3,7 @@ import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { InquiryForm } from "@/components/inquiry-form";
 import { getSiteSettings } from "@/lib/site-settings";
+import { getPageContent } from "@/lib/page-content";
 import { SectionHeading } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 
@@ -14,7 +15,7 @@ function isEmbeddableMap(url: string | null | undefined) {
 }
 
 export default async function Contact() {
-  const settings = await getSiteSettings();
+  const [settings, contact] = await Promise.all([getSiteSettings(), getPageContent("contact")]);
   const showMap = isEmbeddableMap(settings?.mapEmbedUrl);
   const cards = [
     { icon: MapPin, label: "Adresse", value: settings?.address ?? "", href: undefined },
@@ -25,7 +26,7 @@ export default async function Contact() {
   return (
     <SiteShell>
       <main>
-        <PageHero eyebrow="CONTACT" title="Entrons en contact" text="Une question, un projet, une demande de rendez-vous ? Notre équipe vous répond." />
+        <PageHero eyebrow={contact.heroEyebrow} title={contact.heroTitle} text={contact.heroText} />
         <section className="bg-white py-20">
           <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1fr_1.2fr] lg:px-8">
             <Reveal>
@@ -47,15 +48,15 @@ export default async function Contact() {
                 <div className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-mist p-5">
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-vinci"><Clock className="h-5 w-5 text-vinci-sky" /></span>
                   <div>
-                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500">Horaires</p>
-                    <p className="mt-1 font-semibold text-anthracite">Lundi – Vendredi · 8h00 – 17h00</p>
-                    <p className="text-sm text-slate-600">Kinshasa, RDC</p>
+                    <p className="text-xs font-bold uppercase tracking-wider text-slate-500">{contact.hoursLabel}</p>
+                    <p className="mt-1 font-semibold text-anthracite">{contact.hours}</p>
+                    <p className="text-sm text-slate-600">{contact.hoursLocation}</p>
                   </div>
                 </div>
               </div>
             </Reveal>
             <Reveal delay={0.08}>
-              <SectionHeading eyebrow="FORMULAIRE" title="Écrivez-nous" />
+              <SectionHeading eyebrow={contact.formEyebrow} title={contact.formTitle} />
               <div className="mt-10"><InquiryForm type="contact" /></div>
             </Reveal>
           </div>
