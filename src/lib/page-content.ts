@@ -207,7 +207,7 @@ export const defaultHome: HomeContent = {
   heroEyebrow: "E.T.C.S Sarl — MONDE « CONSTRUIRE AUTREMENT »",
   heroTitle: "Bâtir Moderniser les infrastructures.",
   heroImage: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2400&q=90",
-  introText: "E.T.C.S Sarl a pour vocation :\n- Assurer l'ensemble des missions que comportent les études, la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des Grandes Infrastructures de Travaux Publics et de Génie Civil.\n- Porteuse d'une synergie de compétences et d'un élan d'innovation.\n- Fournir l'ensemble des solutions nécessaires pour réussir à bâtir et à rénover les infrastructures.",
+  introText: "E.T.C.S Sarl (Etudes Techniques Conceptions des Structures) est une entreprise congolaise d'ingénierie et une entreprise générale, dont le siège social est établi à Kinshasa, Avenue du Port, Nouvelles Galeries Présidentielles, 5e étage, Bureau 504, commune de la Gombe.\n\nÀ l'international, une filiale établie en France, dans la région parisienne, opère comme bureau d'études de génie civil, de bâtiments et de travaux publics.\n\nE.T.C.S Sarl a pour vocation d'assurer l'ensemble des missions que comportent les études : la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil.\n\nPorteuse d'une synergie de compétences et d'un élan d'innovation, E.T.C.S Sarl fournit les solutions nécessaires pour réussir à bâtir et à rénover la République.",
   presentationTitle: "L'expertise au service de vos projets.",
   presentationImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=85",
   strengths: [
