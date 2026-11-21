@@ -1,5 +1,5 @@
 export const company = {
-  name: "ETCS SARL",
+  name: "E.T.C.S Sarl",
   fullName: "Etudes Techniques Conceptions des Structures",
   tagline: "Entreprise générale",
   phone: "+243 854 859 784",

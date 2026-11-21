@@ -35,9 +35,9 @@ export const instant = false;
 export const metadata: Metadata = {
   metadataBase: new URL("https://etcs-ingenierie.com"),
   title: { default: "ETCS | Etudes Techniques Conceptions des Structures", template: "%s | ETCS" },
-  description: "ETCS SARL (Etudes Techniques Conceptions des Structures), entreprise générale d'ingénierie, de génie civil et de travaux publics à Kinshasa, RDC.",
+  description: "E.T.C.S Sarl (Etudes Techniques Conceptions des Structures), entreprise générale d'ingénierie, de génie civil et de travaux publics à Kinshasa, RDC.",
   alternates: { canonical: "/" },
-  openGraph: { type: "website", locale: "fr_CD", siteName: "ETCS SARL", title: "ETCS | Etudes Techniques Conceptions des Structures", description: "Entreprise générale d'ingénierie, de génie civil et de travaux publics à Kinshasa, RDC." },
+  openGraph: { type: "website", locale: "fr_CD", siteName: "E.T.C.S Sarl", title: "ETCS | Etudes Techniques Conceptions des Structures", description: "Entreprise générale d'ingénierie, de génie civil et de travaux publics à Kinshasa, RDC." },
   twitter: { card: "summary_large_image" },
   ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
 };
@@ -46,7 +46,7 @@ const organization = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: company.name,
-  alternateName: ["ETCS", "ETCS SARL"],
+  alternateName: ["ETCS", "E.T.C.S Sarl"],
   legalName: company.fullName,
   url: "https://etcs-ingenierie.com",
   logo: "https://etcs-ingenierie.com/logo-etcs.png",

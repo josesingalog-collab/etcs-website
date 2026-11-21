@@ -31,7 +31,7 @@ export default async function About() {
   return (
     <SiteShell>
       <main>
-        <PageHero eyebrow={about.heroEyebrow || settings?.companyName || "ETCS SARL"} title={about.heroTitle} text={about.heroText} image={image} />
+        <PageHero eyebrow={about.heroEyebrow || settings?.companyName || "E.T.C.S Sarl"} title={about.heroTitle} text={about.heroText} image={image} />
 
         <section className="bg-white py-24">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-8">

@@ -41,7 +41,7 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
   return (
     <header className={`fixed inset-x-0 top-0 z-50 bg-white transition-all duration-300 ${solid ? "shadow-lg shadow-vinci-navy/10" : "shadow-none"}`}>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Logo light={false} companyName={companyName ?? "ETCS SARL"} logoUrl={logoUrl} />
+        <Logo light={false} companyName={companyName ?? "E.T.C.S Sarl"} logoUrl={logoUrl} />
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navigation principale">
           {links.map(([label, href]) => {
             const active = href === "/" ? pathname === "/" : pathname.startsWith(href);

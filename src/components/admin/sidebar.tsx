@@ -48,7 +48,7 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
       <div className="flex items-center gap-3 px-2 pt-1">
         <span className="grid h-11 w-11 place-items-center rounded-xl bg-gradient-to-br from-royal to-royal-deep text-lg font-black text-white shadow-lg ring-1 ring-white/10">ET</span>
         <div>
-          <p className="text-sm font-extrabold tracking-wide">ETCS SARL</p>
+          <p className="text-sm font-extrabold tracking-wide">E.T.C.S Sarl</p>
           <p className="text-[10px] font-bold uppercase tracking-[.2em] text-gold">Administration</p>
         </div>
       </div>

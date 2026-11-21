@@ -121,15 +121,15 @@ export default async function Home() {
           </div>
         </section>
 
-        <section aria-label="Présentation de ETCS SARL" className="bg-white py-24 lg:pt-40">
+        <section aria-label="Présentation de E.T.C.S Sarl" className="bg-white py-24 lg:pt-40">
           <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
             <Reveal variant="left">
               <div className="relative">
                 <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-mist shadow-xl shadow-anthracite/10">
-                  <Image src={home.presentationImage} alt="Chantier ETCS SARL" fill sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
+                  <Image src={home.presentationImage} alt="Chantier E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
                 </div>
                 <div className="absolute -bottom-8 right-6 hidden bg-vinci-navy px-8 py-6 text-white shadow-xl sm:block">
-                  <p className="display text-2xl leading-none">ETCS SARL</p>
+                  <p className="display text-2xl leading-none">E.T.C.S Sarl</p>
                   <p className="mt-2 text-[10px] font-bold uppercase tracking-[.2em] text-vinci-sky">Etudes Techniques<br />Conceptions des Structures</p>
                 </div>
               </div>
@@ -219,20 +219,20 @@ export default async function Home() {
                 ))}
               </div>
             ) : (
-              <div className="mt-12"><EmptyState illustration ctaHref="/contact" ctaLabel="Parler de votre projet" title="Nos réalisations seront bientôt présentées ici." text="Cette rubrique accueillera prochainement une sélection de projets et d'ouvrages de ETCS SARL." /></div>
+              <div className="mt-12"><EmptyState illustration ctaHref="/contact" ctaLabel="Parler de votre projet" title="Nos réalisations seront bientôt présentées ici." text="Cette rubrique accueillera prochainement une sélection de projets et d'ouvrages de E.T.C.S Sarl." /></div>
             )}
           </div>
         </section>
 
-        <section aria-label="Pourquoi choisir ETCS SARL" className="relative isolate bg-royal-deep py-24 text-white">
+        <section aria-label="Pourquoi choisir E.T.C.S Sarl" className="relative isolate bg-royal-deep py-24 text-white">
           <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1.05fr_1.25fr] lg:px-8">
             <Reveal variant="left">
               <div className="relative h-[380px] overflow-hidden rounded-3xl shadow-2xl shadow-black/30 lg:h-full">
-                <Image src={home.engagementImage} alt="Chantier génie civil ETCS SARL" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+                <Image src={home.engagementImage} alt="Chantier génie civil E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-royal-deep via-anthracite/25 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-7">
                   <span className="block" aria-hidden="true" />
-                  <p className="display mt-3 text-2xl uppercase leading-none text-white">ETCS SARL</p>
+                  <p className="display mt-3 text-2xl uppercase leading-none text-white">E.T.C.S Sarl</p>
                   <p className="mt-1 text-[10px] font-bold uppercase tracking-[.2em] text-slate-300">Etudes Techniques Conceptions des Structures — Kinshasa, RDC</p>
                 </div>
               </div>

@@ -36,7 +36,7 @@ export default function Login() {
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1600&q=80)" }} />
         <div className="absolute inset-0 bg-gradient-to-t from-royal-deep/90 via-anthracite/60 to-anthracite/70" />
         <div className="grid-lines relative flex h-full flex-col justify-end p-14">
-          <p className="text-[11px] font-bold uppercase tracking-[.24em] text-gold">ETCS SARL</p>
+          <p className="text-[11px] font-bold uppercase tracking-[.24em] text-gold">E.T.C.S Sarl</p>
           <h2 className="display mt-4 max-w-md text-5xl uppercase leading-[.95]">Piloter le contenu du site en toute simplicité.</h2>
           <p className="mt-5 max-w-sm text-sm leading-7 text-slate-300">Réalisations, services, actualités, demandes : gérez tout depuis un espace sécurisé.</p>
         </div>
@@ -66,7 +66,7 @@ export default function Login() {
               {pending ? (<><Loader2 className="h-4 w-4 animate-spin" />Connexion…</>) : (<><Lock className="h-4 w-4" />Se connecter</>)}
             </button>
           </form>
-          <p className="mt-6 text-center text-xs text-slate-500">Session sécurisée de 8 heures · ETCS SARL © 2026</p>
+          <p className="mt-6 text-center text-xs text-slate-500">Session sécurisée de 8 heures · E.T.C.S Sarl © 2026</p>
         </div>
       </section>
     </main>
