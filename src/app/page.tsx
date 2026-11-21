@@ -10,6 +10,7 @@ import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/componen
 import { ProjectCard, ServiceCard, ArticleCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
 import { WorldMap } from "@/components/public/world-map";
+import { CompanyBold } from "@/components/company-bold";
 
 export const instant = false;
 
@@ -58,12 +59,12 @@ function IntroText({ text, justify = false }: { text: string; justify?: boolean 
         return (
           <div key={blockIndex} className={blockIndex > 0 ? "mt-4" : ""}>
             {plain.map((line, index) => (
-              <p key={index} className={index > 0 ? "mt-2" : ""}>{line}</p>
+              <p key={index} className={index > 0 ? "mt-2" : ""}><CompanyBold text={line} /></p>
             ))}
             {bullets.length > 0 && (
               <ul className={`mt-2 grid gap-1.5 ${justify ? "" : "list-none"}`}>
                 {bullets.map((line, index) => (
-                  <li key={index} className="flex gap-2.5"><span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-vinci-sky" aria-hidden="true" /><span className="text-justify">{line}</span></li>
+                  <li key={index} className="flex gap-2.5"><span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-vinci-sky" aria-hidden="true" /><span className="text-justify"><CompanyBold text={line} /></span></li>
                 ))}
               </ul>
             )}
@@ -240,7 +241,7 @@ export default async function Home() {
               <p className="text-xs font-bold tracking-[.22em] text-gold">NOTRE ENGAGEMENT</p>
               <h2 className="display mt-4 text-4xl leading-[1.08] text-white md:text-5xl">{home.engagementTitle}</h2>
               <p className="mt-5 max-w-xl text-sm leading-7 text-slate-300">
-                {home.engagementText}
+                <CompanyBold text={home.engagementText} />
               </p>
               <ul className="mt-10 divide-y divide-white/10 border-y border-white/10">
                 {home.commitments.map((commitment, index) => {
@@ -291,7 +292,7 @@ export default async function Home() {
             <Reveal variant="left">
               <h2 className="display text-4xl leading-[1.1] text-white md:text-5xl">{home.presenceTitle}</h2>
               <p className="mt-8 max-w-md text-base leading-8 text-slate-100">
-                {home.presenceText}
+                <CompanyBold text={home.presenceText} />
               </p>
               <Link href="/contact" className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-vinci transition duration-300 hover:-translate-y-0.5 hover:bg-vinci-sky hover:text-vinci-navy">
                 Nous contacter <ArrowRight className="h-4 w-4" />

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MapPin, Phone, Mail, Facebook, Linkedin, Instagram, Twitter, Youtube, Lock } from "lucide-react";
 import type { SiteSettings } from "@prisma/client";
 import { getPhoneList, splitPhone } from "@/lib/site-settings";
+import { CompanyBold } from "@/components/company-bold";
 import { Logo } from "@/components/logo";
 
 const navLinks: [string, string][] = [
@@ -36,7 +37,7 @@ export function Footer({ settings, aboutText }: { settings: SiteSettings | null;
         <div>
           <Logo light companyName={settings?.companyName ?? "ETCS SARL"} logoUrl={settings?.logoUrl} />
           <p className="mt-6 max-w-sm text-sm leading-7 text-slate-100">
-            {aboutText}
+            <CompanyBold text={aboutText} />
           </p>
           {socialLinks.length > 0 && (
             <div className="mt-6 flex gap-3">

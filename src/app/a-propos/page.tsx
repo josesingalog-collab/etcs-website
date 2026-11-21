@@ -7,6 +7,7 @@ import { getPageContent, stringList } from "@/lib/page-content";
 import { SectionHeading, CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 import { prisma } from "@/lib/prisma";
+import { CompanyBold } from "@/components/company-bold";
 
 export const metadata = { title: "À propos" };
 export const instant = false;
@@ -41,7 +42,7 @@ export default async function About() {
             </Reveal>
             <Reveal delay={0.1}>
               <SectionHeading eyebrow={about.introEyebrow} title={about.introTitle} />
-              <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600">{text}</p>
+              <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600"><CompanyBold text={text} /></p>
               <div className="mt-10 grid gap-6 border-t border-slate-200 pt-8 sm:grid-cols-3">
                 {about.introValues.map((value) => (
                   <div key={value.title}><p className="text-sm font-black uppercase tracking-wide text-royal">{value.title}</p><p className="mt-1 text-sm text-slate-500">{value.text}</p></div>
