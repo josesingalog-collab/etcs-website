@@ -5,7 +5,7 @@ import { ArrowRight, Phone, Mail } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { publishedService, publishedServices } from "@/lib/public-content";
-import { getSiteSettings } from "@/lib/site-settings";
+import { getPhoneList, getSiteSettings } from "@/lib/site-settings";
 import { Reveal } from "@/components/public/reveal";
 
 export const instant = false;
@@ -18,6 +18,7 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
     getSiteSettings(),
   ]);
   if (!service) notFound();
+  const phoneList = getPhoneList(settings);
   const related = others.filter((item) => item.slug !== slug).slice(0, 3);
 
   return (
@@ -51,13 +52,13 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
                       Demander un devis
                     </Link>
                   </div>
-                  {(settings?.phone || settings?.email) && (
+                  {phoneList.length > 0 && (
                     <div className="rounded-2xl border border-slate-200 bg-mist p-7">
                       <p className="text-xs font-bold tracking-[.2em] text-royal">CONTACT DIRECT</p>
                       <div className="mt-4 grid gap-3 text-sm font-semibold text-anthracite">
-                        {settings?.phone && (
-                          <a href={`tel:${settings.phone.replace(/\s/g, "")}`} className="flex items-center gap-3 transition hover:text-royal"><Phone className="h-4 w-4 text-royal" />{settings.phone}</a>
-                        )}
+                        {phoneList.map((phone) => (
+                          <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="flex items-center gap-3 transition hover:text-royal"><Phone className="h-4 w-4 shrink-0 text-royal" />{phone}</a>
+                        ))}
                         {settings?.email && (
                           <a href={`mailto:${settings.email}`} className="flex items-center gap-3 break-all transition hover:text-royal"><Mail className="h-4 w-4 shrink-0 text-royal" />{settings.email}</a>
                         )}

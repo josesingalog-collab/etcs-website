@@ -2,7 +2,7 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { InquiryForm } from "@/components/inquiry-form";
-import { getSiteSettings } from "@/lib/site-settings";
+import { getPhoneList, getSiteSettings } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
 import { SectionHeading } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
@@ -17,9 +17,10 @@ function isEmbeddableMap(url: string | null | undefined) {
 export default async function Contact() {
   const [settings, contact] = await Promise.all([getSiteSettings(), getPageContent("contact")]);
   const showMap = isEmbeddableMap(settings?.mapEmbedUrl);
+  const phones = getPhoneList(settings);
   const cards = [
     { icon: MapPin, label: "Adresse", value: settings?.address ?? "", href: undefined },
-    { icon: Phone, label: "Téléphone", value: settings?.phone ?? "", href: settings?.phone ? `tel:${settings.phone.replace(/\s/g, "")}` : undefined },
+    ...phones.map((phone, index) => ({ icon: Phone, label: index === 0 ? "Téléphone" : `Téléphone ${index + 1}`, value: phone, href: `tel:${phone.replace(/\s/g, "")}` })),
     { icon: Mail, label: "Email", value: settings?.email ?? "", href: settings?.email ? `mailto:${settings.email}` : undefined },
   ];
 

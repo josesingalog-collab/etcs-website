@@ -123,6 +123,7 @@ model SiteSettings {
   id           Int      @id @default(1)
   companyName  String   @default("ETCS SARL")
   phone        String
+  phones       Json?
   email        String
   address      String   @db.VarChar(500)
   aboutText    String?  @db.Text

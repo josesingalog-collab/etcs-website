@@ -2,11 +2,13 @@ import { saveSettings } from "@/app/admin/actions";
 import { Field, inputClass } from "@/components/admin/form-fields";
 import { AdminHeader, SavedBanner } from "@/components/admin/ui";
 import { UploadField } from "@/components/admin/upload-field";
+import { getPhoneList } from "@/lib/site-settings";
 import { prisma } from "@/lib/prisma";
 import { SubmitButton } from "@/components/submit-button";
 
 export default async function Settings({ searchParams }: { searchParams: Promise<{ saved?: string }> }) {
   const [settings, params] = await Promise.all([prisma.siteSettings.findUnique({ where: { id: 1 } }), searchParams]);
+  const phoneExtras = getPhoneList(settings).slice(1);
   return (
     <>
       <AdminHeader eyebrow="IDENTITÉ" title="Paramètres" text="Informations globales affichées dans le header, le footer et les pages de contact." />
@@ -16,9 +18,18 @@ export default async function Settings({ searchParams }: { searchParams: Promise
           <h2 className="text-sm font-black uppercase tracking-wider text-royal">Identité</h2>
           <div className="mt-5 grid gap-5 sm:grid-cols-2">
             <Field label="Nom commercial"><input className={inputClass} name="companyName" required defaultValue={settings?.companyName ?? "ETCS SARL"} /></Field>
-            <Field label="Téléphone"><input className={inputClass} name="phone" required defaultValue={settings?.phone ?? ""} /></Field>
-            <Field label="Email"><input className={inputClass} name="email" type="email" required defaultValue={settings?.email ?? ""} /></Field>
             <Field label="Adresse"><input className={inputClass} name="address" required defaultValue={settings?.address ?? ""} /></Field>
+            <Field label="Email"><input className={inputClass} name="email" type="email" required defaultValue={settings?.email ?? ""} /></Field>
+          </div>
+        </section>
+        <section className="border-t border-slate-100 pt-8">
+          <h2 className="text-sm font-black uppercase tracking-wider text-royal">Téléphones</h2>
+          <p className="mt-2 text-xs text-slate-500">Le premier numéro est obligatoire ; ajoutez jusqu&apos;à trois numéros supplémentaires. Ils s&apos;affichent sur la page Contact, dans le pied de page et sur les pages Services.</p>
+          <div className="mt-5 grid gap-5 sm:grid-cols-2">
+            <Field label="Téléphone principal"><input className={inputClass} name="phone" required defaultValue={settings?.phone ?? ""} /></Field>
+            <Field label="Téléphone 2" hint="Laisser vide pour masquer"><input className={inputClass} name="phone2" defaultValue={phoneExtras[0] ?? ""} /></Field>
+            <Field label="Téléphone 3" hint="Laisser vide pour masquer"><input className={inputClass} name="phone3" defaultValue={phoneExtras[1] ?? ""} /></Field>
+            <Field label="Téléphone 4" hint="Laisser vide pour masquer"><input className={inputClass} name="phone4" defaultValue={phoneExtras[2] ?? ""} /></Field>
           </div>
         </section>
         <section className="border-t border-slate-100 pt-8">

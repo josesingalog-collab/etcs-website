@@ -55,7 +55,10 @@ export async function updateQuoteStatus(formData: FormData) { await requireAdmin
 export async function updateMessageStatus(formData: FormData) { await requireAdmin(); const status = requestStatus.safeParse(formData.get("status")); if (!status.success) invalid(); await prisma.contactMessage.update({ where: { id: String(formData.get("id")) }, data: { status: status.data as RequestStatus } }); refresh("/admin/messages"); }
 
 export async function saveSettings(formData: FormData) {
-  await requireAdmin(); const parsed = settingsSchema.safeParse(values(formData)); if (!parsed.success) invalid();  let socialLinks: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput = Prisma.JsonNull;
+  await requireAdmin(); const parsed = settingsSchema.safeParse(values(formData)); if (!parsed.success) invalid();
+  const phones = [parsed.data.phone2, parsed.data.phone3, parsed.data.phone4].map((value) => (value ?? "").trim()).filter(Boolean);
+  if (phones.length > 3) invalid();
+  let socialLinks: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput = Prisma.JsonNull;
   if (parsed.data.socialLinks) { try { const value: unknown = JSON.parse(parsed.data.socialLinks); if (!value || Array.isArray(value) || typeof value !== "object") invalid(); socialLinks = value as Record<string, string>; } catch { invalid(); } }
   let keyStats: Prisma.InputJsonValue | Prisma.NullableJsonNullValueInput = Prisma.JsonNull;
   if (parsed.data.keyStats) {
@@ -65,7 +68,8 @@ export async function saveSettings(formData: FormData) {
       keyStats = value as Prisma.InputJsonValue;
     } catch { invalid(); }
   }
-  await prisma.siteSettings.upsert({ where: { id: 1 }, update: { companyName: parsed.data.companyName, phone: parsed.data.phone, email: parsed.data.email, address: parsed.data.address, aboutText: parsed.data.aboutText, logoUrl: parsed.data.logoUrl, heroImageUrl: parsed.data.heroImageUrl, mapEmbedUrl: parsed.data.mapEmbedUrl, socialLinks, keyStats }, create: { id: 1, companyName: parsed.data.companyName, phone: parsed.data.phone, email: parsed.data.email, address: parsed.data.address, aboutText: parsed.data.aboutText, logoUrl: parsed.data.logoUrl, heroImageUrl: parsed.data.heroImageUrl, mapEmbedUrl: parsed.data.mapEmbedUrl, socialLinks, keyStats } });
+  const settingsData = { companyName: parsed.data.companyName, phone: parsed.data.phone, phones, email: parsed.data.email, address: parsed.data.address, aboutText: parsed.data.aboutText, logoUrl: parsed.data.logoUrl, heroImageUrl: parsed.data.heroImageUrl, mapEmbedUrl: parsed.data.mapEmbedUrl, socialLinks, keyStats };
+  await prisma.siteSettings.upsert({ where: { id: 1 }, update: settingsData, create: { id: 1, ...settingsData } });
   refresh("/", "/contact", "/admin/parametres"); redirect("/admin/parametres?saved=1");
 }
 

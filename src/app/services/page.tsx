@@ -3,7 +3,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { publishedServices } from "@/lib/public-content";
-import { services as fallbackServices, company } from "@/lib/content";
+import { services as fallbackServices } from "@/lib/content";
+import { getPhoneList, getSiteSettings } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
 import { CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
@@ -12,7 +13,8 @@ export const metadata = { title: "Nos services" };
 export const instant = false;
 
 export default async function Services() {
-  const [published, services] = await Promise.all([publishedServices(), getPageContent("services")]);
+  const [published, services, settings] = await Promise.all([publishedServices(), getPageContent("services"), getSiteSettings()]);
+  const phones = getPhoneList(settings);
   const items = published.length > 0
     ? published.map((service) => ({ title: service.title, description: service.description, image: service.image }))
     : fallbackServices.map((service) => ({ title: service.title, description: service.excerpt, image: service.image }));
@@ -102,8 +104,12 @@ export default async function Services() {
                   </p>
                 </div>
                 <div className="grid gap-3 text-sm">
-                  <a href={`tel:${company.phone.replace(/\s/g, "")}`} className="rounded-xl bg-royal px-6 py-4 font-bold text-white transition hover:bg-royal-deep">{company.phone}</a>
-                  <a href={`mailto:${company.email}`} className="break-all rounded-xl border border-royal/20 px-6 py-4 font-bold text-royal transition hover:bg-royal-50">{company.email}</a>
+                  {phones.map((phone, index) => (
+                    <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className={index === 0 ? "rounded-xl bg-royal px-6 py-4 font-bold text-white transition hover:bg-royal-deep" : "rounded-xl border border-royal/20 bg-white px-6 py-4 font-bold text-royal transition hover:bg-royal-50"}>{phone}</a>
+                  ))}
+                  {settings?.email && (
+                    <a href={`mailto:${settings.email}`} className="break-all rounded-xl border border-royal/20 px-6 py-4 font-bold text-royal transition hover:bg-royal-50">{settings.email}</a>
+                  )}
                 </div>
               </div>
             </Reveal>

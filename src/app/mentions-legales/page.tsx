@@ -1,11 +1,14 @@
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { company } from "@/lib/content";
+import { getPhoneList, getSiteSettings } from "@/lib/site-settings";
 
 export const metadata = { title: "Mentions légales" };
 export const instant = false;
 
-export default function Legal() {
+export default async function Legal() {
+  const settings = await getSiteSettings();
+  const phones = getPhoneList(settings);
   return (
     <SiteShell>
       <PageHero eyebrow="INFORMATIONS" title="Mentions légales" />
@@ -23,7 +26,7 @@ export default function Legal() {
           </dl>
           <h2 className="display mt-10 text-xl uppercase text-royal">Contact</h2>
           <p className="mt-4 text-sm leading-8 text-slate-600">
-            Téléphone fixe : {company.phoneFixed} · Mobile : {company.phone} / {company.phoneAlt}
+            {phones.length > 0 ? phones.join(" · ") : `Téléphone fixe : ${company.phoneFixed} · Mobile : ${company.phone} / ${company.phoneAlt}`}
             <br />
             Email : <a className="font-semibold text-royal" href={`mailto:${company.email}`}>{company.email}</a> / <a className="font-semibold text-royal" href={`mailto:${company.emailAlt}`}>{company.emailAlt}</a>
             <br />
