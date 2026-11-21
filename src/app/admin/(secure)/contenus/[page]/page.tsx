@@ -162,6 +162,50 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 items={list("pillars") as { title: string; text: string }[]}
               />
             </Section>
+            <Section title="Domaines de compétences (liste avec icônes)">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field label="Sur-titre"><input className={inputClass} name="competencesEyebrow" defaultValue={value("competencesEyebrow")} /></Field>
+                <Field label="Titre"><input className={inputClass} name="competencesTitle" defaultValue={value("competencesTitle")} /></Field>
+              </div>
+              <Field label="Texte d'introduction"><textarea className={inputClass} name="competencesIntro" rows={3} defaultValue={value("competencesIntro")} /></Field>
+              <RepeaterField
+                name="competences"
+                label="Domaines (une icône est attribuée automatiquement à chaque ligne)"
+                addLabel="Ajouter un domaine"
+                itemTitleKey="title"
+                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Texte", type: "textarea" }])}
+                items={list("competences") as { title: string; text: string }[]}
+              />
+            </Section>
+            <Section title="Frise du cycle de projet (NOS EXPERTISES)">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field label="Sur-titre"><input className={inputClass} name="processusEyebrow" defaultValue={value("processusEyebrow")} /></Field>
+                <Field label="Titre"><input className={inputClass} name="processusTitle" defaultValue={value("processusTitle")} /></Field>
+              </div>
+              <Field label="Texte d'introduction"><textarea className={inputClass} name="processusIntro" rows={2} defaultValue={value("processusIntro")} /></Field>
+              <RepeaterField
+                name="processusSteps"
+                label="Étapes (de gauche à droite, icône attribuée automatiquement)"
+                addLabel="Ajouter une étape"
+                itemTitleKey="label"
+                fields={listFields([{ name: "label", label: "Intitulé de l'étape" }])}
+                items={labelList(list("processusSteps"))}
+              />
+            </Section>
+            <Section title="Valeurs (pastilles avec icônes)">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Field label="Sur-titre"><input className={inputClass} name="valeursEyebrow" defaultValue={value("valeursEyebrow")} /></Field>
+                <Field label="Titre"><input className={inputClass} name="valeursTitle" defaultValue={value("valeursTitle")} /></Field>
+              </div>
+              <RepeaterField
+                name="valeurs"
+                label="Valeurs (icône attribuée automatiquement)"
+                addLabel="Ajouter une valeur"
+                itemTitleKey="title"
+                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Sous-titre" }])}
+                items={list("valeurs") as { title: string; text: string }[]}
+              />
+            </Section>
             <Section title="Équipe">
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Sur-titre"><input className={inputClass} name="teamEyebrow" defaultValue={value("teamEyebrow")} /></Field>

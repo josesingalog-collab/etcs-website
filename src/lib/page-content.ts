@@ -58,6 +58,17 @@ export type AboutContent = {
   pillarsEyebrow: string;
   pillarsTitle: string;
   pillars: { title: string; text: string }[];
+  competencesEyebrow: string;
+  competencesTitle: string;
+  competencesIntro: string;
+  competences: { title: string; text: string }[];
+  processusEyebrow: string;
+  processusTitle: string;
+  processusIntro: string;
+  processusSteps: { label: string }[];
+  valeursEyebrow: string;
+  valeursTitle: string;
+  valeurs: { title: string; text: string }[];
   teamEyebrow: string;
   teamTitle: string;
   partnersEyebrow: string;
@@ -267,6 +278,34 @@ export const defaultAbout: AboutContent = {
     { title: "Notre mission", text: "Assurer l'ensemble des missions que comportent les études : la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil." },
     { title: "Notre vision", text: "Être l'une des sociétés d'ingénierie congolaises les plus importantes : une entreprise congolaise d'abord et multinationale, reconnue pour ses grandes infrastructures en RDC et au-delà." },
     { title: "Nos valeurs", text: "S'engager sur les performances, assurer la qualité de son service, progresser chaque jour dans notre savoir-faire : harmonie des talents, construire autrement." },
+  ],
+  competencesEyebrow: "NOS DOMAINES",
+  competencesTitle: "Nos domaines de compétences",
+  competencesIntro: "E.T.C.S Sarl se distingue par son expertise pluridisciplinaire dans de nombreux domaines de l'ingénierie, notamment les transports et les infrastructures, les bâtiments, l'énergie, l'aménagement urbain, et l'environnement et le développement durable :",
+  competences: [
+    { title: "Infrastructures de transport", text: "Conception, modernisation et élargissement des infrastructures de transport, y compris les systèmes routiers, ferroviaires, aéroportuaires et de transports urbains. Nous accompagnons nos clients de la planification à la mise en œuvre, avec une forte expérience dans la maintenance et la réparation des infrastructures existantes." },
+    { title: "Bâtiments complexes et IGH", text: "Conception et réalisation de bâtiments complexes et de grande hauteur (IGH), avec des compétences en architecture, structure et équipements techniques. Ces projets requièrent une coordination étroite et une maîtrise des enjeux techniques et environnementaux." },
+    { title: "Énergie et bâtiments industriels", text: "Des solutions pour les projets liés à l'énergie et aux bâtiments industriels, incluant la conception, la réalisation et la gestion des installations énergétiques et industrielles." },
+    { title: "Aménagement urbain", text: "Des projets d'aménagement urbain contribuant à la création de quartiers durables et à la réhabilitation de zones urbaines. Cela inclut la gestion de l'eau, des déchets et l'intégration de solutions de mobilité durable." },
+    { title: "Environnement et développement durable", text: "Notre expertise environnementale couvre l'évaluation des impacts, la gestion des risques et le développement de solutions pour la transition énergétique et écologique, afin d'atténuer les émissions de gaz à effet de serre et de promouvoir la résilience des territoires face aux changements climatiques." },
+  ],
+  processusEyebrow: "NOS EXPERTISES",
+  processusTitle: "Un accompagnement à chaque étape du projet",
+  processusIntro: "Par sa diversité, E.T.C.S Sarl rassemble toutes les compétences nécessaires pour assurer la totalité des prestations couvrant toute la vie d'un projet, depuis les études de faisabilité jusqu'à la mise en service.",
+  processusSteps: [
+    { label: "Études préliminaires" },
+    { label: "Assistance à maîtrise d'ouvrage" },
+    { label: "Maîtrise d'œuvre" },
+    { label: "Gestion de projet" },
+    { label: "Conseil & expertise" },
+  ],
+  valeursEyebrow: "NOS VALEURS",
+  valeursTitle: "Nos engagements au quotidien",
+  valeurs: [
+    { title: "Excellence", text: "La qualité comme standard d'exécution" },
+    { title: "L'humain d'abord", text: "Des équipes au service de nos clients" },
+    { title: "Libres d'oser", text: "L'innovation au service des projets" },
+    { title: "Engagés, intègres et responsables", text: "Des engagements tenus, en toute transparence" },
   ],
   teamEyebrow: "NOTRE ÉQUIPE",
   teamTitle: "Les femmes et hommes qui portent vos projets",
