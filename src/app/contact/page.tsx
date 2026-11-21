@@ -72,7 +72,7 @@ export default async function Contact() {
               src={settings?.mapEmbedUrl ?? ""}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title="Carte — localisation de ETCS"
+              title="Carte — localisation de E.T.C.S Sarl"
               className="h-[420px] w-full border-0"
             />
           </section>

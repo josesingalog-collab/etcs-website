@@ -61,7 +61,7 @@ export function WorldMap() {
     <svg
       viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
       role="img"
-      aria-label="Carte du monde — présence de ETCS en République démocratique du Congo et en France"
+      aria-label="Carte du monde — présence de E.T.C.S Sarl en République démocratique du Congo et en France"
       className="h-auto w-full"
     >
       {shapes.map((shape, index) => (

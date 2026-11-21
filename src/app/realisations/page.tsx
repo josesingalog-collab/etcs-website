@@ -16,7 +16,7 @@ export default async function Projects() {
         <PageHero
           eyebrow="RÉFÉRENCES"
           title="Nos réalisations"
-          text="Découvrez les projets publiés par ETCS : ouvrages, chantiers et infrastructures réalisés avec exigence."
+          text="Découvrez les projets publiés par E.T.C.S Sarl : ouvrages, chantiers et infrastructures réalisés avec exigence."
           image={settings?.heroImageUrl}
         />
         <section className="bg-white py-20">
@@ -24,7 +24,7 @@ export default async function Projects() {
             {projects.length > 0 ? (
               <ProjectGallery projects={projects} />
             ) : (
-              <EmptyState title="Aucune réalisation publiée pour le moment" text="Le portfolio ETCS sera alimenté dès que des projets auront été publiés dans l'espace d'administration. Revenez bientôt." />
+              <EmptyState title="Aucune réalisation publiée pour le moment" text="Le portfolio E.T.C.S Sarl sera alimenté dès que des projets auront été publiés dans l'espace d'administration. Revenez bientôt." />
             )}
           </div>
         </section>

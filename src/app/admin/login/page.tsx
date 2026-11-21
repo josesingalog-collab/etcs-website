@@ -46,7 +46,7 @@ export default function Login() {
           <div className="text-center">
             <span className="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-gradient-to-br from-royal to-royal-deep text-lg font-black shadow-xl">ET</span>
             <h1 className="mt-6 text-2xl font-extrabold">Espace administration</h1>
-            <p className="mt-2 text-sm text-slate-400">Accès réservé à l&apos;équipe ETCS.</p>
+            <p className="mt-2 text-sm text-slate-400">Accès réservé à l&apos;équipe E.T.C.S Sarl.</p>
           </div>
           <form action={submit} className="mt-8 grid gap-5 rounded-2xl border border-white/10 bg-white/5 p-7 backdrop-blur">
             <label className="grid gap-2 text-sm font-bold text-slate-100">

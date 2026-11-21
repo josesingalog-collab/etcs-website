@@ -94,7 +94,7 @@ export function AdminSidebar({ adminName }: { adminName: string }) {
   return (
     <>
       <div className="sticky top-0 z-40 flex items-center justify-between bg-anthracite px-4 py-3 text-white lg:hidden">
-        <span className="text-sm font-extrabold tracking-wide">ETCS<span className="ml-2 text-[10px] font-bold uppercase tracking-[.2em] text-gold">ADMIN</span></span>
+        <span className="text-sm font-extrabold tracking-wide">E.T.C.S Sarl<span className="ml-2 text-[10px] font-bold uppercase tracking-[.2em] text-gold">ADMIN</span></span>
         <button type="button" onClick={() => setOpen(!open)} aria-expanded={open} aria-label={open ? "Fermer le menu" : "Ouvrir le menu"} className="grid h-10 w-10 place-items-center rounded-lg border border-white/20">
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>

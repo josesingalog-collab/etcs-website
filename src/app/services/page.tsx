@@ -37,7 +37,7 @@ export default async function Services() {
             </Reveal>
             <Reveal delay={0.1} className="rise rise-3 mt-12">
               <div className="relative aspect-[3/2] overflow-hidden rounded-3xl bg-mist shadow-2xl shadow-anthracite/15">
-                <Image src={services.heroImage} alt="Chantier ETCS — génie civil" fill priority sizes="100vw" className="object-cover" />
+                <Image src={services.heroImage} alt="Chantier E.T.C.S Sarl — génie civil" fill priority sizes="100vw" className="object-cover" />
               </div>
             </Reveal>
           </div>

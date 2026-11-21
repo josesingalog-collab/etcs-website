@@ -115,7 +115,7 @@ export default async function Home() {
             </div>
             <div className="rise rise-2 relative z-10 lg:self-center">
               <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-vinci-navy shadow-2xl shadow-vinci-navy/40">
-                <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier ETCS" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
+                <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
               </div>
             </div>
           </div>
@@ -268,7 +268,7 @@ export default async function Home() {
 
         <section aria-label="Notre conviction" className="relative isolate overflow-hidden bg-anthracite text-white">
           <div className="absolute inset-0">
-            <Image src={home.convictionImage} alt="Équipes ETCS sur le chantier" fill sizes="100vw" className="kenburns object-cover opacity-55" />
+            <Image src={home.convictionImage} alt="Équipes E.T.C.S Sarl sur le chantier" fill sizes="100vw" className="kenburns object-cover opacity-55" />
             <div className="absolute inset-0 bg-anthracite/55" />
           </div>
           <div className="relative mx-auto max-w-4xl px-6 py-28 text-center lg:px-8">
@@ -327,7 +327,7 @@ export default async function Home() {
                 ))}
               </div>
             ) : (
-              <div className="mt-12"><EmptyState title="Aucune actualité publiée" text="Les annonces et nouvelles de l'entreprise apparaîtront ici une fois publiées par l'équipe ETCS." /></div>
+              <div className="mt-12"><EmptyState title="Aucune actualité publiée" text="Les annonces et nouvelles de l'entreprise apparaîtront ici une fois publiées par l'équipe E.T.C.S Sarl." /></div>
             )}
           </div>
         </section>

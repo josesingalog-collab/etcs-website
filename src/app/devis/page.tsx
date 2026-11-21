@@ -54,7 +54,7 @@ export default async function Quote() {
         </section>
         <section className="relative isolate overflow-hidden bg-vinci-navy">
           <div className="relative h-[420px] w-full sm:h-[480px]">
-            <Image src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85" alt="Chantier ETCS" fill sizes="100vw" className="object-cover opacity-40" />
+            <Image src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85" alt="Chantier E.T.C.S Sarl" fill sizes="100vw" className="object-cover opacity-40" />
             <div className="absolute inset-0 bg-gradient-to-t from-vinci-navy via-vinci-navy/80 to-vinci-navy/40" />
             <div className="relative flex h-full flex-col items-center justify-center gap-5 px-6 text-center">
               <p className="text-xs font-bold tracking-[.24em] text-vinci-sky">{quote.bannerEyebrow}</p>

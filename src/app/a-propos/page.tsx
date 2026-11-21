@@ -37,7 +37,7 @@ export default async function About() {
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-8">
             <Reveal>
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl shadow-anthracite/20">
-                <Image src={sectionImage} alt="Chantier ETCS" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+                <Image src={sectionImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
               </div>
             </Reveal>
             <Reveal delay={0.1}>
