@@ -2,7 +2,7 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { InquiryForm } from "@/components/inquiry-form";
-import { getPhoneList, getSiteSettings } from "@/lib/site-settings";
+import { getPhoneList, getSiteSettings, splitPhone } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
 import { SectionHeading } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
@@ -19,9 +19,12 @@ export default async function Contact() {
   const showMap = isEmbeddableMap(settings?.mapEmbedUrl);
   const phones = getPhoneList(settings);
   const cards = [
-    { icon: MapPin, label: "Adresse", value: settings?.address ?? "", href: undefined },
-    ...phones.map((phone, index) => ({ icon: Phone, label: index === 0 ? "Téléphone" : `Téléphone ${index + 1}`, value: phone, href: `tel:${phone.replace(/\s/g, "")}` })),
-    { icon: Mail, label: "Email", value: settings?.email ?? "", href: settings?.email ? `mailto:${settings.email}` : undefined },
+    { icon: MapPin, label: "Adresse", value: settings?.address ?? "", note: undefined as string | undefined, href: undefined },
+    ...phones.map((raw, index) => {
+      const { number, note } = splitPhone(raw);
+      return { icon: Phone, label: index === 0 ? "Téléphone" : `Téléphone ${index + 1}`, value: number, note, href: `tel:${number.replace(/\s/g, "")}` };
+    }),
+    { icon: Mail, label: "Email", value: settings?.email ?? "", note: undefined as string | undefined, href: settings?.email ? `mailto:${settings.email}` : undefined },
   ];
 
   return (
@@ -33,7 +36,7 @@ export default async function Contact() {
             <Reveal>
               <SectionHeading eyebrow="COORDONNÉES" title="Nous joindre directement" />
               <div className="mt-10 grid gap-4">
-                {cards.map(({ icon: Icon, label, value, href }) => value && (
+                {cards.map(({ icon: Icon, label, value, note, href }) => value && (
                   <div key={label} className="card-hover flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
                     <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-royal shadow-md shadow-royal/30"><Icon className="h-5 w-5 text-white" /></span>
                     <div className="min-w-0">
@@ -43,6 +46,7 @@ export default async function Contact() {
                       ) : (
                         <p className="mt-1 font-semibold leading-6 text-anthracite">{value}</p>
                       )}
+                      {note && <p className="mt-0.5 text-xs text-slate-500">{note}</p>}
                     </div>
                   </div>
                 ))}

@@ -17,6 +17,7 @@ export const pageMetas: PageMeta[] = [
 ];
 
 export type HomeContent = {
+  heroEyebrow: string;
   heroTitle: string;
   heroImage: string;
   introText: string;
@@ -203,9 +204,10 @@ export type AllPageContent = {
 };
 
 export const defaultHome: HomeContent = {
-  heroTitle: "Bâtir et rénover\nles infrastructures\nde la République.",
+  heroEyebrow: "ETCS — MONDE « CONSTRUIRE AUTREMENT »",
+  heroTitle: "Bâtir Moderniser les infrastructures.",
   heroImage: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2400&q=90",
-  introText: "ETCS SARL, Etudes Techniques Conceptions des Structures, assure l'ensemble des missions que comportent les études : maîtrise d'œuvre, vérification et conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil.",
+  introText: "E.T.C.S Sarl a pour vocation :\n- Assurer l'ensemble des missions que comportent les études, la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des Grandes Infrastructures de Travaux Publics et de Génie Civil.\n- Porteuse d'une synergie de compétences et d'un élan d'innovation.\n- Fournir l'ensemble des solutions nécessaires pour réussir à bâtir et à rénover les infrastructures.",
   presentationTitle: "L'expertise au service de vos projets.",
   presentationImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=85",
   strengths: [
@@ -226,8 +228,8 @@ export const defaultHome: HomeContent = {
   projectsEyebrow: "NOS RÉALISATIONS",
   projectsTitle: "Des projets qui prennent forme.",
   projectsText: "Découvrez notre approche à travers les projets et les ouvrages réalisés par ETCS SARL. Chaque réalisation témoigne de notre engagement envers la qualité et la rigueur technique.",
-  engagementTitle: "Pourquoi choisir ETCS SARL ?",
-  engagementText: "La réussite d'un projet repose sur une bonne préparation, une approche technique rigoureuse et un engagement constant envers la qualité.",
+  engagementTitle: "Pourquoi choisir E.T.C.S Sarl ?",
+  engagementText: "La réussite d'un projet dans le domaine de la construction civile, des bâtiments et des travaux publics repose sur une bonne préparation, une approche technique rigoureuse et un engagement constant envers la qualité.",
   engagementImage: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85",
   commitments: [
     { title: "Une approche sur mesure", text: "Chaque projet a ses contraintes propres : nous mettons en œuvre des procédés techniques spécifiques à chaque chantier, en parfaite adéquation avec les exigences du maître d'ouvrage." },
@@ -235,7 +237,7 @@ export const defaultHome: HomeContent = {
     { title: "Innovation continue", text: "Être toujours en avance sur l'innovation : faire plus beau, plus vite, moins coûteux, et tenir nos objectifs de qualité." },
     { title: "Harmonie des talents", text: "Nos équipes couvrent l'ensemble des enjeux techniques, économiques, juridiques et financiers, de l'étude de faisabilité à la mise en service." },
   ],
-  quote: "ETCS est porteuse et promotrice d'une synergie de compétences et d'un élan d'innovation pour fournir les solutions nécessaires pour réussir à bâtir et à rénover la République.",
+  quote: "E.T.C.S est porteuse et promotrice d'une synergie de compétences et d'un élan d'innovation pour fournir les solutions nécessaires pour réussir à bâtir et à moderniser les infrastructures.",
   quoteAuthor: "Etudes Techniques Conceptions des Structures",
   convictionImage: "https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?auto=format&fit=crop&w=1600&q=85",
   presenceTitle: "Notre présence congolaise et internationale",
@@ -271,7 +273,7 @@ export const defaultAbout: AboutContent = {
   partnersEyebrow: "PARTENARIAT",
   partnersTitle: "Un réseau de compétences reconnu",
   partnersText: "ETCS s'appuie sur des partenariats solides avec des acteurs de référence de l'ingénierie et de la construction.",
-  partners: ["DICOMEX", "MATIERE", "SETEC", "RASEL", "IOSIS", "XELIS", "SYSTRA"],
+  partners: ["DICOMEX", "MATIERE", "SETEC", "RASEL-BEC", "SYSTRA", "EGIS", "ARTELIA", "EIFFAGE", "COLAS", "TECHNOVIA", "TOPEDEC", "DTA", "JADE", "MAP", "VINCI"],
   trainingEyebrow: "TRANSMISSION DES SAVOIRS",
   trainingTitle: "Notre centre de formations",
   trainingText: "Nos programmes d'enseignement se déclinent en modules adaptés à votre corps de métiers : génie civil, BTP et architecture. Les formations sont dispensées par des intervenants agréés, dans nos locaux ou directement chez le client.",

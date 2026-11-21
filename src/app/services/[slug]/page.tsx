@@ -5,7 +5,7 @@ import { ArrowRight, Phone, Mail } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { publishedService, publishedServices } from "@/lib/public-content";
-import { getPhoneList, getSiteSettings } from "@/lib/site-settings";
+import { getPhoneList, getSiteSettings, splitPhone } from "@/lib/site-settings";
 import { Reveal } from "@/components/public/reveal";
 
 export const instant = false;
@@ -56,9 +56,12 @@ export default async function ServiceDetail({ params }: { params: Promise<{ slug
                     <div className="rounded-2xl border border-slate-200 bg-mist p-7">
                       <p className="text-xs font-bold tracking-[.2em] text-royal">CONTACT DIRECT</p>
                       <div className="mt-4 grid gap-3 text-sm font-semibold text-anthracite">
-                        {phoneList.map((phone) => (
-                          <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className="flex items-center gap-3 transition hover:text-royal"><Phone className="h-4 w-4 shrink-0 text-royal" />{phone}</a>
-                        ))}
+                        {phoneList.map((raw) => {
+                          const { number, note } = splitPhone(raw);
+                          return (
+                            <a key={number} href={`tel:${number.replace(/\s/g, "")}`} className="flex items-center gap-3 transition hover:text-royal"><Phone className="h-4 w-4 shrink-0 text-royal" />{number}{note && <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{note}</span>}</a>
+                          );
+                        })}
                         {settings?.email && (
                           <a href={`mailto:${settings.email}`} className="flex items-center gap-3 break-all transition hover:text-royal"><Mail className="h-4 w-4 shrink-0 text-royal" />{settings.email}</a>
                         )}

@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { publishedServices } from "@/lib/public-content";
 import { services as fallbackServices } from "@/lib/content";
-import { getPhoneList, getSiteSettings } from "@/lib/site-settings";
+import { getPhoneList, getSiteSettings, splitPhone } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
 import { CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
@@ -104,9 +104,14 @@ export default async function Services() {
                   </p>
                 </div>
                 <div className="grid gap-3 text-sm">
-                  {phones.map((phone, index) => (
-                    <a key={phone} href={`tel:${phone.replace(/\s/g, "")}`} className={index === 0 ? "rounded-xl bg-royal px-6 py-4 font-bold text-white transition hover:bg-royal-deep" : "rounded-xl border border-royal/20 bg-white px-6 py-4 font-bold text-royal transition hover:bg-royal-50"}>{phone}</a>
-                  ))}
+                  {phones.map((raw, index) => {
+                    const { number, note } = splitPhone(raw);
+                    return (
+                      <a key={number} href={`tel:${number.replace(/\s/g, "")}`} className={index === 0 ? "rounded-xl bg-royal px-6 py-4 font-bold text-white transition hover:bg-royal-deep" : "rounded-xl border border-royal/20 bg-white px-6 py-4 font-bold text-royal transition hover:bg-royal-50"}>
+                        {number}{note && <span className="ml-2 text-[10px] font-bold uppercase tracking-wider opacity-70">{note}</span>}
+                      </a>
+                    );
+                  })}
                   {settings?.email && (
                     <a href={`mailto:${settings.email}`} className="break-all rounded-xl border border-royal/20 px-6 py-4 font-bold text-royal transition hover:bg-royal-50">{settings.email}</a>
                   )}

@@ -49,6 +49,9 @@ export default async function PageContentEditor({ params, searchParams }: Props)
         {page === "home" && (
           <>
             <Section title="Bannière d'accueil">
+              <Field label="Sur-titre" hint="Ligne au-dessus du titre principal (ex. ETCS — MONDE « CONSTRUIRE AUTREMENT »)">
+                <input className={inputClass} name="heroEyebrow" defaultValue={value("heroEyebrow")} />
+              </Field>
               <Field label="Titre principal" hint="Un retour à la ligne crée un saut de ligne visuel">
                 <textarea className={inputClass} name="heroTitle" rows={3} defaultValue={value("heroTitle")} />
               </Field>

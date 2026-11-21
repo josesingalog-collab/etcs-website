@@ -26,6 +26,54 @@ function lastRowOffset(count: number, index: number) {
   return "";
 }
 
+function FlagRDC() {
+  return (
+    <svg viewBox="0 0 24 16" className="h-3.5 w-5 shrink-0 rounded-[2px] shadow-sm" aria-label="Drapeau de la RDC" role="img">
+      <rect width="24" height="16" fill="#007FFF" />
+      <path d="M0 16 L24 0 L24 5.5 L7.5 16 Z" fill="#F7D618" />
+      <path d="M2.5 16 L24 2.5 L24 5.5 L7.5 16 Z" fill="#CE1021" />
+      <path d="M4 1.2 L4.7 3.2 L6.8 3.2 L5.1 4.5 L5.7 6.5 L4 5.2 L2.3 6.5 L2.9 4.5 L1.2 3.2 L3.3 3.2 Z" fill="#F7D618" />
+    </svg>
+  );
+}
+
+function FlagFrance() {
+  return (
+    <svg viewBox="0 0 24 16" className="h-3.5 w-5 shrink-0 rounded-[2px] shadow-sm" aria-label="Drapeau de la France" role="img">
+      <rect width="8" height="16" fill="#0055A4" />
+      <rect x="8" width="8" height="16" fill="#FFFFFF" />
+      <rect x="16" width="8" height="16" fill="#EF4135" />
+    </svg>
+  );
+}
+
+function IntroText({ text, justify = false }: { text: string; justify?: boolean }) {
+  const blocks = text.split(/\r?\n\s*\r?\n/);
+  return (
+    <>
+      {blocks.map((block, blockIndex) => {
+        const lines = block.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+        const bullets = lines.filter((line) => /^[-•]\s+/.test(line)).map((line) => line.replace(/^[-•]\s+/, ""));
+        const plain = lines.filter((line) => !/^[-•]\s+/.test(line));
+        return (
+          <div key={blockIndex} className={blockIndex > 0 ? "mt-4" : ""}>
+            {plain.map((line, index) => (
+              <p key={index} className={index > 0 ? "mt-2" : ""}>{line}</p>
+            ))}
+            {bullets.length > 0 && (
+              <ul className={`mt-2 grid gap-1.5 ${justify ? "" : "list-none"}`}>
+                {bullets.map((line, index) => (
+                  <li key={index} className="flex gap-2.5"><span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-vinci-sky" aria-hidden="true" /><span className="text-justify">{line}</span></li>
+                ))}
+              </ul>
+            )}
+          </div>
+        );
+      })}
+    </>
+  );
+}
+
 export default async function Home() {
   const [projects, services, articles, settings, home] = await Promise.all([
     publishedProjects(),
@@ -46,19 +94,21 @@ export default async function Home() {
         <section aria-label="Introduction" className="relative isolate bg-vinci text-white">
           <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-0 pt-36 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:pt-40">
             <div className="lg:pb-28">
-              <p className="rise text-xs font-bold tracking-[.24em] text-vinci-sky">#ETCS — KINSHASA, RDC</p>
-              <h1 className="rise rise-1 display mt-7 leading-[1.1] text-[clamp(1.7rem,3.8vw,3.4rem)]">
+              <p className="rise text-sm font-black uppercase tracking-[.24em] text-vinci-sky">{home.heroEyebrow}</p>
+              <h1 className="rise rise-1 display mt-7 uppercase leading-[1.1] text-[clamp(1.7rem,3.8vw,3.4rem)]">
                 {heroLines.map((line, index) => (
                   <span key={index}>{index > 0 && <br />}{line}</span>
                 ))}
               </h1>
-              <p className="rise rise-2 mt-8 max-w-xl text-justify text-base leading-8 text-slate-100">{intro}</p>
+              <div className="rise rise-2 mt-8 max-w-xl text-base leading-8 text-slate-100">
+                <IntroText text={intro} justify />
+              </div>
               <div className="rise rise-3 mt-10 flex flex-wrap gap-4">
                 <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy">
                   Découvrir nos services <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link href="/devis" className="rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky">
-                  Demander un devis
+                  Demander l&apos;estimation et quantitatifs
                 </Link>
               </div>
             </div>
@@ -89,9 +139,9 @@ export default async function Home() {
                 {home.presentationTitle}
               </h2>
               <div className="mt-6">
-                {intro.split(/\r?\n\s*\r?\n/).map((paragraph, index) => (
-                  <p key={index} className={`text-justify leading-8 text-slate-600 ${index > 0 ? "mt-4" : ""}`}>{paragraph}</p>
-                ))}
+                <div className="text-justify leading-8 text-slate-600">
+                  <IntroText text={intro} />
+                </div>
               </div>
               <ul className="mt-8 divide-y divide-slate-100 border-y border-slate-100">
                 {stringList(home.strengths).map((label, index) => {
@@ -118,8 +168,8 @@ export default async function Home() {
             <Reveal><SectionHeading eyebrow={home.domainsEyebrow} title={home.domainsTitle} text={home.domainsText} /></Reveal>
             {services.length > 0 ? (
               <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
-                {services.slice(0, 5).map((service, index) => (
-                  <Reveal key={service.slug} delay={index * 0.05} className={`lg:col-span-2 ${lastRowOffset(services.slice(0, 5).length, index)}`}>
+                {services.map((service, index) => (
+                  <Reveal key={service.slug} delay={index * 0.05} className={`lg:col-span-2 ${lastRowOffset(services.length, index)}`}>
                     <ServiceCard service={service} index={index} />
                   </Reveal>
                 ))}
@@ -143,7 +193,7 @@ export default async function Home() {
             )}
             <div className="mt-12 text-center">
               <Link href="/services" className="inline-flex items-center gap-2 rounded-lg border border-royal px-7 py-3.5 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
-                Découvrir tous nos services <ArrowRight className="h-4 w-4" />
+                Découvrir nos services et prestations <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>
@@ -250,9 +300,9 @@ export default async function Home() {
             <Reveal delay={0.1} variant="right">
               <div className="relative">
                 <WorldMap />
-                <div className="mt-6 flex flex-wrap gap-6 text-xs font-bold text-vinci-sky">
-                  <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-white ring-2 ring-vinci-sky" />Kinshasa, RDC — Siège social</span>
-                  <span className="inline-flex items-center gap-2"><span className="h-2.5 w-2.5 rounded-full bg-white ring-2 ring-vinci-sky" />Paris, France — Bureau d&apos;études</span>
+                <div className="mt-6 flex flex-col gap-4 text-xs font-bold text-vinci-sky sm:flex-row sm:flex-wrap sm:gap-6">
+                  <span className="inline-flex items-center gap-2"><FlagRDC />Kinshasa, RD Congo — Entreprise des Travaux · Siège social</span>
+                  <span className="inline-flex items-center gap-2"><FlagFrance />Montrouge, France — Bureau d&apos;études · Construction, Génie civil, Travaux Publics</span>
                 </div>
               </div>
             </Reveal>

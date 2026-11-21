@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { MapPin, Phone, Mail, Facebook, Linkedin, Instagram, Twitter, Youtube, Lock } from "lucide-react";
 import type { SiteSettings } from "@prisma/client";
-import { getPhoneList } from "@/lib/site-settings";
+import { getPhoneList, splitPhone } from "@/lib/site-settings";
 import { Logo } from "@/components/logo";
 
 const navLinks: [string, string][] = [
@@ -66,9 +66,12 @@ export function Footer({ settings, aboutText }: { settings: SiteSettings | null;
             {settings?.address && (
               <li className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-vinci-sky" /><span className="leading-6">{settings.address}</span></li>
             )}
-            {getPhoneList(settings).map((phone) => (
-              <li key={phone} className="flex items-center gap-3"><Phone className="h-4 w-4 shrink-0 text-vinci-sky" /><a href={`tel:${phone.replace(/\s/g, "")}`} className="transition hover:text-vinci-sky">{phone}</a></li>
-            ))}
+            {getPhoneList(settings).map((raw) => {
+              const { number, note } = splitPhone(raw);
+              return (
+                <li key={number} className="flex items-center gap-3"><Phone className="h-4 w-4 shrink-0 text-vinci-sky" /><a href={`tel:${number.replace(/\s/g, "")}`} className="transition hover:text-vinci-sky">{number}{note && <span className="ml-2 text-[10px] font-bold uppercase tracking-wider text-vinci-sky/80">{note}</span>}</a></li>
+              );
+            })}
             {settings?.email && (
               <li className="flex items-center gap-3"><Mail className="h-4 w-4 shrink-0 text-vinci-sky" /><a href={`mailto:${settings.email}`} className="break-all transition hover:text-vinci-sky">{settings.email}</a></li>
             )}
