@@ -54,20 +54,27 @@ export function EmptyState({ title, text, ctaHref, ctaLabel, illustration = fals
 
 export function CtaSection({ title, text, primaryLabel = "Demander un devis", primaryHref = "/devis" }: { title: string; text: string; primaryLabel?: string; primaryHref?: string }) {
   return (
-    <section className="bg-vinci-sky py-24">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-10 px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <p className="text-xs font-bold tracking-[.22em] text-vinci-navy">TRAVAILLONS ENSEMBLE</p>
-          <h2 className="display mt-4 text-4xl leading-[1.12] text-vinci-navy md:text-5xl">{title}</h2>
-          {text && <p className="mt-5 text-sm leading-7 text-vinci">{text}</p>}
-        </div>
-        <div className="flex flex-wrap gap-4">
-          <Link href={primaryHref} className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/20 transition duration-300 hover:-translate-y-0.5 hover:bg-vinci-navy hover:text-white">
-            {primaryLabel}<ArrowRight className="h-4 w-4" />
-          </Link>
-          <Link href="/contact" className="inline-flex items-center gap-2 rounded-full border-2 border-vinci-navy px-7 py-4 text-sm font-bold text-vinci-navy transition duration-300 hover:bg-vinci-navy hover:text-white">
-            Nous contacter
-          </Link>
+    <section className="px-4 pb-14 sm:px-6 lg:px-10">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] p-10 text-white sm:p-14" style={{ backgroundColor: "#101a33" }}>
+        <div className="pointer-events-none absolute -bottom-24 -right-20 h-80 w-80 rounded-full opacity-25 blur-3xl" style={{ background: "var(--plan-accent)" }} aria-hidden="true" />
+        <div className="relative flex flex-wrap items-center justify-between gap-10">
+          <div className="max-w-2xl">
+            <p className="flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[.22em]" style={{ color: "var(--plan-sky)" }}>
+              <span className="h-0.5 w-8 rounded-full" style={{ backgroundColor: "var(--plan-sky)" }} aria-hidden="true" />
+              Travaillons ensemble
+            </p>
+            <h2 className="display mt-4 text-3xl leading-[1.12] md:text-4xl">{title}</h2>
+            {text && <p className="mt-4 text-sm leading-7 text-slate-300">{text}</p>}
+          </div>
+          <div className="flex flex-wrap gap-4">
+            <Link href={primaryHref} className="focus-ring group inline-flex items-center gap-3 rounded-full bg-[var(--plan-accent)] py-2.5 pl-7 pr-2.5 text-sm font-bold transition hover:bg-[#1a5fd6]">
+              {primaryLabel}
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-black/15 transition group-hover:bg-white group-hover:text-[var(--plan-accent)]"><ArrowRight className="h-4 w-4" /></span>
+            </Link>
+            <Link href="/contact" className="focus-ring inline-flex items-center gap-3 rounded-full border-2 border-white/40 py-2.5 pl-7 pr-2.5 text-sm font-bold text-white transition hover:bg-white hover:text-[var(--plan-navy)]">
+              Nous contacter
+            </Link>
+          </div>
         </div>
       </div>
     </section>

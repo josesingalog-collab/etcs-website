@@ -5,6 +5,8 @@ import { savePageContent } from "@/app/admin/actions";
 import { Field, inputClass } from "@/components/admin/form-fields";
 import { RepeaterField } from "@/components/admin/repeater";
 import { UploadField } from "@/components/admin/upload-field";
+import { SlotField } from "@/components/admin/slot-field";
+import { CountedTextarea } from "@/components/admin/counted-textarea";
 import { AdminHeader, SavedBanner } from "@/components/admin/ui";
 import { SubmitButton } from "@/components/submit-button";
 import { defaultPageContent, fontOptions, getPageContent, justifyOptions, labelList, letterSpacingOptions, lineHeightOptions, pageKeys, pageMetas, textScaleOptions, type PageKey } from "@/lib/page-content";
@@ -63,7 +65,18 @@ export default async function PageContentEditor({ params, searchParams }: Props)
               <Field label="Phrase d'accroche" hint="Une seule phrase courte sous le titre — le texte long de présentation se règle dans les Paramètres">
                 <textarea className={inputClass} name="heroHook" rows={2} defaultValue={value("heroHook")} />
               </Field>
-              <UploadField name="heroImage" label="Image de la bannière" hint="Importez un fichier (PNG/JPEG/WebP, 5 Mo max.) ou collez une URL HTTPS." defaultValue={value("heroImage")} />
+              <SlotField
+                name="heroImage"
+                label="Image de la bannière (plein écran)"
+                ratio="1920×1080 — paysage"
+                hint="Voile sombre appliqué automatiquement pour la lisibilité du titre."
+                defaultValue={list("heroImage") as { url: string; alt?: string; focal?: string }}
+                fallbackAlt="Chantier d'infrastructure en cours de réalisation avec engins de terrassement"
+              />
+            </Section>
+            <Section title="Photos « Qui sommes-nous » (deux compositions)">
+              <SlotField name="aboutPhotos[0]" label="Photo 1 (haute)" ratio="1600×900 — paysage" defaultValue={(list("aboutPhotos") as { url: string; alt?: string; focal?: string }[])[0]} fallbackAlt="Ingénieur consultant un plan sur un chantier de génie civil" />
+              <SlotField name="aboutPhotos[1]" label="Photo 2 (large, dessous)" ratio="1600×700 — panoramique" defaultValue={(list("aboutPhotos") as { url: string; alt?: string; focal?: string }[])[1]} fallbackAlt="Route et chaussée en construction avec véhicules d'entreprise" />
             </Section>
             <Section title="Phases d'accompagnement (frise de l'accueil)">
               <RepeaterField
@@ -86,13 +99,40 @@ export default async function PageContentEditor({ params, searchParams }: Props)
               />
             </Section>
             <Section title="Témoignage client (masqué si vide)">
-              <Field label="Témoignage" hint="Laisser vide pour masquer la section. Renseignez uniquement de vrais témoignages.">
-                <textarea className={inputClass} name="testimonial[quote]" rows={3} defaultValue={value2("testimonial", "quote")} />
-              </Field>
+              <CountedTextarea
+                label="Témoignage"
+                name="testimonial[quote]"
+                rows={3}
+                defaultValue={value2("testimonial", "quote")}
+                maxLength={500}
+                required={false}
+                hint="Laisser vide pour masquer la section. Renseignez uniquement de vrais témoignages."
+              />
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Nom du client"><input className={inputClass} name="testimonial[author]" defaultValue={value2("testimonial", "author")} /></Field>
-                <Field label="Fonction / projet" hint="Ex. Maître d'ouvrage — Route national 1"><input className={inputClass} name="testimonial[role]" defaultValue={value2("testimonial", "role")} /></Field>
+                <Field label="Fonction / projet" hint="Ex. Maître d'ouvrage — Route nationale 1"><input className={inputClass} name="testimonial[role]" defaultValue={value2("testimonial", "role")} /></Field>
               </div>
+            </Section>
+            <Section title="FAQ — image d'illustration">
+              <SlotField
+                name="faqImage"
+                label="Illustration de la FAQ"
+                ratio="800×1000 — portrait ou carré"
+                defaultValue={list("faqImage") as { url: string; alt?: string; focal?: string }}
+                fallbackAlt="Grue de chantier et bâtiment en construction"
+              />
+            </Section>
+            <Section title="Contact — image du bas (et vidéo optionnelle)">
+              <SlotField
+                name="contactImage"
+                label="Grande image sous le formulaire"
+                ratio="1920×840 — panoramique"
+                defaultValue={list("contactImage") as { url: string; alt?: string; focal?: string }}
+                fallbackAlt="Ouvrage de génie civil en béton armé en cours de construction"
+              />
+              <Field label="URL de la vidéo (optionnelle)" hint="Coller un lien YouTube/Vimeo : le bouton lecture apparaît sur l'image. Laisser vide = pas de bouton.">
+                <input className={inputClass} name="contactVideoUrl" type="url" defaultValue={value("contactVideoUrl")} />
+              </Field>
             </Section>
             <Section title="Présentation (qui sommes-nous ?)">
               <Field label="Titre de section"><input className={inputClass} name="presentationTitle" defaultValue={value("presentationTitle")} /></Field>

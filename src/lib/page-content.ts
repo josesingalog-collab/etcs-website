@@ -22,6 +22,10 @@ export type HomeContent = {
   heroTitle: string;
   heroHook: string;
   heroImage: string;
+  aboutPhotos: { url: string; alt?: string; focal?: string }[];
+  faqImage: { url: string; alt?: string; focal?: string };
+  contactImage: { url: string; alt?: string; focal?: string };
+  contactVideoUrl: string;
   introText: string;
   phases: { title: string; text: string }[];
   faq: { question: string; answer: string }[];
@@ -224,6 +228,13 @@ export const defaultHome: HomeContent = {
   heroTitle: "Bâtir et moderniser les infrastructures.",
   heroHook: "Bureau d'études et entreprise générale de génie civil, au service des grandes infrastructures en RDC et à l'international.",
   heroImage: IMAGES.hero.src,
+  aboutPhotos: [
+    { url: IMAGES.presentation.src, alt: "Ingénieur consultant un plan sur un chantier de génie civil", focal: "50% 40%" },
+    { url: IMAGES.transport.src, alt: "Route et chaussée en construction avec véhicules d'entreprise", focal: "50% 50%" },
+  ],
+  faqImage: { url: IMAGES.etudes.src, alt: "Grue de chantier et bâtiment en construction", focal: "50% 40%" },
+  contactImage: { url: IMAGES.engagement.src, alt: "Ouvrage de génie civil en béton armé en cours de construction", focal: "50% 45%" },
+  contactVideoUrl: "",
   introText: "E.T.C.S Sarl (Etudes Techniques Conceptions des Structures) est une entreprise congolaise d'ingénierie et une entreprise générale, dont le siège social est établi à Kinshasa, Avenue du Port, Nouvelles Galeries Présidentielles, 5e étage, Bureau 504, commune de la Gombe.\n\nÀ l'international, une filiale établie en France, dans la région parisienne, opère comme bureau d'études de génie civil, de bâtiments et de travaux publics.\n\nE.T.C.S Sarl a pour vocation d'assurer l'ensemble des missions que comportent les études : la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil.\n\nPorteuse d'une synergie de compétences et d'un élan d'innovation, E.T.C.S Sarl fournit les solutions nécessaires pour réussir à bâtir et à rénover la République.",
   phases: [
     { title: "Études préliminaires", text: "Faisabilité, avant-projets et dimensionnement des ouvrages." },
@@ -232,11 +243,10 @@ export const defaultHome: HomeContent = {
   ],
   testimonial: { quote: "", author: "", role: "" },
   faq: [
-    { question: "Quel type de projets réalise E.T.C.S Sarl ?", answer: "Des infrastructures de transport (routes, ouvrages d'art, aéroports), des bâtiments complexes et de grande hauteur, des ouvrages hydrauliques et énergétiques, ainsi que des études, de la faisabilité à la mise en service." },
-    { question: "Où intervient E.T.C.S Sarl ?", answer: "Le siège social est à Kinshasa (RDC) et un bureau d'études opère à Montrouge, dans la région parisienne. Nous intervenons en RDC et à l'international." },
-    { question: "Comment obtenir une estimation et des quantitatifs ?", answer: "Décrivez votre projet via le formulaire de devis et joignez vos plans (PDF, JPG, PNG). Nos ingénieurs analysent votre dossier et reviennent vers vous avec une proposition claire et documentée." },
-    { question: "Quels sont vos domaines de compétences ?", answer: "Infrastructures de transport, bâtiments complexes et IGH, énergie et bâtiments industriels, aménagement urbain, environnement et développement durable." },
-    { question: "E.T.C.S Sarl forme-t-elle des techniciens ?", answer: "Oui, notre centre de formations propose des modules adaptés au génie civil, au BTP et à l'architecture, dispensés par des intervenants agréés." },
+    { question: "Quels sont vos domaines d'intervention ?", answer: "Infrastructures de transport, bâtiments complexes et de grande hauteur (IGH), énergie et bâtiments industriels, aménagement urbain, et environnement et développement durable." },
+    { question: "Où intervenez-vous ?", answer: "Nous intervenons en République Démocratique du Congo depuis notre siège de Kinshasa-Gombe, et à l'international via notre filiale établie en région parisienne (Montrouge)." },
+    { question: "Comment se déroule l'accompagnement ?", answer: "En trois phases : les études préliminaires (faisabilité, avant-projets), l'assistance à maîtrise d'ouvrage (programmation, études économiques, conseil), puis la maîtrise d'œuvre (conception détaillée, direction et contrôle de l'exécution)." },
+    { question: "Comment obtenir un devis ?", answer: "Décrivez votre projet via le formulaire en ligne (ou joignez vos plans en PDF, JPG ou PNG). Nos ingénieurs étudient votre dossier et reviennent vers vous avec une offre claire — et si besoin, une visite de site est organisée." },
   ],
   presentationTitle: "L'expertise au service de vos projets.",
   presentationImage: IMAGES.presentation.src,
@@ -425,6 +435,23 @@ export function getPageLabel(page: string) {
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+/** Normalise un slot d'image (peut avoir été enregistré comme simple chaîne URL). */
+export function getSlot(value: unknown, fallbackAlt = ""): { url: string; alt: string; focal: string } {
+  if (typeof value === "string" && value.trim() !== "") return { url: value, alt: fallbackAlt, focal: "50% 40%" };
+  if (isPlainObject(value) && typeof value.url === "string" && value.url.trim() !== "") {
+    return { url: value.url, alt: typeof value.alt === "string" && value.alt.trim() !== "" ? value.alt : fallbackAlt, focal: typeof value.focal === "string" && value.focal.trim() !== "" ? value.focal : "50% 40%" };
+  }
+  return { url: "", alt: fallbackAlt, focal: "50% 40%" };
+}
+
+/** Extrait la liste des témoignages (objet unique ou tableau). */
+export function getTestimonials(value: unknown): { quote: string; author: string; role: string }[] {
+  const list = Array.isArray(value) ? value : isPlainObject(value) ? [value] : [];
+  return list.filter((item): item is { quote: string; author: string; role: string } =>
+    isPlainObject(item) && typeof item.quote === "string" && item.quote.trim() !== "" && typeof item.author === "string" && item.author.trim() !== "",
+  );
 }
 
 function deepMergeDefaults(defaults: unknown, saved: unknown): unknown {

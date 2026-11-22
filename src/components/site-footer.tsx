@@ -12,110 +12,93 @@ const navLinks: [string, string][] = [
   ["Demander un devis", "/devis"],
 ];
 
-function Cell({ label, children, className = "" }: { label: string; children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`px-5 py-4 ${className}`}>
-      <p className="annotation text-[9px] text-slate-400">{label}</p>
-      <div className="mt-1.5 text-sm leading-6 text-slate-100">{children}</div>
-    </div>
-  );
+function socialIcons(settings: SiteSettings | null): [string, string][] {
+  if (!settings?.socialLinks || Array.isArray(settings.socialLinks) || typeof settings.socialLinks !== "object") return [];
+  return (Object.entries(settings.socialLinks) as [string, unknown][]).filter((entry): entry is [string, string] => typeof entry[1] === "string" && /^https:\/\//.test(entry[1]));
 }
 
-/** Pied de page conçu comme le cartouche d'un plan d'ingénieur. */
+/** Pied de page sombre arrondi, avec logo en filigrane, style maquette. */
 export function Footer({ settings, aboutText }: { settings: SiteSettings | null; aboutText: string }) {
-  const year = new Date().getFullYear();
+  const socials = socialIcons(settings);
   const phones = getPhoneList(settings);
   return (
-    <footer style={{ backgroundColor: "var(--plan-paper-dark)" }} className="text-slate-100">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-10">
-        <div className="border border-white/25">
-          {/* Ligne titre du cartouche */}
-          <div className="flex flex-wrap items-stretch justify-between border-b border-white/25">
-            <div className="flex items-center gap-3 px-5 py-4">
+    <footer className="px-4 pb-8 sm:px-6 lg:px-10">
+      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] text-white" style={{ backgroundColor: "#101a33" }}>
+        <div className="pointer-events-none absolute -bottom-24 -right-20 h-80 w-80 rounded-full opacity-20 blur-3xl" style={{ background: "var(--plan-accent)" }} aria-hidden="true" />
+        <div className="relative grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
+          <div>
+            <div className="flex items-center gap-3">
               {settings?.logoUrl ? (
                 // eslint-disable-next-line @next/next/no-img-element
-                <img src={settings.logoUrl} alt={`Logo ${settings?.companyName ?? "E.T.C.S Sarl"}`} className="h-10 w-auto" />
+                <img src={settings.logoUrl} alt={`Logo ${settings?.companyName ?? "E.T.C.S Sarl"}`} className="h-12 w-auto" />
               ) : (
-                <span className="grid h-10 w-10 place-items-center bg-[var(--plan-accent)] text-sm font-black text-white">ET</span>
+                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[var(--plan-accent)] text-lg font-black text-white">ET</span>
               )}
               <div>
-                <p className="text-sm font-extrabold tracking-wide">{settings?.companyName ?? "E.T.C.S Sarl"}</p>
-                <p className="annotation text-[9px] text-slate-400">Etudes Techniques Conceptions des Structures</p>
+                <p className="text-lg font-extrabold">{settings?.companyName ?? "E.T.C.S Sarl"}</p>
+                <p className="text-[10px] font-bold uppercase tracking-[.18em] text-slate-400">Etudes Techniques Conceptions des Structures</p>
               </div>
             </div>
-            <div className="flex items-center gap-5 px-5 py-4">
-              <span className="annotation text-[9px] text-slate-400">ÉCH. 1:1 — IND. A</span>
-              <span className="annotation text-[9px] text-slate-400">{year}</span>
-            </div>
+            <p className="mt-5 max-w-xs text-sm leading-7 text-slate-400">{aboutText}</p>
+            {socials.length > 0 && (
+              <div className="mt-6 flex gap-3">
+                {socials.map(([name, url]) => (
+                  <a key={name} href={url} target="_blank" rel="noreferrer" aria-label={name} className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-[10px] font-bold text-slate-300 transition hover:bg-white hover:text-[var(--plan-navy)]">
+                    {name.slice(0, 2).toUpperCase()}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
-          {/* Corps du cartouche en cellules */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            <Cell label="MAÎTRE D'OUVRAGE" className="border-b border-r border-white/25">
-              <p className="font-bold">{settings?.companyName ?? "E.T.C.S Sarl"}</p>
-              <p className="mt-1 text-xs leading-5 text-slate-300">{aboutText}</p>
-            </Cell>
-            <Cell label="PROJET" className="border-b border-white/25 lg:border-r">
-              <p>Site institutionnel <span className="annotation text-[10px] text-slate-400">/ Vitrine d'entreprise</span></p>
-              <p className="mt-1 text-xs text-slate-400">Domaine : ingénierie &amp; BTP</p>
-            </Cell>
-            <Cell label="SIÈGE — KINSHASA (RDC)" className="border-b sm:border-r border-white/25">
-              <p className="leading-5">{settings?.address ?? "Avenue du Port, Nouvelles Galeries Présidentielles, 5e étage, Bureau 504, Gombe-Kinshasa"}</p>
-              <p className="annotation mt-1 text-[9px] text-slate-500">4°19'18"S — 15°18'45"E · 415 m</p>
-            </Cell>
-            <Cell label="BUREAU D'ÉTUDES — MONTROUGE (FRANCE)" className="border-b border-white/25">
-              <p className="leading-5">Montrouge, région parisienne [À COMPLÉTER : adresse]</p>
-              <p className="annotation mt-1 text-[9px] text-slate-500">48°49'07"N — 2°19'10"E</p>
-            </Cell>
-            <Cell label="CONTACT" className="border-b border-r border-white/25">
-              <ul className="grid gap-1">
-                {phones.map((raw) => {
-                  const { number, note } = splitPhone(raw);
-                  const isWhatsapp = note ? /whatsapp/i.test(note) : false;
-                  const href = isWhatsapp ? `https://wa.me/${number.replace(/[^\d]/g, "")}` : `tel:${number.replace(/\s/g, "")}`;
-                  return (
-                    <li key={number}>
-                      <a href={href} className="transition hover:text-white">{number}{note && <span className="ml-2 text-[9px] font-bold uppercase tracking-wider text-slate-400">{note}</span>}</a>
-                    </li>
-                  );
-                })}
-                {settings?.email && (
-                  <li><a href={`mailto:${settings.email}`} className="break-all transition hover:text-white">{settings.email}</a></li>
-                )}
-              </ul>
-            </Cell>
-            <Cell label="HORAIRES" className="border-b border-white/25 lg:border-r">
-              <p>[À COMPLÉTER — ex. Lundi – Vendredi, 8h00 – 17h00]</p>
-            </Cell>
-            <Cell label="NAVIGATION" className="border-b sm:border-r border-white/25">
-              <nav aria-label="Liens rapides du pied de page">
-                <ul className="grid grid-cols-2 gap-x-4 gap-y-1">
-                  {navLinks.map(([label, href]) => (
-                    <li key={href}><Link href={href} className="transition hover:text-white">{label}</Link></li>
-                  ))}
-                </ul>
-              </nav>
-            </Cell>
-            <Cell label="MENTIONS" className="border-b border-white/25">
-              <ul className="grid gap-1">
-                <li><Link href="/mentions-legales" className="transition hover:text-white">Mentions légales</Link></li>
-                <li><Link href="/politique-confidentialite" className="transition hover:text-white">Politique de confidentialité</Link></li>
-              </ul>
-            </Cell>
+          <div>
+            <p className="text-sm font-extrabold text-white">Navigation</p>
+            <ul className="mt-5 grid gap-2.5 text-sm text-slate-400">
+              {navLinks.map(([label, href]) => (
+                <li key={href}><Link href={href} className="transition hover:text-white">{label}</Link></li>
+              ))}
+            </ul>
           </div>
-          {/* Ligne réglementaire */}
-          <div className="grid grid-cols-1 border-t border-white/25 sm:grid-cols-3">
-            <Cell label="RCCM"><p className="text-xs">{settings?.companyName === "E.T.C.S Sarl" ? "CD/KIN/RCCM/14-B-6272 [À VÉRIFIER]" : "[À COMPLÉTER]"}</p></Cell>
-            <Cell label="ID. NAT. / N° IMPÔT" className="sm:border-l sm:border-r border-white/25"><p className="text-xs">01-403-N44539F · A0700086C [À VÉRIFIER]</p></Cell>
-            <Cell label="AGRÉMENTS / SIRET (FRANCE)"><p className="text-xs">[À COMPLÉTER]</p></Cell>
+          <div>
+            <p className="text-sm font-extrabold text-white">Domaines</p>
+            <ul className="mt-5 grid gap-2.5 text-sm text-slate-400">
+              <li>Infrastructures de transport</li>
+              <li>Bâtiments complexes et IGH</li>
+              <li>Énergie et bâtiments industriels</li>
+              <li>Aménagement urbain</li>
+              <li>Environnement et développement durable</li>
+            </ul>
+          </div>
+          <div>
+            <p className="text-sm font-extrabold text-white">Contact</p>
+            <ul className="mt-5 grid gap-2.5 text-sm text-slate-400">
+              {phones.map((raw) => {
+                const { number, note } = splitPhone(raw);
+                const isWhatsapp = note ? /whatsapp/i.test(note) : false;
+                const href = isWhatsapp ? `https://wa.me/${number.replace(/[^\d]/g, "")}` : `tel:${number.replace(/\s/g, "")}`;
+                return (
+                  <li key={number}>
+                    <a href={href} className="transition hover:text-white">{number}{note && <span className="ml-2 text-[9px] font-bold uppercase tracking-wider text-slate-500">{note}</span>}</a>
+                  </li>
+                );
+              })}
+              {settings?.email && <li><a href={`mailto:${settings.email}`} className="break-all transition hover:text-white">{settings.email}</a></li>}
+              {settings?.address && <li className="leading-6">{settings.address}</li>}
+              <li>[À COMPLÉTER — horaires]</li>
+            </ul>
           </div>
         </div>
-
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
-          <p className="annotation text-[9px] text-slate-500">© {year} {settings?.companyName ?? "E.T.C.S Sarl"} — TOUS DROITS RÉSERVÉS</p>
-          <Link href="/admin/login" aria-label="Espace administrateur" title="Espace administrateur"
-            className="focus-ring inline-flex items-center gap-2 border border-white/25 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-300 transition hover:bg-white hover:text-[var(--plan-navy)]">
-            <Lock className="h-3 w-3" />Espace admin
-          </Link>
+        <div className="relative border-t border-white/10">
+          <p className="pointer-events-none select-none px-8 pb-2 pt-6 text-center display text-[clamp(2.5rem,9vw,7rem)] leading-none text-white/[.04]">{settings?.companyName ?? "E.T.C.S Sarl"}</p>
+          <div className="flex flex-wrap items-center justify-between gap-3 px-8 pb-8 text-xs text-slate-500">
+            <p>© {new Date().getFullYear()} {settings?.companyName ?? "E.T.C.S Sarl"}. Tous droits réservés.</p>
+            <p className="flex gap-5">
+              <Link href="/mentions-legales" className="transition hover:text-white">Mentions légales</Link>
+              <Link href="/politique-confidentialite" className="transition hover:text-white">Confidentialité</Link>
+            </p>
+            <Link href="/admin/login" aria-label="Espace administrateur" className="focus-ring inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 transition hover:bg-white hover:text-[var(--plan-navy)]">
+              <Lock className="h-3 w-3" />Espace admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
