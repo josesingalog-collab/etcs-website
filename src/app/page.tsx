@@ -55,20 +55,20 @@ export default async function Home() {
           <div className="absolute inset-0" aria-hidden="true">
             <HeroSlideshow images={heroPool} />
           </div>
-          <div className="relative mx-auto flex max-w-5xl flex-col items-center px-4 pb-20 pt-32 text-center sm:px-8 lg:pb-24 lg:pt-40">
-            <div className="rise rise-1 w-full rounded-[2rem] border-2 border-white/30 bg-[rgba(3,20,70,.55)] px-6 py-10 shadow-2xl shadow-black/30 backdrop-blur-md sm:px-10 sm:py-14">
-              <p className="annotation text-[11px] text-vinci-sky">#E.T.C.S Sarl — KINSHASA, RDC</p>
-              <h1 className="display mx-auto mt-6 max-w-4xl leading-[1.08] text-[clamp(2.1rem,4.8vw,4.2rem)]">
+          <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-32 text-center sm:px-6 lg:pb-24 lg:pt-36">
+            <div className="rise rise-1 w-full rounded-[2rem] border-2 border-white/30 bg-[rgba(3,20,70,.55)] px-6 py-10 shadow-2xl shadow-black/30 backdrop-blur-md sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+              <p className="annotation text-[11px] text-vinci-sky lg:text-xs">#E.T.C.S Sarl — KINSHASA, RDC</p>
+              <h1 className="display mx-auto mt-6 max-w-4xl leading-[1.08] text-[clamp(2.1rem,4.8vw,4.2rem)] lg:mt-8 lg:max-w-none lg:text-[clamp(2.6rem,5vw,4.8rem)]">
                 {heroLines.map((line, index) => (
                   <span key={index}>{index > 0 && <br />}{line}</span>
                 ))}
               </h1>
-              <p className="mx-auto mt-8 max-w-3xl text-base leading-8 text-white sm:text-lg sm:leading-9">{intro}</p>
-              <div className="mt-10 flex flex-wrap justify-center gap-4">
-                <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy">
-                  Découvrir nos services <ArrowRight className="h-4 w-4" />
+              <p className="mx-auto mt-8 max-w-3xl text-base leading-8 text-white sm:text-lg sm:leading-9 lg:mt-10 lg:max-w-4xl lg:text-xl lg:leading-10">{intro}</p>
+              <div className="mt-10 flex flex-wrap justify-center gap-4 lg:mt-12 lg:gap-5">
+                <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy lg:px-9 lg:py-4 lg:text-base">
+                  Découvrir nos services <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5" />
                 </Link>
-                <Link href="/devis" className="focus-ring rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky">
+                <Link href="/devis" className="focus-ring rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky lg:px-9 lg:py-4 lg:text-base">
                   Demander un devis
                 </Link>
               </div>
