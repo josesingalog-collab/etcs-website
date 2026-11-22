@@ -17,8 +17,16 @@
   --color-anthracite: #151a24;
   --color-anthracite-soft: #232a38;
   --color-mist: #f5f7fa;
-  --font-sans: var(--font-poppins);
-  --font-display: var(--font-encode);
+  /* Palette « plan d'exécution » — dérivée du logo ETCS */
+  --color-plan-accent: #2176ff;
+  --color-plan-navy: #202c6e;
+  --color-plan-sky: #8cc1f0;
+  --color-plan-structure: #8e959e;
+  --color-plan-paper: #f4f6fa;
+  --color-plan-ink: #0d1b3a;
+  --font-sans: var(--font-archivo);
+  --font-display: var(--font-archivo);
+  --font-mono: var(--font-plex);
 }
 
 :root {
@@ -29,8 +37,30 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-poppins);
-  --font-display: var(--font-encode);
+  --font-sans: var(--font-archivo);
+  --font-display: var(--font-archivo);
+  --font-mono: var(--font-plex);
+}
+
+:root {
+  /* Palette « plan d'exécution » */
+  --plan-paper: #f4f6fa;
+  --plan-paper-dark: #0a1638;
+  --plan-ink: #151a24;
+  --plan-line: rgb(13 27 58 / 0.12);
+  --plan-accent: #2176ff;
+  --plan-navy: #202c6e;
+  --plan-sky: #8cc1f0;
+  --plan-structure: #8e959e;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --plan-paper: #0a1638;
+    --plan-ink: #e8edf7;
+    --plan-line: rgb(232 237 247 / 0.14);
+    --plan-sky: #a9d2f7;
+  }
 }
 
 html {
@@ -38,19 +68,27 @@ html {
   font-size: var(--admin-text-scale, 100%);
 }
 
+/* Annotation technique : labels de repérage, cotes, coordonnées */
+.annotation {
+  font-family: var(--font-plex), "IBM Plex Mono", monospace;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .18em;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--admin-body-font, var(--font-poppins)), Arial, sans-serif;
+  font-family: var(--admin-body-font, var(--font-archivo)), Arial, sans-serif;
   font-weight: 400;
   letter-spacing: var(--admin-body-letter-spacing, .01em);
   line-height: var(--admin-body-line-height, normal);
 }
 
-::selection { background: #f5a623; color: #151a24; }
+::selection { background: #2176ff; color: #ffffff; }
 
 .display {
-  font-family: var(--admin-heading-font, var(--font-encode)), var(--font-poppins), Arial, sans-serif;
+  font-family: var(--admin-heading-font, var(--font-archivo)), Arial, sans-serif;
   font-weight: 700;
   letter-spacing: -.01em;
   line-height: 1.08;

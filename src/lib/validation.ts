@@ -1,5 +1,5 @@
 import { z } from "zod";
-export const inquirySchema = z.object({ name:z.string().trim().min(2).max(100), email:z.string().email().max(254), phone:z.string().trim().min(6).max(40), subject:z.string().trim().min(2).max(160), message:z.string().trim().min(10).max(5000), website:z.string().max(0).optional() });
+export const inquirySchema = z.object({ name:z.string().trim().min(2).max(100), email:z.string().email().max(254), phone:z.string().trim().min(6).max(40), subject:z.string().trim().min(2).max(160), message:z.string().trim().min(10).max(5000), localisation:z.string().trim().max(300).optional(), planUrl:z.union([z.literal(""), z.string().url().max(2048)]).transform((value) => value || undefined).optional(), website:z.string().max(0).optional() });
 
 const status = z.enum(["DRAFT", "PUBLISHED"]);
 const requestStatus = z.enum(["NEW", "IN_PROGRESS", "PROCESSED", "ARCHIVED"]);

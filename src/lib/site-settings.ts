@@ -23,3 +23,14 @@ export function splitPhone(phone: string): { number: string; note?: string } {
   const note = rest.join(" | ").trim();
   return { number: number.trim(), note: note || undefined };
 }
+
+/** Renvoie le lien WhatsApp (wa.me) si un numéro est annoté « WhatsApp ». */
+export function getWhatsAppLink(settings: SiteSettings | null): string | null {
+  for (const raw of getPhoneList(settings)) {
+    const { number, note } = splitPhone(raw);
+    if (note && /whatsapp/i.test(note)) {
+      return `https://wa.me/${number.replace(/[^\d]/g, "")}`;
+    }
+  }
+  return null;
+}

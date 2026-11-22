@@ -7,8 +7,22 @@ import { SiteShell } from "@/components/site-shell";
 import { publishedService, publishedServices } from "@/lib/public-content";
 import { getPhoneList, getSiteSettings, splitPhone } from "@/lib/site-settings";
 import { Reveal } from "@/components/public/reveal";
+import type { Metadata } from "next";
 
 export const instant = false;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const service = await publishedService(slug);
+  if (!service) return {};
+  const description = service.excerpt.slice(0, 155);
+  return {
+    title: service.title,
+    description,
+    alternates: { canonical: `/services/${service.slug}` },
+    openGraph: { title: `${service.title} | E.T.C.S Sarl`, description, url: `/services/${service.slug}`, siteName: "E.T.C.S Sarl", locale: "fr_CD", type: "website", images: ["/og-image.png"] },
+  };
+}
 
 export default async function ServiceDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

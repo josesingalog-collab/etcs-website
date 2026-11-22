@@ -6,12 +6,15 @@ import { SiteShell } from "@/components/site-shell";
 import { InquiryForm } from "@/components/inquiry-form";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
+import { IMAGES } from "@/lib/images";
 import { Reveal } from "@/components/public/reveal";
 
-export const metadata = { title: "Demander un devis" };
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({ title: "Demander un devis", description: "Demandez une estimation et des quantitatifs : décrivez votre projet, joignez vos plans, et recevez une offre claire d'E.T.C.S Sarl.", path: "/devis" });
 export const instant = false;
 
-const fallbackImage = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1600&q=85";
+const fallbackImage = IMAGES.etudes.src;
 
 export default async function Quote() {
   const [settings, quote] = await Promise.all([getSiteSettings(), getPageContent("quote")]);
@@ -54,7 +57,7 @@ export default async function Quote() {
         </section>
         <section className="relative isolate overflow-hidden bg-vinci-navy">
           <div className="relative h-[420px] w-full sm:h-[480px]">
-            <Image src="https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85" alt="Chantier E.T.C.S Sarl" fill sizes="100vw" className="object-cover opacity-40" />
+            <Image src={IMAGES.engagement.src} alt={IMAGES.engagement.alt} fill sizes="100vw" className="object-cover opacity-40" />
             <div className="absolute inset-0 bg-gradient-to-t from-vinci-navy via-vinci-navy/80 to-vinci-navy/40" />
             <div className="relative flex h-full flex-col items-center justify-center gap-5 px-6 text-center">
               <p className="text-xs font-bold tracking-[.24em] text-vinci-sky">{quote.bannerEyebrow}</p>

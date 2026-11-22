@@ -7,8 +7,22 @@ import { SiteShell } from "@/components/site-shell";
 import { publishedProject, publishedProjects } from "@/lib/public-content";
 import { ProjectCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
+import type { Metadata } from "next";
 
 export const instant = false;
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await publishedProject(slug);
+  if (!project) return {};
+  const description = project.description.slice(0, 155);
+  return {
+    title: project.title,
+    description,
+    alternates: { canonical: `/realisations/${project.slug}` },
+    openGraph: { title: `${project.title} | E.T.C.S Sarl`, description, url: `/realisations/${project.slug}`, siteName: "E.T.C.S Sarl", locale: "fr_CD", type: "website", images: ["/og-image.png"] },
+  };
+}
 
 export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
