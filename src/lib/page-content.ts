@@ -22,7 +22,6 @@ export type HomeContent = {
   introText: string;
   presentationTitle: string;
   presentationImage: string;
-  strengths: string[];
   domainsEyebrow: string;
   domainsTitle: string;
   domainsText: string;
@@ -53,6 +52,7 @@ export type AboutContent = {
   introTitle: string;
   introText: string;
   introImage: string;
+  strengths: string[];
   introValues: { title: string; text: string }[];
   pillarsEyebrow: string;
   pillarsTitle: string;
@@ -208,11 +208,6 @@ export const defaultHome: HomeContent = {
   introText: "E.T.C.S Sarl, Etudes Techniques Conceptions des Structures, assure l'ensemble des missions que comportent les études : maîtrise d'œuvre, vérification et conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil.",
   presentationTitle: "L'expertise au service de vos projets.",
   presentationImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=85",
-  strengths: [
-    "Tous les métiers pour une approche globale",
-    "Ingénieurs et techniciens supérieurs expérimentés",
-    "Un engagement sur les performances et la qualité",
-  ],
   domainsEyebrow: "NOS DOMAINES",
   domainsTitle: "Des expertises complémentaires.",
   domainsText: "Nous mobilisons l'ensemble de nos compétences pour vos projets d'ingénierie, de génie civil, de bâtiments et de travaux publics.",
@@ -250,8 +245,13 @@ export const defaultAbout: AboutContent = {
   heroTitle: "Une vision construite pour durer",
   heroText: "Ingénierie, génie civil et travaux publics — de l'étude de faisabilité à la mise en service.",
   heroImage: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85",
-  introEyebrow: "NOTRE ENGAGEMENT",
-  introTitle: "Faire avancer chaque projet avec exigence",
+  introEyebrow: "QUI SOMMES-NOUS ?",
+  introTitle: "L'expertise au service de vos projets.",
+  strengths: [
+    "Tous les métiers pour une approche globale",
+    "Ingénieurs et techniciens supérieurs expérimentés",
+    "Un engagement sur les performances et la qualité",
+  ],
   introText: "Etudes Techniques Conceptions des Structures (E.T.C.S Sarl) est l'une des sociétés d'ingénierie congolaises les plus importantes. Composée d'ingénieurs et de techniciens supérieurs de formation en constructions civiles et travaux publics, l'entreprise porte une grande expérience et assure la maîtrise d'œuvre, la vérification et la conduite des opérations pour les grandes infrastructures.",
   introImage: "https://images.unsplash.com/photo-1516216628859-9bccecab13ca?auto=format&fit=crop&w=1600&q=85",
   introValues: [

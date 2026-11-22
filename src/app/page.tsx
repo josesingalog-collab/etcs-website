@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Building2, HardHat, DraftingCompass, Route, Droplets, BadgeCheck, Compass, Handshake, Target, Layers } from "lucide-react";
+import { ArrowRight, Building2, HardHat, DraftingCompass, Route, Droplets, BadgeCheck, Handshake, Target } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { publishedProjects, publishedServices, publishedArticles } from "@/lib/public-content";
 import { getSiteSettings } from "@/lib/site-settings";
-import { getPageContent, stringList } from "@/lib/page-content";
+import { getPageContent } from "@/lib/page-content";
 import { parseKeyStats } from "@/lib/key-stats";
 import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/components/public/sections";
 import { ProjectCard, ServiceCard, ArticleCard } from "@/components/public/cards";
@@ -14,7 +14,6 @@ import { WorldMap } from "@/components/public/world-map";
 export const instant = false;
 
 const featureIcons = [DraftingCompass, Route, Building2, HardHat, Droplets];
-const strengthIcons = [Layers, Compass, Handshake];
 const commitmentIcons = [DraftingCompass, BadgeCheck, Target, Handshake];
 
 function lastRowOffset(count: number, index: number) {
@@ -67,49 +66,6 @@ export default async function Home() {
                 <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
               </div>
             </div>
-          </div>
-        </section>
-
-        <section aria-label="Présentation de E.T.C.S Sarl" className="bg-white py-24 lg:pt-40">
-          <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
-            <Reveal variant="left">
-              <div className="relative">
-                <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-mist shadow-xl shadow-anthracite/10">
-                  <Image src={home.presentationImage} alt="Chantier E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
-                </div>
-                <div className="absolute -bottom-8 right-6 hidden bg-vinci-navy px-8 py-6 text-white shadow-xl sm:block">
-                  <p className="display text-2xl leading-none">E.T.C.S Sarl</p>
-                  <p className="mt-2 text-[10px] font-bold uppercase tracking-[.2em] text-vinci-sky">Etudes Techniques<br />Conceptions des Structures</p>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={0.1} variant="right">
-              <p className="text-xs font-bold tracking-[.22em] text-gold">QUI SOMMES-NOUS ?</p>
-              <h2 className="display mt-4 text-4xl leading-[1.08] text-anthracite md:text-5xl">
-                {home.presentationTitle}
-              </h2>
-              <div className="mt-6">
-                {intro.split(/\r?\n\s*\r?\n/).map((paragraph, index) => (
-                  <p key={index} className={`text-justify leading-8 text-slate-600 ${index > 0 ? "mt-4" : ""}`}>{paragraph}</p>
-                ))}
-              </div>
-              <ul className="mt-8 divide-y divide-slate-100 border-y border-slate-100">
-                {stringList(home.strengths).map((label, index) => {
-                  const Icon = strengthIcons[index % strengthIcons.length];
-                  return (
-                    <li key={label} className="flex items-center gap-4 py-3.5">
-                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-royal-50 text-royal">
-                        <Icon className="h-4 w-4" />
-                      </span>
-                      <span className="text-sm font-semibold text-anthracite">{label}</span>
-                    </li>
-                  );
-                })}
-              </ul>
-              <Link href="/a-propos" className="mt-9 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-royal px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-royal/25 transition hover:bg-royal-deep sm:w-fit sm:justify-start">
-                Découvrir notre entreprise <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Reveal>
           </div>
         </section>
 

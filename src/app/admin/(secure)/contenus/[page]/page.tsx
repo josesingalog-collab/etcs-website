@@ -53,21 +53,6 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 <textarea className={inputClass} name="heroTitle" rows={3} defaultValue={value("heroTitle")} />
               </Field>
               <UploadField name="heroImage" label="Image de la bannière" hint="Importez un fichier (PNG/JPEG/WebP, 5 Mo max.) ou collez une URL HTTPS." defaultValue={value("heroImage")} />
-              <Field label="Texte d'introduction" hint="Affiché sous le titre. Laisser vide pour utiliser le texte de présentation des Paramètres.">
-                <textarea className={inputClass} name="introText" rows={4} defaultValue={value("introText")} />
-              </Field>
-            </Section>
-            <Section title="Présentation (qui sommes-nous ?)">
-              <Field label="Titre de section"><input className={inputClass} name="presentationTitle" defaultValue={value("presentationTitle")} /></Field>
-              <UploadField name="presentationImage" label="Photo de présentation" defaultValue={value("presentationImage")} />
-              <RepeaterField
-                name="strengths"
-                label="Points forts"
-                addLabel="Ajouter un point fort"
-                itemTitleKey="label"
-                fields={listFields([{ name: "label", label: "Intitulé" }])}
-                items={labelList(list("strengths"))}
-              />
             </Section>
             <Section title="Domaines d'expertise (affiché si aucun service publié)">
               <div className="grid gap-5 sm:grid-cols-2">
@@ -129,13 +114,21 @@ export default async function PageContentEditor({ params, searchParams }: Props)
               <Field label="Texte"><textarea className={inputClass} name="heroText" rows={2} defaultValue={value("heroText")} /></Field>
               <UploadField name="heroImage" label="Photo de la bannière" hint="Laisser vide pour utiliser l'image principale des Paramètres." defaultValue={value("heroImage")} />
             </Section>
-            <Section title="Introduction">
+            <Section title="Introduction (qui sommes-nous ?)">
               <div className="grid gap-5 sm:grid-cols-2">
                 <Field label="Sur-titre"><input className={inputClass} name="introEyebrow" defaultValue={value("introEyebrow")} /></Field>
                 <Field label="Titre"><input className={inputClass} name="introTitle" defaultValue={value("introTitle")} /></Field>
               </div>
               <Field label="Texte" hint="Un saut de ligne simple conserve le retour à la ligne"><textarea className={inputClass} name="introText" rows={6} defaultValue={value("introText")} /></Field>
               <UploadField name="introImage" label="Photo de la section" defaultValue={value("introImage")} />
+              <RepeaterField
+                name="strengths"
+                label="Points forts (liste sous le texte)"
+                addLabel="Ajouter un point fort"
+                itemTitleKey="label"
+                fields={listFields([{ name: "label", label: "Intitulé" }])}
+                items={labelList(list("strengths"))}
+              />
               <RepeaterField
                 name="introValues"
                 label="Valeurs mises en avant"
