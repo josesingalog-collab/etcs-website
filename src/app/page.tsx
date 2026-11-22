@@ -54,7 +54,6 @@ export default async function Home() {
         <section aria-label="Introduction" className="relative isolate overflow-hidden bg-vinci text-white">
           <div className="absolute inset-0" aria-hidden="true">
             <HeroSlideshow images={heroPool} />
-            <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(3,31,115,.9) 0%, rgba(16,48,120,.78) 50%, rgba(7,20,80,.92) 100%)" }} />
           </div>
           <div className="relative mx-auto flex max-w-5xl flex-col items-center px-4 pb-20 pt-32 text-center sm:px-8 lg:pb-24 lg:pt-40">
             <div className="rise rise-1 w-full rounded-[2rem] border-2 border-white/30 bg-[rgba(3,20,70,.55)] px-6 py-10 shadow-2xl shadow-black/30 backdrop-blur-md sm:px-10 sm:py-14">
