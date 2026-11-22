@@ -9,6 +9,7 @@ import { parseKeyStats } from "@/lib/key-stats";
 import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/components/public/sections";
 import { ProjectCard, ServiceCard, ArticleCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
+import { HeroSlideshow } from "@/components/public/hero-slideshow";
 import { WorldMap } from "@/components/public/world-map";
 
 export const instant = false;
@@ -37,6 +38,14 @@ export default async function Home() {
   const intro = settings?.aboutText || home.introText;
   const latestProjects = projects.slice(0, 3);
   const latestArticles = articles.slice(0, 3);
+  const heroPool = [
+    { src: "/images/hero.jpg", alt: "Chantier d'infrastructure en cours de réalisation avec engins de terrassement" },
+    { src: "/images/transport.jpg", alt: "Route et chaussée en construction avec véhicules d'entreprise" },
+    { src: "/images/batiments.jpg", alt: "Immeuble de grande hauteur en construction, structure béton apparente" },
+    { src: "/images/engagement.jpg", alt: "Ouvrage de génie civil en béton armé en cours de construction" },
+    { src: "/images/conviction.jpg", alt: "Grue de chantier et structure en construction à l'aube" },
+    { src: "/images/etudes.jpg", alt: "Bureau d'études : plans de coffrage et dessins techniques sur table de travail" },
+  ];
   const heroLines = home.heroTitle.split(/\r?\n/);
 
   return (
@@ -44,7 +53,7 @@ export default async function Home() {
       <main>
         <section aria-label="Introduction" className="relative isolate overflow-hidden bg-vinci text-white">
           <div className="absolute inset-0" aria-hidden="true">
-            <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="100vw" className="kenburns object-cover" />
+            <HeroSlideshow images={heroPool} />
             <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(3,31,115,.78) 0%, rgba(24,74,139,.62) 50%, rgba(10,24,86,.82) 100%)" }} />
           </div>
           <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 pb-24 pt-36 text-center sm:px-8 lg:pb-28 lg:pt-44">
