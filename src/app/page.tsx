@@ -11,6 +11,7 @@ import { ProjectCard, ArticleCard } from "@/components/public/cards";
 import { DomainCard } from "@/components/public/domain-card";
 import { Reveal } from "@/components/public/reveal";
 import { HeroSlideshow } from "@/components/public/hero-slideshow";
+import { HeroTextTransition } from "@/components/public/hero-text-transition";
 import { WorldMap } from "@/components/public/world-map";
 
 export const instant = false;
@@ -36,7 +37,6 @@ export default async function Home() {
     getPageContent("home"),
   ]);
   const stats = parseKeyStats(settings?.keyStats);
-  const intro = settings?.aboutText || home.introText;
   const latestProjects = projects.slice(0, 3);
   const latestArticles = articles.slice(0, 3);
   const heroPool = [
@@ -47,7 +47,6 @@ export default async function Home() {
     { src: "/images/conviction.jpg", alt: "Grue de chantier et structure en construction à l'aube" },
     { src: "/images/etudes.jpg", alt: "Bureau d'études : plans de coffrage et dessins techniques sur table de travail" },
   ];
-  const heroLines = home.heroTitle.split(/\r?\n/);
 
   return (
     <SiteShell>
@@ -59,13 +58,18 @@ export default async function Home() {
           </div>
           <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-32 text-center sm:px-6 lg:pb-24 lg:pt-36">
             <div className="rise rise-1 w-full px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
-              <p className="annotation text-sm text-vinci-sky lg:text-base">ETCS — MONDE « CONSTRUIRE AUTREMENT »</p>
-              <h1 className="display mx-auto mt-6 max-w-4xl leading-[1.08] text-[clamp(2.1rem,4.8vw,4.2rem)] lg:mt-8 lg:max-w-none lg:text-[clamp(2.6rem,5vw,4.8rem)]">
-                {heroLines.map((line, index) => (
-                  <span key={index}>{index > 0 && <br />}{line}</span>
-                ))}
+              <p className="annotation text-base font-black tracking-[.18em] text-vinci-sky lg:text-xl">ETCS — MONDE</p>
+              <h1 className="display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
+                <HeroTextTransition
+                  phrases={[
+                    { lines: ["Construire autrement"], className: "text-vinci-sky" },
+                    { lines: ["Bâtir et Moderniser", "les Infrastructures."], className: "text-white" },
+                  ]}
+                />
               </h1>
-              <p className="mx-auto mt-8 max-w-3xl text-base leading-8 text-white sm:text-lg sm:leading-9 lg:mt-10 lg:max-w-4xl lg:text-xl lg:leading-10">{intro}</p>
+              <p className="mx-auto mt-9 max-w-2xl text-sm leading-7 text-slate-100 sm:text-base sm:leading-8 lg:mt-11 lg:text-lg lg:leading-9">
+                E.T.C.S Sarl, bureau d&apos;études et entreprise générale de génie civil — de la maîtrise d&apos;œuvre à la réalisation des grandes infrastructures, en RDC et à l&apos;international.
+              </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4 lg:mt-12 lg:gap-5">
                 <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy lg:px-9 lg:py-4 lg:text-base">
                   Découvrir nos services <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5" />
