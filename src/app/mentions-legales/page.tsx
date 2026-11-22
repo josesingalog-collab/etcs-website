@@ -3,9 +3,7 @@ import { SiteShell } from "@/components/site-shell";
 import { company } from "@/lib/content";
 import { getPhoneList, getSiteSettings, splitPhone } from "@/lib/site-settings";
 
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({ title: "Mentions légales", description: "Mentions légales du site d'E.T.C.S Sarl : éditeur, identification légale et contacts.", path: "/mentions-legales" });
+export const metadata = { title: "Mentions légales" };
 export const instant = false;
 
 export default async function Legal() {
@@ -25,8 +23,6 @@ export default async function Legal() {
             <dt className="font-bold text-anthracite">RCCM :</dt><dd>{company.rccm}</dd>
             <dt className="font-bold text-anthracite">ID NAT :</dt><dd>{company.idNat}</dd>
             <dt className="font-bold text-anthracite">Numéro d&apos;impôt :</dt><dd>{company.tax}</dd>
-            <dt className="font-bold text-anthracite">Agréments :</dt><dd>[À COMPLÉTER]</dd>
-            <dt className="font-bold text-anthracite">SIRET (filiale française) :</dt><dd>[À COMPLÉTER]</dd>
           </dl>
           <h2 className="display mt-10 text-xl uppercase text-royal">Contact</h2>
           <p className="mt-4 text-sm leading-8 text-slate-600">

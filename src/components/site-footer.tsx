@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { Lock } from "lucide-react";
+import { MapPin, Phone, Mail, Facebook, Linkedin, Instagram, Twitter, Youtube, Lock } from "lucide-react";
 import type { SiteSettings } from "@prisma/client";
 import { getPhoneList, splitPhone } from "@/lib/site-settings";
+import { CompanyBold } from "@/components/company-bold";
+import { Logo } from "@/components/logo";
 
 const navLinks: [string, string][] = [
   ["À propos", "/a-propos"],
@@ -12,93 +14,82 @@ const navLinks: [string, string][] = [
   ["Demander un devis", "/devis"],
 ];
 
-function socialIcons(settings: SiteSettings | null): [string, string][] {
+const socialIcons: Record<string, typeof Facebook> = {
+  facebook: Facebook,
+  linkedin: Linkedin,
+  instagram: Instagram,
+  twitter: Twitter,
+  "x": Twitter,
+  youtube: Youtube,
+};
+
+function socials(settings: SiteSettings | null) {
   if (!settings?.socialLinks || Array.isArray(settings.socialLinks) || typeof settings.socialLinks !== "object") return [];
-  return (Object.entries(settings.socialLinks) as [string, unknown][]).filter((entry): entry is [string, string] => typeof entry[1] === "string" && /^https:\/\//.test(entry[1]));
+  return Object.entries(settings.socialLinks).filter((entry): entry is [string, string] => typeof entry[1] === "string" && /^https:\/\//.test(entry[1]));
 }
 
-/** Pied de page sombre arrondi, avec logo en filigrane, style maquette. */
 export function Footer({ settings, aboutText }: { settings: SiteSettings | null; aboutText: string }) {
-  const socials = socialIcons(settings);
-  const phones = getPhoneList(settings);
+  const socialLinks = socials(settings);
+  const year = new Date().getFullYear();
   return (
-    <footer className="px-4 pb-8 sm:px-6 lg:px-10">
-      <div className="relative mx-auto max-w-7xl overflow-hidden rounded-[2.5rem] text-white" style={{ backgroundColor: "#101a33" }}>
-        <div className="pointer-events-none absolute -bottom-24 -right-20 h-80 w-80 rounded-full opacity-20 blur-3xl" style={{ background: "var(--plan-accent)" }} aria-hidden="true" />
-        <div className="relative grid gap-10 p-8 sm:p-12 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
-          <div>
-            <div className="flex items-center gap-3">
-              {settings?.logoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={settings.logoUrl} alt={`Logo ${settings?.companyName ?? "E.T.C.S Sarl"}`} className="h-12 w-auto" />
-              ) : (
-                <span className="grid h-12 w-12 place-items-center rounded-2xl bg-[var(--plan-accent)] text-lg font-black text-white">ET</span>
-              )}
-              <div>
-                <p className="text-lg font-extrabold">{settings?.companyName ?? "E.T.C.S Sarl"}</p>
-                <p className="text-[10px] font-bold uppercase tracking-[.18em] text-slate-400">Etudes Techniques Conceptions des Structures</p>
-              </div>
-            </div>
-            <p className="mt-5 max-w-xs text-sm leading-7 text-slate-400">{aboutText}</p>
-            {socials.length > 0 && (
-              <div className="mt-6 flex gap-3">
-                {socials.map(([name, url]) => (
-                  <a key={name} href={url} target="_blank" rel="noreferrer" aria-label={name} className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-[10px] font-bold text-slate-300 transition hover:bg-white hover:text-[var(--plan-navy)]">
-                    {name.slice(0, 2).toUpperCase()}
-                  </a>
-                ))}
-              </div>
-            )}
-          </div>
-          <div>
-            <p className="text-sm font-extrabold text-white">Navigation</p>
-            <ul className="mt-5 grid gap-2.5 text-sm text-slate-400">
-              {navLinks.map(([label, href]) => (
-                <li key={href}><Link href={href} className="transition hover:text-white">{label}</Link></li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <p className="text-sm font-extrabold text-white">Domaines</p>
-            <ul className="mt-5 grid gap-2.5 text-sm text-slate-400">
-              <li>Infrastructures de transport</li>
-              <li>Bâtiments complexes et IGH</li>
-              <li>Énergie et bâtiments industriels</li>
-              <li>Aménagement urbain</li>
-              <li>Environnement et développement durable</li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-sm font-extrabold text-white">Contact</p>
-            <ul className="mt-5 grid gap-2.5 text-sm text-slate-400">
-              {phones.map((raw) => {
-                const { number, note } = splitPhone(raw);
-                const isWhatsapp = note ? /whatsapp/i.test(note) : false;
-                const href = isWhatsapp ? `https://wa.me/${number.replace(/[^\d]/g, "")}` : `tel:${number.replace(/\s/g, "")}`;
+    <footer className="bg-vinci text-white">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-16 pt-20 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.2fr] lg:px-8">
+        <div>
+          <Logo light companyName={settings?.companyName ?? "E.T.C.S Sarl"} logoUrl={settings?.logoUrl} />
+          <p className="mt-6 max-w-sm text-sm leading-7 text-slate-100">
+            <CompanyBold text={aboutText} />
+          </p>
+          {socialLinks.length > 0 && (
+            <div className="mt-6 flex gap-3">
+              {socialLinks.map(([name, url]) => {
+                const Icon = socialIcons[name.toLowerCase()] ?? null;
                 return (
-                  <li key={number}>
-                    <a href={href} className="transition hover:text-white">{number}{note && <span className="ml-2 text-[9px] font-bold uppercase tracking-wider text-slate-500">{note}</span>}</a>
-                  </li>
+                  <a key={name} href={url} target="_blank" rel="noreferrer" aria-label={name}
+                    className="grid h-10 w-10 place-items-center rounded-lg border border-white/25 text-white transition hover:bg-white hover:text-vinci">
+                    {Icon ? <Icon className="h-4 w-4" /> : <span className="text-[10px] font-bold uppercase">{name.slice(0, 2)}</span>}
+                  </a>
                 );
               })}
-              {settings?.email && <li><a href={`mailto:${settings.email}`} className="break-all transition hover:text-white">{settings.email}</a></li>}
-              {settings?.address && <li className="leading-6">{settings.address}</li>}
-              <li>[À COMPLÉTER — horaires]</li>
-            </ul>
-          </div>
+            </div>
+          )}
         </div>
-        <div className="relative border-t border-white/10">
-          <p className="pointer-events-none select-none px-8 pb-2 pt-6 text-center display text-[clamp(2.5rem,9vw,7rem)] leading-none text-white/[.04]">{settings?.companyName ?? "E.T.C.S Sarl"}</p>
-          <div className="flex flex-wrap items-center justify-between gap-3 px-8 pb-8 text-xs text-slate-500">
-            <p>© {new Date().getFullYear()} {settings?.companyName ?? "E.T.C.S Sarl"}. Tous droits réservés.</p>
-            <p className="flex gap-5">
-              <Link href="/mentions-legales" className="transition hover:text-white">Mentions légales</Link>
-              <Link href="/politique-confidentialite" className="transition hover:text-white">Confidentialité</Link>
-            </p>
-            <Link href="/admin/login" aria-label="Espace administrateur" className="focus-ring inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 transition hover:bg-white hover:text-[var(--plan-navy)]">
-              <Lock className="h-3 w-3" />Espace admin
-            </Link>
+        <nav aria-label="Liens rapides">
+          <p className="display text-lg text-white">Navigation</p>
+          <div className="mt-6 grid gap-3 text-sm text-slate-100">
+            {navLinks.map(([label, href]) => (
+              <Link key={href} href={href} className="w-fit transition hover:text-vinci-sky">{label}</Link>
+            ))}
           </div>
+        </nav>
+        <div>
+          <p className="display text-lg text-white">Contact</p>
+          <ul className="mt-6 grid gap-4 text-sm text-slate-100">
+            {settings?.address && (
+              <li className="flex items-start gap-3"><MapPin className="mt-0.5 h-4 w-4 shrink-0 text-vinci-sky" /><span className="leading-6">{settings.address}</span></li>
+            )}
+            {getPhoneList(settings).map((raw) => {
+              const { number, note } = splitPhone(raw);
+              return (
+                <li key={number} className="flex items-center gap-3"><Phone className="h-4 w-4 shrink-0 text-vinci-sky" /><a href={`tel:${number.replace(/\s/g, "")}`} className="transition hover:text-vinci-sky">{number}{note && <span className="ml-2 text-[10px] font-bold uppercase tracking-wider text-vinci-sky/80">{note}</span>}</a></li>
+              );
+            })}
+            {settings?.email && (
+              <li className="flex items-center gap-3"><Mail className="h-4 w-4 shrink-0 text-vinci-sky" /><a href={`mailto:${settings.email}`} className="break-all transition hover:text-vinci-sky">{settings.email}</a></li>
+            )}
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-white/20">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-6 text-xs text-slate-100 lg:justify-between lg:px-8">
+          <p>© {year} {settings?.companyName ?? "E.T.C.S Sarl"}. Tous droits réservés.</p>
+          <p className="flex gap-5">
+            <Link href="/mentions-legales" className="transition hover:text-vinci-sky">Mentions légales</Link>
+            <Link href="/politique-confidentialite" className="transition hover:text-vinci-sky">Confidentialité</Link>
+          </p>
+          <Link href="/admin/login" aria-label="Espace administrateur" title="Espace administrateur"
+            className="inline-flex items-center gap-2 rounded-full border border-white/25 px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-100 transition hover:bg-white hover:text-vinci">
+            <Lock className="h-3 w-3" />Espace admin
+          </Link>
         </div>
       </div>
     </footer>

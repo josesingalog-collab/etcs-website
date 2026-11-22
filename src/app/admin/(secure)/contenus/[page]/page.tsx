@@ -5,8 +5,6 @@ import { savePageContent } from "@/app/admin/actions";
 import { Field, inputClass } from "@/components/admin/form-fields";
 import { RepeaterField } from "@/components/admin/repeater";
 import { UploadField } from "@/components/admin/upload-field";
-import { SlotField } from "@/components/admin/slot-field";
-import { CountedTextarea } from "@/components/admin/counted-textarea";
 import { AdminHeader, SavedBanner } from "@/components/admin/ui";
 import { SubmitButton } from "@/components/submit-button";
 import { defaultPageContent, fontOptions, getPageContent, justifyOptions, labelList, letterSpacingOptions, lineHeightOptions, pageKeys, pageMetas, textScaleOptions, type PageKey } from "@/lib/page-content";
@@ -22,7 +20,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-const listFields = (valueFields: { name: string; label: string; type?: "text" | "textarea" | "url" }[]) => valueFields;
+const listFields = (valueFields: { name: string; label: string; type?: "text" | "textarea" }[]) => valueFields;
 
 export default async function PageContentEditor({ params, searchParams }: Props) {
   const [{ page: rawPage }, query] = await Promise.all([params, searchParams]);
@@ -34,11 +32,6 @@ export default async function PageContentEditor({ params, searchParams }: Props)
   const value = (key: string) => {
     const current = (content as unknown as Record<string, unknown>)[key];
     return typeof current === "string" ? current : String(defaults[key] ?? "");
-  };
-  const value2 = (key: string, sub: string) => {
-    const current = (content as unknown as Record<string, unknown>)[key];
-    const nested = current && typeof current === "object" && !Array.isArray(current) ? (current as Record<string, unknown>)[sub] : undefined;
-    return typeof nested === "string" ? nested : "";
   };
   const list = (key: string) => (content as unknown as Record<string, unknown>)[key];
 
@@ -56,82 +49,15 @@ export default async function PageContentEditor({ params, searchParams }: Props)
         {page === "home" && (
           <>
             <Section title="Bannière d'accueil">
-              <Field label="Sur-titre" hint="Slogan court, ex. « CONSTRUIRE AUTREMENT »">
+              <Field label="Sur-titre" hint="Ligne au-dessus du titre principal (ex. E.T.C.S Sarl — MONDE « CONSTRUIRE AUTREMENT »)">
                 <input className={inputClass} name="heroEyebrow" defaultValue={value("heroEyebrow")} />
               </Field>
               <Field label="Titre principal" hint="Un retour à la ligne crée un saut de ligne visuel">
-                <textarea className={inputClass} name="heroTitle" rows={2} defaultValue={value("heroTitle")} />
+                <textarea className={inputClass} name="heroTitle" rows={3} defaultValue={value("heroTitle")} />
               </Field>
-              <Field label="Phrase d'accroche" hint="Une seule phrase courte sous le titre — le texte long de présentation se règle dans les Paramètres">
-                <textarea className={inputClass} name="heroHook" rows={2} defaultValue={value("heroHook")} />
-              </Field>
-              <SlotField
-                name="heroImage"
-                label="Image de la bannière (plein écran)"
-                ratio="1920×1080 — paysage"
-                hint="Voile sombre appliqué automatiquement pour la lisibilité du titre."
-                defaultValue={list("heroImage") as { url: string; alt?: string; focal?: string }}
-                fallbackAlt="Chantier d'infrastructure en cours de réalisation avec engins de terrassement"
-              />
-            </Section>
-            <Section title="Photos « Qui sommes-nous » (deux compositions)">
-              <SlotField name="aboutPhotos[0]" label="Photo 1 (haute)" ratio="1600×900 — paysage" defaultValue={(list("aboutPhotos") as { url: string; alt?: string; focal?: string }[])[0]} fallbackAlt="Ingénieur consultant un plan sur un chantier de génie civil" />
-              <SlotField name="aboutPhotos[1]" label="Photo 2 (large, dessous)" ratio="1600×700 — panoramique" defaultValue={(list("aboutPhotos") as { url: string; alt?: string; focal?: string }[])[1]} fallbackAlt="Route et chaussée en construction avec véhicules d'entreprise" />
-            </Section>
-            <Section title="Phases d'accompagnement (frise de l'accueil)">
-              <RepeaterField
-                name="phases"
-                label="Phases (3 recommandées, icône automatique)"
-                addLabel="Ajouter une phase"
-                itemTitleKey="title"
-                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Description courte", type: "textarea" }])}
-                items={list("phases") as { title: string; text: string }[]}
-              />
-            </Section>
-            <Section title="FAQ — questions fréquentes (accueil)">
-              <RepeaterField
-                name="faq"
-                label="Questions/réponses"
-                addLabel="Ajouter une question"
-                itemTitleKey="question"
-                fields={listFields([{ name: "question", label: "Question" }, { name: "answer", label: "Réponse", type: "textarea" }])}
-                items={list("faq") as { question: string; answer: string }[]}
-              />
-            </Section>
-            <Section title="Témoignage client (masqué si vide)">
-              <CountedTextarea
-                label="Témoignage"
-                name="testimonial[quote]"
-                rows={3}
-                defaultValue={value2("testimonial", "quote")}
-                maxLength={500}
-                required={false}
-                hint="Laisser vide pour masquer la section. Renseignez uniquement de vrais témoignages."
-              />
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Nom du client"><input className={inputClass} name="testimonial[author]" defaultValue={value2("testimonial", "author")} /></Field>
-                <Field label="Fonction / projet" hint="Ex. Maître d'ouvrage — Route nationale 1"><input className={inputClass} name="testimonial[role]" defaultValue={value2("testimonial", "role")} /></Field>
-              </div>
-            </Section>
-            <Section title="FAQ — image d'illustration">
-              <SlotField
-                name="faqImage"
-                label="Illustration de la FAQ"
-                ratio="800×1000 — portrait ou carré"
-                defaultValue={list("faqImage") as { url: string; alt?: string; focal?: string }}
-                fallbackAlt="Grue de chantier et bâtiment en construction"
-              />
-            </Section>
-            <Section title="Contact — image du bas (et vidéo optionnelle)">
-              <SlotField
-                name="contactImage"
-                label="Grande image sous le formulaire"
-                ratio="1920×840 — panoramique"
-                defaultValue={list("contactImage") as { url: string; alt?: string; focal?: string }}
-                fallbackAlt="Ouvrage de génie civil en béton armé en cours de construction"
-              />
-              <Field label="URL de la vidéo (optionnelle)" hint="Coller un lien YouTube/Vimeo : le bouton lecture apparaît sur l'image. Laisser vide = pas de bouton.">
-                <input className={inputClass} name="contactVideoUrl" type="url" defaultValue={value("contactVideoUrl")} />
+              <UploadField name="heroImage" label="Image de la bannière" hint="Importez un fichier (PNG/JPEG/WebP, 5 Mo max.) ou collez une URL HTTPS." defaultValue={value("heroImage")} />
+              <Field label="Texte d'introduction" hint="Affiché sous le titre. Laisser vide pour utiliser le texte de présentation des Paramètres.">
+                <textarea className={inputClass} name="introText" rows={4} defaultValue={value("introText")} />
               </Field>
             </Section>
             <Section title="Présentation (qui sommes-nous ?)">
@@ -244,11 +170,11 @@ export default async function PageContentEditor({ params, searchParams }: Props)
               <Field label="Texte d'introduction"><textarea className={inputClass} name="competencesIntro" rows={3} defaultValue={value("competencesIntro")} /></Field>
               <RepeaterField
                 name="competences"
-                label="Domaines (icône automatique ; l'image s'affiche sur la page Services)"
+                label="Domaines (une icône est attribuée automatiquement à chaque ligne)"
                 addLabel="Ajouter un domaine"
                 itemTitleKey="title"
-                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Texte", type: "textarea" }, { name: "image", label: "Image (URL HTTPS)", type: "url" }])}
-                items={list("competences") as { title: string; text: string; image?: string }[]}
+                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Texte", type: "textarea" }])}
+                items={list("competences") as { title: string; text: string }[]}
               />
             </Section>
             <Section title="Frise du cycle de projet (NOS EXPERTISES)">

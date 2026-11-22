@@ -6,9 +6,7 @@ import { EmptyState } from "@/components/public/sections";
 import { ArticleCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
 
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({ title: "Actualités", description: "Les actualités d'E.T.C.S Sarl : projets, annonces et nouvelles de l'entreprise.", path: "/actualites" });
+export const metadata = { title: "Actualités" };
 export const instant = false;
 
 export default async function News() {

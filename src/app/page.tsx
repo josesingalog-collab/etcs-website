@@ -1,297 +1,338 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Phone, Mail, MapPin, Clock, Play } from "lucide-react";
+import { ArrowRight, Building2, HardHat, DraftingCompass, Route, Droplets, BadgeCheck, Compass, Handshake, Target, Layers } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
-import { publishedProjects, publishedArticles } from "@/lib/public-content";
-import { getPhoneList, getSiteSettings, splitPhone } from "@/lib/site-settings";
-import { getPageContent, getSlot, getTestimonials } from "@/lib/page-content";
+import { publishedProjects, publishedServices, publishedArticles } from "@/lib/public-content";
+import { getSiteSettings } from "@/lib/site-settings";
+import { getPageContent, stringList } from "@/lib/page-content";
 import { parseKeyStats } from "@/lib/key-stats";
-import { ProjectStack } from "@/components/public/project-stack";
-import { ArticleCard } from "@/components/public/cards";
+import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/components/public/sections";
+import { ProjectCard, ServiceCard, ArticleCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
-import { ServicesPanel } from "@/components/public/services-panel";
-import { StatsCounters } from "@/components/public/stats-counters";
-import { TestimonialSlider } from "@/components/public/testimonial-slider";
-import { FaqAccordion } from "@/components/public/faq-accordion";
-import { MarqueeRibbon } from "@/components/public/marquee-ribbon";
+import { WorldMap } from "@/components/public/world-map";
 import { CompanyBold } from "@/components/company-bold";
-import { IMAGES } from "@/lib/images";
-import { InquiryForm } from "@/components/inquiry-form";
-import { MockEyebrow, PillLink } from "@/components/public/pill";
 
 export const instant = false;
 
-function socialsOf(settings: Awaited<ReturnType<typeof getSiteSettings>>): [string, string][] {
-  if (!settings?.socialLinks || typeof settings.socialLinks !== "object" || Array.isArray(settings.socialLinks)) return [];
-  return (Object.entries(settings.socialLinks as Record<string, unknown>) as [string, unknown][])
-    .filter((entry): entry is [string, string] => typeof entry[1] === "string" && /^https:\/\//.test(entry[1]));
+const featureIcons = [DraftingCompass, Route, Building2, HardHat, Droplets];
+const strengthIcons = [Layers, Compass, Handshake];
+const commitmentIcons = [DraftingCompass, BadgeCheck, Target, Handshake];
+
+function lastRowOffset(count: number, index: number) {
+  const lastRowStart = Math.floor((count - 1) / 3) * 3;
+  if (count <= 3 || index < lastRowStart) return "";
+  const inLastRow = count - lastRowStart;
+  if (inLastRow === 2 && index === lastRowStart) return "lg:col-start-2";
+  if (inLastRow === 1) return "lg:col-start-3";
+  return "";
+}
+
+function FlagRDC() {
+  return (
+    <svg viewBox="0 0 24 16" className="h-3.5 w-5 shrink-0 rounded-[2px] shadow-sm" aria-label="Drapeau de la RDC" role="img">
+      <rect width="24" height="16" fill="#007FFF" />
+      <path d="M0 16 L24 0 L24 5.5 L7.5 16 Z" fill="#F7D618" />
+      <path d="M2.5 16 L24 2.5 L24 5.5 L7.5 16 Z" fill="#CE1021" />
+      <path d="M4 1.2 L4.7 3.2 L6.8 3.2 L5.1 4.5 L5.7 6.5 L4 5.2 L2.3 6.5 L2.9 4.5 L1.2 3.2 L3.3 3.2 Z" fill="#F7D618" />
+    </svg>
+  );
+}
+
+function FlagFrance() {
+  return (
+    <svg viewBox="0 0 24 16" className="h-3.5 w-5 shrink-0 rounded-[2px] shadow-sm" aria-label="Drapeau de la France" role="img">
+      <rect width="8" height="16" fill="#0055A4" />
+      <rect x="8" width="8" height="16" fill="#FFFFFF" />
+      <rect x="16" width="8" height="16" fill="#EF4135" />
+    </svg>
+  );
+}
+
+function IntroText({ text, justify = false }: { text: string; justify?: boolean }) {
+  const blocks = text.split(/\r?\n\s*\r?\n/);
+  return (
+    <>
+      {blocks.map((block, blockIndex) => {
+        const lines = block.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+        const bullets = lines.filter((line) => /^[-•]\s+/.test(line)).map((line) => line.replace(/^[-•]\s+/, ""));
+        const plain = lines.filter((line) => !/^[-•]\s+/.test(line));
+        return (
+          <div key={blockIndex} className={blockIndex > 0 ? "mt-4" : ""}>
+            {plain.map((line, index) => (
+              <p key={index} className={index > 0 ? "mt-2" : ""}><CompanyBold text={line} /></p>
+            ))}
+            {bullets.length > 0 && (
+              <ul className={`mt-2 grid gap-1.5 ${justify ? "" : "list-none"}`}>
+                {bullets.map((line, index) => (
+                  <li key={index} className="flex gap-2.5"><span className="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-vinci-sky" aria-hidden="true" /><span className="text-justify"><CompanyBold text={line} /></span></li>
+                ))}
+              </ul>
+            )}
+          </div>
+        );
+      })}
+    </>
+  );
 }
 
 export default async function Home() {
-  const [projects, articles, settings, home, about] = await Promise.all([
+  const [projects, services, articles, settings, home] = await Promise.all([
     publishedProjects(),
+    publishedServices(),
     publishedArticles(),
     getSiteSettings(),
     getPageContent("home"),
-    getPageContent("about"),
   ]);
-  const phones = getPhoneList(settings);
-  const firstPhone = phones.length > 0 ? splitPhone(phones[0]) : null;
   const stats = parseKeyStats(settings?.keyStats);
-  const latestProjects = projects.slice(0, 4);
+  const intro = settings?.aboutText || home.introText;
+  const latestProjects = projects.slice(0, 3);
   const latestArticles = articles.slice(0, 3);
   const heroLines = home.heroTitle.split(/\r?\n/);
-  const testimonials = getTestimonials(home.testimonial);
-  const socials = socialsOf(settings);
-  const heroSlot = getSlot(home.heroImage, IMAGES.hero.alt);
-  const aboutSlot1 = getSlot(home.aboutPhotos[0], IMAGES.presentation.alt);
-  const aboutSlot2 = getSlot(home.aboutPhotos[1], IMAGES.transport.alt);
-  const faqSlot = getSlot(home.faqImage, IMAGES.etudes.alt);
-  const contactSlot = getSlot(home.contactImage, IMAGES.engagement.alt);
-  const statCards = stats.slice(0, 2);
 
   return (
     <SiteShell>
       <main>
-        {/* 1. HERO plein écran */}
-        <section aria-label="Introduction" className="relative isolate flex min-h-[92vh] items-center overflow-hidden rounded-b-[2.5rem] lg:rounded-b-[3.5rem]">
-          <Image src={settings?.heroImageUrl || heroSlot.url} alt={IMAGES.hero.alt} fill priority sizes="100vw" className="object-cover" style={{ objectPosition: heroSlot.focal }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(10,22,56,.92) 0%, rgba(10,22,56,.78) 45%, rgba(10,22,56,.35) 100%)" }} />
-          {socials.length > 0 && (
-            <div className="absolute bottom-10 left-6 z-10 hidden flex-col gap-3 lg:flex">
-              {socials.map(([name, url]) => (
-                <a key={name} href={url} target="_blank" rel="noreferrer" aria-label={name} className="grid h-11 w-11 place-items-center rounded-full border border-white/25 text-[10px] font-bold text-white backdrop-blur-sm transition hover:bg-white hover:text-[var(--plan-navy)]">
-                  {name.slice(0, 2).toUpperCase()}
-                </a>
-              ))}
-              <span className="mx-auto my-2 h-16 w-px bg-white/30" aria-hidden="true" />
-            </div>
-          )}
-          <div className="relative mx-auto grid w-full max-w-7xl gap-10 px-6 py-36 lg:grid-cols-[1.15fr_.85fr] lg:items-center lg:px-16">
-            <div>
-              <p className="rise annotation text-[11px]" style={{ color: "var(--plan-sky)" }}>{home.heroEyebrow}</p>
-              <h1 className="rise rise-1 display mt-6 leading-[1.02] text-[clamp(2.4rem,5.4vw,4.5rem)] text-white">
+        <section aria-label="Introduction" className="relative isolate bg-vinci text-white">
+          <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-0 pt-36 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:pt-40">
+            <div className="lg:pb-28">
+              <p className="rise text-sm font-black uppercase tracking-[.24em] text-vinci-sky">{home.heroEyebrow}</p>
+              <h1 className="rise rise-1 display mt-7 uppercase leading-[1.1] text-[clamp(1.7rem,3.8vw,3.4rem)]">
                 {heroLines.map((line, index) => (
                   <span key={index}>{index > 0 && <br />}{line}</span>
                 ))}
               </h1>
-              <p className="rise rise-2 mt-7 max-w-lg text-sm leading-7 text-slate-200">
-                <CompanyBold text={home.heroHook} />
-              </p>
-              <div className="rise rise-3 mt-9">
-                <PillLink href="/devis" variant="accent">Demander une estimation et des quantitatifs</PillLink>
+              <div className="rise rise-2 mt-8 max-w-xl text-base leading-8 text-slate-100">
+                <IntroText text={intro} justify />
+              </div>
+              <div className="rise rise-3 mt-10 flex flex-wrap gap-4">
+                <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy">
+                  Découvrir nos services <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="/devis" className="rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky">
+                  Demander l&apos;estimation et quantitatifs
+                </Link>
               </div>
             </div>
-            <div className="hidden lg:block">
-              <Reveal delay={0.2}>
-                <div className="ml-auto w-fit rounded-3xl border border-white/20 bg-white/10 p-6 text-white backdrop-blur-md">
-                  <p className="annotation text-[9px] text-slate-200">NOS IMPLANTATIONS</p>
-                  <div className="mt-4 grid gap-4">
-                    <div>
-                      <p className="flex items-center gap-2 text-sm font-extrabold"><span className="h-2 w-2 rounded-full" style={{ backgroundColor: "var(--plan-sky)" }} aria-hidden="true" />Kinshasa · RDC</p>
-                      <p className="mt-1 pl-4 text-xs text-slate-300">Siège social — Gombe</p>
-                    </div>
-                    <div>
-                      <p className="flex items-center gap-2 text-sm font-extrabold"><span className="h-2 w-2 rounded-full" style={{ backgroundColor: "var(--plan-sky)" }} aria-hidden="true" />Montrouge · France</p>
-                      <p className="mt-1 pl-4 text-xs text-slate-300">Bureau d&apos;études</p>
-                    </div>
-                  </div>
-                  <Link href="/a-propos" className="focus-ring mt-6 inline-flex items-center gap-2 text-xs font-bold text-white transition hover:gap-3">
-                    En savoir plus <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  </Link>
-                </div>
-              </Reveal>
+            <div className="rise rise-2 relative z-10 lg:self-center">
+              <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-vinci-navy shadow-2xl shadow-vinci-navy/40">
+                <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
+              </div>
             </div>
           </div>
         </section>
 
-        {/* 2. À PROPOS */}
-        <section className="relative z-10 -mt-8 rounded-t-[2.5rem] bg-white py-24 lg:-mt-14 lg:rounded-t-[3.5rem]">
-          <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1fr_1fr] lg:gap-20 lg:px-10">
+        <section aria-label="Présentation de E.T.C.S Sarl" className="bg-white py-24 lg:pt-40">
+          <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
             <Reveal variant="left">
-              <div className="grid gap-4">
-                <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[2rem]">
-                  <Image src={aboutSlot1.url} alt={aboutSlot1.alt} fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" style={{ objectPosition: aboutSlot1.focal }} />
-                  <span className="absolute left-4 top-4 rounded-full bg-white/90 px-4 py-2 text-[10px] font-extrabold uppercase tracking-wider text-[var(--plan-navy)] backdrop-blur">Bureau d&apos;études &amp; entreprise générale</span>
+              <div className="relative">
+                <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-mist shadow-xl shadow-anthracite/10">
+                  <Image src={home.presentationImage} alt="Chantier E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
                 </div>
-                <div className="relative aspect-[16/7] w-full overflow-hidden rounded-[2rem]">
-                  <Image src={aboutSlot2.url} alt={aboutSlot2.alt} fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" style={{ objectPosition: aboutSlot2.focal }} />
+                <div className="absolute -bottom-8 right-6 hidden bg-vinci-navy px-8 py-6 text-white shadow-xl sm:block">
+                  <p className="display text-2xl leading-none">E.T.C.S Sarl</p>
+                  <p className="mt-2 text-[10px] font-bold uppercase tracking-[.2em] text-vinci-sky">Etudes Techniques<br />Conceptions des Structures</p>
                 </div>
               </div>
             </Reveal>
             <Reveal delay={0.1} variant="right">
-              <MockEyebrow>Qui sommes-nous</MockEyebrow>
-              <h2 className="display mt-4 text-3xl leading-[1.1] text-anthracite md:text-4xl">{home.presentationTitle}</h2>
-              <div className="mt-7 grid gap-4">
-                <div className="rounded-3xl border border-slate-200 bg-white p-6">
-                  <p className="text-sm font-extrabold" style={{ color: "var(--plan-accent)" }}>Notre vocation</p>
-                  <p className="mt-2 text-xs leading-6 text-slate-600">Assurer l&apos;ensemble des missions que comportent les études : la maîtrise d&apos;œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil.</p>
-                </div>
-                <div className="rounded-3xl border border-slate-200 bg-white p-6">
-                  <p className="text-sm font-extrabold" style={{ color: "var(--plan-accent)" }}>Notre présence</p>
-                  <p className="mt-2 text-xs leading-6 text-slate-600">Siège social à Kinshasa-Gombe (RDC) et un bureau d&apos;études opérant en région parisienne (Montrouge, France).</p>
+              <p className="text-xs font-bold tracking-[.22em] text-gold">QUI SOMMES-NOUS ?</p>
+              <h2 className="display mt-4 text-4xl leading-[1.08] text-anthracite md:text-5xl">
+                {home.presentationTitle}
+              </h2>
+              <div className="mt-6">
+                <div className="text-justify leading-8 text-slate-600">
+                  <IntroText text={intro} />
                 </div>
               </div>
-              {statCards.length > 0 && (
-                <div className="mt-6 grid grid-cols-2 gap-4">
-                  {statCards.map((stat, index) => (
-                    <div key={stat.label} className={`rounded-3xl p-5 ${index === 0 ? "text-white" : "text-white"}`} style={{ backgroundColor: index === 0 ? "#101a33" : "var(--plan-accent)" }}>
-                      <p className="display text-3xl leading-none">{stat.value}</p>
-                      <p className="mt-2 text-[10px] font-bold uppercase leading-4 tracking-wider opacity-80">{stat.label}</p>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <div className="mt-7"><PillLink href="/a-propos" variant="accent">En savoir plus</PillLink></div>
+              <ul className="mt-8 divide-y divide-slate-100 border-y border-slate-100">
+                {stringList(home.strengths).map((label, index) => {
+                  const Icon = strengthIcons[index % strengthIcons.length];
+                  return (
+                    <li key={label} className="flex items-center gap-4 py-3.5">
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-royal-50 text-royal">
+                        <Icon className="h-4 w-4" />
+                      </span>
+                      <span className="text-sm font-semibold text-anthracite">{label}</span>
+                    </li>
+                  );
+                })}
+              </ul>
+              <Link href="/a-propos" className="mt-9 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-royal px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-royal/25 transition hover:bg-royal-deep sm:w-fit sm:justify-start">
+                Découvrir notre entreprise <ArrowRight className="h-4 w-4" />
+              </Link>
             </Reveal>
           </div>
         </section>
 
-        {/* 3. SERVICES — panneau sombre interactif */}
-        <section className="px-4 py-14 sm:px-6 lg:px-10">
-          <ServicesPanel eyebrow="Nos domaines" title="Des expertises complémentaires" items={about.competences.map((item) => ({ title: item.title, text: item.text, image: item.image, alt: item.title }))} />
-        </section>
-
-        {/* 4. RÉALISATIONS — masqué si vide */}
-        {latestProjects.length > 0 && (
-          <section className="py-24" style={{ backgroundColor: "var(--plan-paper)" }}>
-            <div className="mx-auto max-w-7xl px-6 lg:px-10">
-              <Reveal>
-                <MockEyebrow className="justify-center">Nos réalisations</MockEyebrow>
-                <h2 className="display mt-4 text-center text-3xl leading-[1.1] text-anthracite md:text-4xl">Des projets qui prennent forme.</h2>
-              </Reveal>
-              <ProjectStack projects={latestProjects} />
-            </div>
-          </section>
-        )}
-
-        {/* 5. TÉMOIGNAGE — masqué si vide */}
-        {testimonials.length > 0 && (
-          <section className="bg-white py-24">
-            <TestimonialSlider items={testimonials} />
-          </section>
-        )}
-
-        {/* 6. CHIFFRES CLÉS — masqué si vide */}
-        {stats.length > 0 && (
-          <section className="bg-white pb-24">
-            <StatsCounters stats={stats.slice(0, 4)} />
-          </section>
-        )}
-
-        {/* 7. FAQ + partenaires */}
-        <section className="py-24" style={{ backgroundColor: "var(--plan-paper)" }}>
-          <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[.9fr_1.1fr] lg:px-10">
-            <Reveal variant="left">
-              <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[2rem]">
-                <Image src={faqSlot.url} alt={faqSlot.alt} fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" style={{ objectPosition: faqSlot.focal }} />
+        <section className="bg-mist py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <Reveal><SectionHeading eyebrow={home.domainsEyebrow} title={home.domainsTitle} text={home.domainsText} /></Reveal>
+            {services.length > 0 ? (
+              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
+                {services.map((service, index) => (
+                  <Reveal key={service.slug} delay={index * 0.05} className={`lg:col-span-2 ${lastRowOffset(services.length, index)}`}>
+                    <ServiceCard service={service} index={index} />
+                  </Reveal>
+                ))}
               </div>
-            </Reveal>
-            <Reveal delay={0.1} variant="right">
-              <MockEyebrow>Questions fréquentes</MockEyebrow>
-              <h2 className="display mt-4 text-3xl leading-[1.1] text-anthracite md:text-4xl">Vous vous posez ces questions ?</h2>
-              <div className="mt-8"><FaqAccordion items={home.faq} /></div>
-            </Reveal>
+            ) : (
+              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
+                {home.features.map((feature, index) => {
+                  const Icon = featureIcons[index % featureIcons.length];
+                  return (
+                    <Reveal key={feature.title} delay={index * 0.05} className={`lg:col-span-2 ${lastRowOffset(home.features.length, index)}`}>
+                      <article className="card-hover h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-sm hover:border-royal/40">
+                        <span className="grid h-12 w-12 place-items-center rounded-xl bg-royal shadow-md shadow-royal/30"><Icon className="h-5 w-5 text-white" /></span>
+                        <h3 className="mt-5 text-base font-extrabold leading-snug text-anthracite">{feature.title}</h3>
+                        <span className="mt-3 block" aria-hidden="true" />
+                        <p className="mt-3 text-sm leading-6 text-slate-500">{feature.text}</p>
+                      </article>
+                    </Reveal>
+                  );
+                })}
+              </div>
+            )}
+            <div className="mt-12 text-center">
+              <Link href="/services" className="inline-flex items-center gap-2 rounded-lg border border-royal px-7 py-3.5 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
+                Découvrir nos services et prestations <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
-          {about.partners.length > 0 && (
-            <div className="mx-auto mt-16 max-w-7xl px-6 lg:px-10">
-              <div className="marquee border-y border-slate-200 py-6" role="list" aria-label="Partenaires">
-                <div className="marquee-track">
-                  {[...about.partners, ...about.partners].map((partner, index) => (
-                    <span key={`${partner}-${index}`} role="listitem" className="display flex items-center gap-10 pr-10 text-lg tracking-[.12em] text-slate-300">
-                      {partner}
-                      <span className="h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: "var(--plan-accent)" }} aria-hidden="true" />
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </section>
 
-        {/* 8. CONTACT */}
         <section className="bg-white py-24">
-          <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[1fr_1.1fr] lg:px-10">
-            <Reveal variant="left">
-              <MockEyebrow>Contact</MockEyebrow>
-              <h2 className="display mt-4 text-3xl leading-[1.1] text-anthracite md:text-4xl">Construisons ensemble.</h2>
-              <div className="mt-9 grid gap-5">
-                {firstPhone && (
-                  <a href={`tel:${firstPhone.number.replace(/\s/g, "")}`} className="flex items-center gap-4 rounded-2xl border border-slate-200 p-4 transition hover:border-[var(--plan-accent)]">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-white" style={{ backgroundColor: "var(--plan-accent)" }}><Phone className="h-5 w-5" aria-hidden="true" /></span>
-                    <span><span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Téléphone</span><span className="block text-sm font-bold text-anthracite">{firstPhone.number}</span></span>
-                  </a>
-                )}
-                {settings?.email && (
-                  <a href={`mailto:${settings.email}`} className="flex items-center gap-4 rounded-2xl border border-slate-200 p-4 transition hover:border-[var(--plan-accent)]">
-                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-white" style={{ backgroundColor: "var(--plan-accent)" }}><Mail className="h-5 w-5" aria-hidden="true" /></span>
-                    <span><span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">E-mail</span><span className="block text-sm font-bold text-anthracite">{settings.email}</span></span>
-                  </a>
-                )}
-                <div className="flex items-center gap-4 rounded-2xl border border-slate-200 p-4">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-white" style={{ backgroundColor: "var(--plan-accent)" }}><Clock className="h-5 w-5" aria-hidden="true" /></span>
-                  <span><span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Horaires</span><span className="block text-sm font-bold text-anthracite">Lundi – Vendredi · 8h00 – 17h00</span></span>
-                </div>
-                <div className="flex items-center gap-4 rounded-2xl border border-slate-200 p-4">
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-white" style={{ backgroundColor: "var(--plan-accent)" }}><MapPin className="h-5 w-5" aria-hidden="true" /></span>
-                  <span><span className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Adresse</span><span className="block text-sm font-bold text-anthracite">Avenue du Port, Nouvelles Galeries Présidentielles, 5<sup>e</sup> étage, Bureau 504, Gombe-Kinshasa</span></span>
-                </div>
-              </div>
-            </Reveal>
-            <Reveal delay={0.1} variant="right"><InquiryForm type="contact" /></Reveal>
-          </div>
-          <div className="mx-auto mt-14 max-w-7xl px-6 lg:px-10">
-            <Reveal>
-              <div className="relative aspect-[16/7] w-full overflow-hidden rounded-[2.5rem]">
-                <Image src={contactSlot.url} alt={contactSlot.alt} fill sizes="100vw" className="object-cover" style={{ objectPosition: contactSlot.focal }} />
-                {home.contactVideoUrl && (
-                  <a href={home.contactVideoUrl} target="_blank" rel="noreferrer" aria-label="Lire la vidéo de présentation" className="focus-ring absolute inset-0 grid place-items-center">
-                    <span className="grid h-20 w-20 place-items-center rounded-full bg-white/90 shadow-2xl transition hover:scale-105"><Play className="h-8 w-8 text-[var(--plan-navy)]" aria-hidden="true" /></span>
-                  </a>
-                )}
-              </div>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* 9. BANDEAUX DÉFILANTS INCLINÉS */}
-        <section aria-hidden="true" className="relative my-10 h-44 overflow-hidden lg:h-52">
-          <div className="absolute inset-x-[-10%] top-6 -rotate-2" style={{ backgroundColor: "var(--plan-accent)" }}>
-            <MarqueeRibbon items={["Génie civil", "Bâtiments", "Travaux publics", "Ouvrages d'art"]} dark={false} />
-          </div>
-          <div className="absolute inset-x-[-10%] top-24 rotate-2" style={{ backgroundColor: "#101a33" }}>
-            <div className="marquee overflow-hidden py-4">
-              <div className="marquee-track">
-                {[...Array(2)].flatMap((_, repetition) => ["Bureau d'études", "Infrastructures", "Ingénierie", "Construction"].map((item, index) => (
-                  <span key={`${repetition}-${index}`} className="display flex items-center gap-8 pr-8 text-2xl uppercase text-outline">
-                    {item}
-                    <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: "var(--plan-accent)" }} />
-                  </span>
-                )))}
-              </div>
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <Reveal><SectionHeading eyebrow={home.projectsEyebrow} title={home.projectsTitle} text={home.projectsText} /></Reveal>
+              {latestProjects.length > 0 && (
+                <Link href="/realisations" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
+                  Découvrir toutes nos réalisations <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
             </div>
+            {latestProjects.length > 0 ? (
+              <div className="mt-12 grid gap-6 md:grid-cols-2">
+                {latestProjects.map((project, index) => (
+                  <Reveal key={project.slug} delay={index * 0.05} className={index === 0 ? "md:col-span-2 lg:col-span-1 lg:row-span-2" : ""}>
+                    <ProjectCard project={project} priority={index === 0} featured={index === 0} ctaLabel="Découvrir le projet" />
+                  </Reveal>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-12"><EmptyState illustration ctaHref="/contact" ctaLabel="Parler de votre projet" title="Nos réalisations seront bientôt présentées ici." text="Cette rubrique accueillera prochainement une sélection de projets et d'ouvrages de E.T.C.S Sarl." /></div>
+            )}
           </div>
         </section>
 
-        {/* ACTUALITÉS — masqué si vide */}
-        {latestArticles.length > 0 && (
-          <section className="bg-white py-24">
-            <div className="mx-auto max-w-7xl px-6 lg:px-10">
-              <div className="flex flex-wrap items-end justify-between gap-6">
-                <div>
-                  <MockEyebrow>Actualités</MockEyebrow>
-                  <h2 className="display mt-4 text-3xl leading-[1.1] text-anthracite md:text-4xl">{home.newsTitle}</h2>
+        <section aria-label="Pourquoi choisir E.T.C.S Sarl" className="relative isolate bg-royal-deep py-24 text-white">
+          <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1.05fr_1.25fr] lg:px-8">
+            <Reveal variant="left">
+              <div className="relative h-[380px] overflow-hidden rounded-3xl shadow-2xl shadow-black/30 lg:h-full">
+                <Image src={home.engagementImage} alt="Chantier génie civil E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-royal-deep via-anthracite/25 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-7">
+                  <span className="block" aria-hidden="true" />
+                  <p className="display mt-3 text-2xl uppercase leading-none text-white">E.T.C.S Sarl</p>
+                  <p className="mt-1 text-[10px] font-bold uppercase tracking-[.2em] text-slate-300">Etudes Techniques Conceptions des Structures — Kinshasa, RDC</p>
                 </div>
-                <PillLink href="/actualites" variant="accent" className="shrink-0">Toutes les actualités</PillLink>
               </div>
+            </Reveal>
+            <Reveal delay={0.1} variant="right">
+              <p className="text-xs font-bold tracking-[.22em] text-gold">NOTRE ENGAGEMENT</p>
+              <h2 className="display mt-4 text-4xl leading-[1.08] text-white md:text-5xl">{home.engagementTitle}</h2>
+              <p className="mt-5 max-w-xl text-sm leading-7 text-slate-300">
+                <CompanyBold text={home.engagementText} />
+              </p>
+              <ul className="mt-10 divide-y divide-white/10 border-y border-white/10">
+                {home.commitments.map((commitment, index) => {
+                  const Icon = commitmentIcons[index % commitmentIcons.length];
+                  return (
+                    <li key={commitment.title} className="flex items-start gap-4 py-5">
+                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-gold/10 text-gold">
+                        <Icon className="h-5 w-5" />
+                      </span>
+                      <div>
+                        <h3 className="text-sm font-extrabold uppercase tracking-[.14em] text-white">{commitment.title}</h3>
+                        <p className="mt-1.5 text-sm leading-6 text-slate-300">{commitment.text}</p>
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+              <Link href="/contact" className="mt-10 inline-flex w-full items-center justify-center gap-2 rounded-full bg-vinci px-7 py-4 text-sm font-bold text-white shadow-lg shadow-vinci/30 transition hover:bg-vinci-navy sm:w-fit sm:justify-start">
+                Parlons de votre projet <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+
+        <section aria-label="Notre conviction" className="relative isolate overflow-hidden bg-anthracite text-white">
+          <div className="absolute inset-0">
+            <Image src={home.convictionImage} alt="Équipes E.T.C.S Sarl sur le chantier" fill sizes="100vw" className="kenburns object-cover opacity-55" />
+            <div className="absolute inset-0 bg-anthracite/55" />
+          </div>
+          <div className="relative mx-auto max-w-4xl px-6 py-28 text-center lg:px-8">
+            <Reveal variant="zoom">
+              <div className="relative rounded-3xl border-2 border-dashed border-white/70 px-6 py-12 sm:px-14">
+                <span className="display absolute -top-7 left-6 text-8xl leading-none text-white" aria-hidden="true">&ldquo;</span>
+                <p className="display text-2xl leading-snug md:text-3xl">
+                  {home.quote}
+                </p>
+                <p className="mt-6 text-sm italic text-slate-200">— {home.quoteAuthor}</p>
+                <span className="display absolute -bottom-9 right-6 text-8xl leading-none text-white" aria-hidden="true">&rdquo;</span>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <StatsSection stats={stats} />
+
+        <section aria-label="Notre présence" className="bg-vinci py-24 text-white">
+          <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1fr_1.6fr] lg:px-8">
+            <Reveal variant="left">
+              <h2 className="display text-4xl leading-[1.1] text-white md:text-5xl">{home.presenceTitle}</h2>
+              <p className="mt-8 max-w-md text-base leading-8 text-slate-100">
+                <CompanyBold text={home.presenceText} />
+              </p>
+              <Link href="/contact" className="mt-10 inline-flex items-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-bold text-vinci transition duration-300 hover:-translate-y-0.5 hover:bg-vinci-sky hover:text-vinci-navy">
+                Nous contacter <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Reveal>
+            <Reveal delay={0.1} variant="right">
+              <div className="relative">
+                <WorldMap />
+                <div className="mt-6 flex flex-col gap-4 text-xs font-bold text-vinci-sky sm:flex-row sm:flex-wrap sm:gap-6">
+                  <span className="inline-flex items-center gap-2"><FlagRDC />Kinshasa, RD Congo — Entreprise des Travaux · Siège social</span>
+                  <span className="inline-flex items-center gap-2"><FlagFrance />Montrouge, France — Bureau d&apos;études · Construction, Génie civil, Travaux Publics</span>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        <section className="bg-mist py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-6">
+              <Reveal><SectionHeading eyebrow="ACTUALITÉS" title={home.newsTitle} /></Reveal>
+              {latestArticles.length > 0 && (
+                <Link href="/actualites" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
+                  Toutes les actualités <ArrowRight className="h-4 w-4" />
+                </Link>
+              )}
+            </div>
+            {latestArticles.length > 0 ? (
               <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {latestArticles.map((article, index) => (
                   <Reveal key={article.slug} delay={index * 0.05}><ArticleCard article={article} /></Reveal>
                 ))}
               </div>
-            </div>
-          </section>
-        )}
+            ) : (
+              <div className="mt-12"><EmptyState title="Aucune actualité publiée" text="Les annonces et nouvelles de l'entreprise apparaîtront ici une fois publiées par l'équipe E.T.C.S Sarl." /></div>
+            )}
+          </div>
+        </section>
+
+        <CtaSection title={home.ctaTitle} text={home.ctaText} />
       </main>
     </SiteShell>
   );

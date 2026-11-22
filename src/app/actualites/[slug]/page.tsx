@@ -4,22 +4,8 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { publishedArticle, publishedArticles } from "@/lib/public-content";
-import type { Metadata } from "next";
 
 export const instant = false;
-
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { slug } = await params;
-  const article = await publishedArticle(slug);
-  if (!article) return {};
-  const description = article.excerpt.slice(0, 155);
-  return {
-    title: article.title,
-    description,
-    alternates: { canonical: `/actualites/${article.slug}` },
-    openGraph: { title: `${article.title} | E.T.C.S Sarl`, description, url: `/actualites/${article.slug}`, siteName: "E.T.C.S Sarl", locale: "fr_CD", type: "article", images: ["/og-image.png"] },
-  };
-}
 
 export default async function Article({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

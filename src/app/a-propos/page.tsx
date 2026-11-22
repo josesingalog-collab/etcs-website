@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { Eye, Target, Gem, BadgeCheck, TrainTrack, Building2, Zap, Sprout, Globe2 } from "lucide-react";
-import { ProcessTimeline, ValuesChips } from "@/components/public/process-values";
+import { Eye, Target, Gem, BadgeCheck, TrainTrack, Building2, Zap, Sprout, Globe2, BookOpenCheck, DraftingCompass, HardHat, Settings, MessagesSquare, Award, HeartHandshake, Lightbulb } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -9,20 +8,18 @@ import { SectionHeading, CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 import { prisma } from "@/lib/prisma";
 import { CompanyBold } from "@/components/company-bold";
-import { IMAGES } from "@/lib/images";
-import { SectionLabel } from "@/components/plan/plan-section";
-import { pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({ title: "À propos", description: "E.T.C.S Sarl, bureau d'études et entreprise générale de génie civil : mission, vision, valeurs, équipe et centre de formations à Kinshasa et Montrouge.", path: "/a-propos" });
-
+export const metadata = { title: "À propos" };
 export const instant = false;
 
-const fallbackImage = IMAGES.engagement.src;
+const fallbackImage = "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85";
 
 const initialsOf = (name: string) => name.trim().split(/\s+/).slice(0, 2).map((part) => part[0] ?? "").join("").toUpperCase();
 
 const pillarIcons = [Target, Eye, Gem];
 const competenceIcons = [TrainTrack, Building2, Zap, Sprout, Globe2];
+const processusIcons = [BookOpenCheck, DraftingCompass, HardHat, Settings, MessagesSquare];
+const valeurIcons = [Award, HeartHandshake, Lightbulb, BadgeCheck];
 
 export default async function About() {
   const [settings, members, about] = await Promise.all([
@@ -43,11 +40,10 @@ export default async function About() {
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-8">
             <Reveal>
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl shadow-anthracite/20">
-                <Image src={sectionImage} alt={IMAGES.aproposIntro.alt} fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+                <Image src={sectionImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
               </div>
             </Reveal>
             <Reveal delay={0.1}>
-              <SectionLabel code="AXE A" label="NOTRE ENGAGEMENT" />
               <SectionHeading eyebrow={about.introEyebrow} title={about.introTitle} />
               <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600"><CompanyBold text={text} /></p>
               <div className="mt-10 grid gap-6 border-t border-slate-200 pt-8 sm:grid-cols-3">
@@ -61,7 +57,6 @@ export default async function About() {
 
         <section className="bg-mist py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <SectionLabel code="COUPE B-B" label="MISSION, VISION, VALEURS" />
             <Reveal><SectionHeading align="center" eyebrow={about.pillarsEyebrow} title={about.pillarsTitle} /></Reveal>
             <div className="mt-14 grid gap-6 md:grid-cols-3">
               {about.pillars.map((pillar, index) => {
@@ -82,7 +77,6 @@ export default async function About() {
 
         <section className="bg-white py-24">
           <div className="mx-auto max-w-5xl px-6 lg:px-8">
-            <SectionLabel code="DÉTAIL 02" label="DOMAINES DE COMPÉTENCES" />
             <Reveal><SectionHeading align="center" eyebrow={about.competencesEyebrow} title={about.competencesTitle} /></Reveal>
             <Reveal delay={0.05}>
               <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-7 text-slate-600">{about.competencesIntro}</p>
@@ -108,9 +102,52 @@ export default async function About() {
           </div>
         </section>
 
-        <ProcessTimeline eyebrow={about.processusEyebrow} title={about.processusTitle} intro={about.processusIntro} steps={about.processusSteps} />
+        <section className="bg-mist py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <Reveal><SectionHeading align="center" eyebrow={about.processusEyebrow} title={about.processusTitle} /></Reveal>
+            {about.processusIntro && (
+              <Reveal delay={0.05}>
+                <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-7 text-slate-600">{about.processusIntro}</p>
+              </Reveal>
+            )}
+            <div className="relative mt-16">
+              <div className="absolute left-[10%] right-[10%] top-10 hidden border-t-2 border-dashed border-royal/25 lg:block" aria-hidden="true" />
+              <div className="grid gap-10 sm:grid-cols-3 lg:grid-cols-5">
+                {about.processusSteps.map((step, index) => {
+                  const Icon = processusIcons[index % processusIcons.length];
+                  return (
+                    <Reveal key={step.label} delay={index * 0.07} className="flex flex-col items-center text-center">
+                      <span className="relative grid h-20 w-20 place-items-center rounded-full bg-royal text-white shadow-xl shadow-royal/30">
+                        <Icon className="h-8 w-8" aria-hidden="true" />
+                      </span>
+                      <p className="mt-4 max-w-[12rem] text-sm font-black uppercase leading-snug tracking-wide text-royal">{step.label}</p>
+                    </Reveal>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <ValuesChips eyebrow={about.valeursEyebrow} title={about.valeursTitle} values={about.valeurs} />
+        <section className="bg-white py-24">
+          <div className="mx-auto max-w-6xl px-6 lg:px-8">
+            <Reveal><SectionHeading align="center" eyebrow={about.valeursEyebrow} title={about.valeursTitle} /></Reveal>
+            <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+              {about.valeurs.map((valeur, index) => {
+                const Icon = valeurIcons[index % valeurIcons.length];
+                return (
+                  <Reveal key={valeur.title} delay={index * 0.06} className="text-center">
+                    <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-royal text-white shadow-lg shadow-royal/30">
+                      <Icon className="h-7 w-7" aria-hidden="true" />
+                    </span>
+                    <p className="mt-4 text-base font-extrabold text-anthracite">{valeur.title}</p>
+                    <p className="mt-1 text-xs leading-5 text-slate-500">{valeur.text}</p>
+                  </Reveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
         {members.length > 0 && (
           <section className="bg-white py-24">

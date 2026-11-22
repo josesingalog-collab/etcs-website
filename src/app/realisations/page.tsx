@@ -5,9 +5,7 @@ import { getSiteSettings } from "@/lib/site-settings";
 import { EmptyState, CtaSection } from "@/components/public/sections";
 import { ProjectGallery } from "@/components/public/project-filters";
 
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({ title: "Réalisations", description: "Projets et ouvrages réalisés par E.T.C.S Sarl : routes, ouvrages d'art, bâtiments et infrastructures.", path: "/realisations" });
+export const metadata = { title: "Réalisations" };
 export const instant = false;
 
 export default async function Projects() {

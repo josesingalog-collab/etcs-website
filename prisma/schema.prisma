@@ -79,16 +79,14 @@ model Article {
 }
 
 model QuoteRequest {
-  id           String        @id @default(cuid())
-  name         String
-  email        String
-  phone        String
-  subject      String        @db.VarChar(500)
-  message      String        @db.Text
-  localisation String?       @db.VarChar(300)
-  planUrl      String?       @db.VarChar(1000)
-  status       RequestStatus @default(NEW)
-  createdAt    DateTime      @default(now())
+  id        String        @id @default(cuid())
+  name      String
+  email     String
+  phone     String
+  subject   String        @db.VarChar(500)
+  message   String        @db.Text
+  status    RequestStatus @default(NEW)
+  createdAt DateTime      @default(now())
 }
 
 model ContactMessage {

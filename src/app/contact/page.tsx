@@ -7,9 +7,7 @@ import { getPageContent } from "@/lib/page-content";
 import { SectionHeading } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({ title: "Contact", description: "Contactez E.T.C.S Sarl : Avenue du Port, Nouvelles Galeries Présidentielles, Gombe-Kinshasa. Téléphones, WhatsApp et formulaire de contact.", path: "/contact" });
+export const metadata = { title: "Contact" };
 export const instant = false;
 
 function isEmbeddableMap(url: string | null | undefined) {
