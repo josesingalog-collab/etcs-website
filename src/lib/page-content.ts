@@ -20,6 +20,9 @@ export type HomeContent = {
   heroEyebrow: string;
   heroTitle: string;
   heroHook: string;
+  manifestoTitle: string;
+  manifestoText: string;
+  manifestoImage: { url: string; alt?: string; focal?: string };
   heroImage: string;
   introText: string;
   presentationTitle: string;
@@ -219,6 +222,9 @@ export const defaultHome: HomeContent = {
   heroEyebrow: "E.T.C.S Sarl — MONDE « CONSTRUIRE AUTREMENT »",
   heroTitle: "Bâtir Moderniser les infrastructures.",
   heroHook: "Bureau d'études et entreprise générale de génie civil, au service des grandes infrastructures en RDC et à l'international.",
+  manifestoTitle: "E.T.C.S Sarl ouvre la voie vers un monde plus responsable !",
+  manifestoText: "E.T.C.S Sarl conçoit, construit et entretient des infrastructures de transport et des aménagements durables, en République Démocratique du Congo et à l'international.",
+  manifestoImage: { url: "/images/transport.jpg", alt: "Vue aérienne d'un carrefour routier et de ses aménagements", focal: "50% 50%" },
   heroImage: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2400&q=90",
   introText: "E.T.C.S Sarl, bureau d'études et entreprise générale de génie civil, assure la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics — en RDC et à l'international.",
   presentationTitle: "L'expertise au service de vos projets.",
@@ -408,6 +414,15 @@ export function getPageLabel(page: string) {
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+/** Normalise un slot d'image (objet {url, alt, focal} ou simple chaîne URL). */
+export function getSlot(value: unknown, fallbackAlt = ""): { url: string; alt: string; focal: string } {
+  if (typeof value === "string" && value.trim() !== "") return { url: value, alt: fallbackAlt, focal: "50% 50%" };
+  if (isPlainObject(value) && typeof value.url === "string" && value.url.trim() !== "") {
+    return { url: value.url, alt: typeof value.alt === "string" && value.alt.trim() !== "" ? value.alt : fallbackAlt, focal: typeof value.focal === "string" && value.focal.trim() !== "" ? value.focal : "50% 50%" };
+  }
+  return { url: "", alt: fallbackAlt, focal: "50% 50%" };
 }
 
 function deepMergeDefaults(defaults: unknown, saved: unknown): unknown {

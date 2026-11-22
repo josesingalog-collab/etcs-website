@@ -5,6 +5,7 @@ import { savePageContent } from "@/app/admin/actions";
 import { Field, inputClass } from "@/components/admin/form-fields";
 import { RepeaterField } from "@/components/admin/repeater";
 import { UploadField } from "@/components/admin/upload-field";
+import { SlotField } from "@/components/admin/slot-field";
 import { AdminHeader, SavedBanner } from "@/components/admin/ui";
 import { SubmitButton } from "@/components/submit-button";
 import { defaultPageContent, fontOptions, getPageContent, justifyOptions, labelList, letterSpacingOptions, lineHeightOptions, pageKeys, pageMetas, textScaleOptions, type PageKey } from "@/lib/page-content";
@@ -62,6 +63,19 @@ export default async function PageContentEditor({ params, searchParams }: Props)
               <Field label="Texte d'introduction" hint="Affiché sous le titre. Laisser vide pour utiliser le texte de présentation des Paramètres.">
                 <textarea className={inputClass} name="introText" rows={4} defaultValue={value("introText")} />
               </Field>
+            </Section>
+            <Section title="Manifeste (bandeau avec image en fond)">
+              <Field label="Titre du manifeste"><input className={inputClass} name="manifestoTitle" defaultValue={value("manifestoTitle")} /></Field>
+              <Field label="Texte du manifeste" hint="Une à deux phrases, affichées sous le titre sur l'image de fond.">
+                <textarea className={inputClass} name="manifestoText" rows={3} defaultValue={value("manifestoText")} />
+              </Field>
+              <SlotField
+                name="manifestoImage"
+                label="Image de fond (vue aérienne de voirie)"
+                ratio="1920×1080 — paysage"
+                defaultValue={list("manifestoImage") as { url: string; alt?: string; focal?: string }}
+                fallbackAlt="Vue aérienne d'un carrefour routier et de ses aménagements"
+              />
             </Section>
             <Section title="Présentation (qui sommes-nous ?)">
               <Field label="Titre de section"><input className={inputClass} name="presentationTitle" defaultValue={value("presentationTitle")} /></Field>

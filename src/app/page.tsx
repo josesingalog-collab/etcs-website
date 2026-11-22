@@ -4,7 +4,7 @@ import { ArrowRight, Building2, HardHat, DraftingCompass, Route, Droplets, Badge
 import { SiteShell } from "@/components/site-shell";
 import { publishedProjects, publishedServices, publishedArticles } from "@/lib/public-content";
 import { getSiteSettings } from "@/lib/site-settings";
-import { getPageContent, stringList } from "@/lib/page-content";
+import { getPageContent, getSlot, stringList } from "@/lib/page-content";
 import { parseKeyStats } from "@/lib/key-stats";
 import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/components/public/sections";
 import { ProjectCard, ServiceCard, ArticleCard } from "@/components/public/cards";
@@ -86,6 +86,7 @@ export default async function Home() {
   const stats = parseKeyStats(settings?.keyStats);
   const intro = home.introText;
   const heroHook = home.heroHook;
+  const manifestoImage = getSlot(home.manifestoImage, "Vue aérienne d'un carrefour routier et de ses aménagements");
   const latestProjects = projects.slice(0, 3);
   const latestArticles = articles.slice(0, 3);
   const heroLines = home.heroTitle.split(/\r?\n/);
@@ -287,6 +288,19 @@ export default async function Home() {
         </section>
 
         <StatsSection stats={stats} />
+
+        <section aria-label="Notre manifeste" className="relative isolate overflow-hidden py-28 text-white">
+          <Image src={manifestoImage.url} alt={manifestoImage.alt} fill sizes="100vw" className="object-cover" style={{ objectPosition: manifestoImage.focal }} />
+          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,22,56,.55) 0%, rgba(10,22,56,.45) 50%, rgba(10,22,56,.65) 100%)" }} />
+          <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
+            <Reveal variant="zoom">
+              <h2 className="display text-3xl leading-[1.15] md:text-4xl">{home.manifestoTitle}</h2>
+              <p className="mx-auto mt-6 max-w-2xl text-sm leading-8 text-slate-100">
+                <CompanyBold text={home.manifestoText} />
+              </p>
+            </Reveal>
+          </div>
+        </section>
 
         <section aria-label="Notre présence" className="bg-vinci py-24 text-white">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1fr_1.6fr] lg:px-8">
