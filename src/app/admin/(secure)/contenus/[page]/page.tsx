@@ -49,29 +49,19 @@ export default async function PageContentEditor({ params, searchParams }: Props)
 
         {page === "home" && (
           <>
-            <Section title="Bannière d'accueil">
-              <Field label="Sur-titre" hint="Ligne au-dessus du titre principal (ex. E.T.C.S Sarl — MONDE « CONSTRUIRE AUTREMENT »)">
+            <Section title="Hero (bloc bleu + image en diagonale)">
+              <Field label="Sur-titre" hint="Petite ligne au-dessus du titre (ex. E.T.C.S Sarl — MONDE « CONSTRUIRE AUTREMENT »)">
                 <input className={inputClass} name="heroEyebrow" defaultValue={value("heroEyebrow")} />
               </Field>
-              <Field label="Titre principal" hint="Un retour à la ligne crée un saut de ligne visuel">
-                <textarea className={inputClass} name="heroTitle" rows={3} defaultValue={value("heroTitle")} />
+              <Field label="Titre du hero" hint="Affiché en gros sur le bloc bleu, à gauche de l'image">
+                <textarea className={inputClass} name="manifestoTitle" rows={2} defaultValue={value("manifestoTitle")} />
               </Field>
-              <Field label="Phrase d'accroche du hero" hint="Une phrase courte. Le texte complet de présentation se règle dans les Paramètres et s'affiche sur la page À propos.">
-                <textarea className={inputClass} name="heroHook" rows={2} defaultValue={value("heroHook")} />
-              </Field>
-              <UploadField name="heroImage" label="Image de la bannière" hint="Importez un fichier (PNG/JPEG/WebP, 5 Mo max.) ou collez une URL HTTPS." defaultValue={value("heroImage")} />
-              <Field label="Texte d'introduction" hint="Affiché sous le titre. Laisser vide pour utiliser le texte de présentation des Paramètres.">
-                <textarea className={inputClass} name="introText" rows={4} defaultValue={value("introText")} />
-              </Field>
-            </Section>
-            <Section title="Manifeste (bandeau avec image en fond)">
-              <Field label="Titre du manifeste"><input className={inputClass} name="manifestoTitle" defaultValue={value("manifestoTitle")} /></Field>
-              <Field label="Texte du manifeste" hint="Une à deux phrases, affichées sous le titre sur l'image de fond.">
+              <Field label="Texte du hero" hint="Une à deux phrases sous le titre">
                 <textarea className={inputClass} name="manifestoText" rows={3} defaultValue={value("manifestoText")} />
               </Field>
               <SlotField
                 name="manifestoImage"
-                label="Image de fond (vue aérienne de voirie)"
+                label="Image de droite (vue aérienne de voirie)"
                 ratio="1920×1080 — paysage"
                 defaultValue={list("manifestoImage") as { url: string; alt?: string; focal?: string }}
                 fallbackAlt="Vue aérienne d'un carrefour routier et de ses aménagements"
@@ -79,6 +69,9 @@ export default async function PageContentEditor({ params, searchParams }: Props)
             </Section>
             <Section title="Présentation (qui sommes-nous ?)">
               <Field label="Titre de section"><input className={inputClass} name="presentationTitle" defaultValue={value("presentationTitle")} /></Field>
+              <Field label="Texte court de présentation" hint="Le texte complet de présentation se règle dans les Paramètres et s'affiche sur la page À propos.">
+                <textarea className={inputClass} name="introText" rows={3} defaultValue={value("introText")} />
+              </Field>
               <UploadField name="presentationImage" label="Photo de présentation" defaultValue={value("presentationImage")} />
               <RepeaterField
                 name="strengths"

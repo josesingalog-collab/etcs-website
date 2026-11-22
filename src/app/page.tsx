@@ -85,39 +85,42 @@ export default async function Home() {
   ]);
   const stats = parseKeyStats(settings?.keyStats);
   const intro = home.introText;
-  const heroHook = home.heroHook;
   const manifestoImage = getSlot(home.manifestoImage, "Vue aérienne d'un carrefour routier et de ses aménagements");
   const latestProjects = projects.slice(0, 3);
   const latestArticles = articles.slice(0, 3);
-  const heroLines = home.heroTitle.split(/\r?\n/);
 
   return (
     <SiteShell>
       <main>
-        <section aria-label="Introduction" className="relative isolate bg-vinci text-white">
-          <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-0 pt-36 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:pt-40">
-            <div className="lg:pb-28">
-              <p className="rise text-sm font-black uppercase tracking-[.24em] text-vinci-sky">{home.heroEyebrow}</p>
-              <h1 className="rise rise-1 display mt-7 uppercase leading-[1.1] text-[clamp(1.7rem,3.8vw,3.4rem)]">
-                {heroLines.map((line, index) => (
-                  <span key={index}>{index > 0 && <br />}{line}</span>
-                ))}
-              </h1>
-              <div className="rise rise-2 mt-8 max-w-xl text-base leading-8 text-slate-100">
-                <IntroText text={heroHook} justify />
+        {/* 1. HERO façon Colas : bloc bleu à gauche (titre + texte + CTA), image à droite avec bord en diagonale */}
+        <section aria-label="Introduction" className="relative isolate overflow-hidden bg-white">
+          <div className="relative min-h-[560px] lg:min-h-[620px]">
+            <Image src={manifestoImage.url} alt={manifestoImage.alt} fill priority sizes="100vw" className="object-cover" style={{ objectPosition: manifestoImage.focal }} />
+            <div
+              className="absolute inset-0 hidden lg:block"
+              style={{ backgroundColor: "#184a8b", clipPath: "polygon(0 0, 58% 0, 44% 100%, 0 100%)" }}
+              aria-hidden="true"
+            />
+            <div className="relative mx-auto grid max-w-7xl gap-0 px-6 lg:grid-cols-2 lg:px-8">
+              <div className="rounded-b-[2rem] py-14 lg:rounded-none lg:py-28 lg:pr-10" style={{ backgroundColor: "#184a8b" }}>
+                <p className="rise text-sm font-black uppercase tracking-[.24em] text-vinci-sky">{home.heroEyebrow}</p>
+                <h1 className="rise rise-1 display mt-6 max-w-xl leading-[1.06] text-[clamp(2rem,4.4vw,3.6rem)] text-white">
+                  {home.manifestoTitle}
+                </h1>
+                <p className="rise rise-2 mt-7 max-w-md text-sm leading-7 text-slate-100">
+                  <CompanyBold text={home.manifestoText} />
+                </p>
+                <div className="rise rise-3 mt-9 flex flex-wrap gap-4">
+                  <Link href="/a-propos" className="focus-ring group inline-flex items-center gap-3 rounded-full bg-white px-7 py-3 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/25 transition hover:bg-vinci-sky hover:text-vinci-navy">
+                    Qui sommes-nous ?
+                    <span className="grid h-8 w-8 place-items-center rounded-full transition group-hover:translate-x-1" aria-hidden="true">
+                      <ArrowRight className="h-4 w-4" />
+                    </span>
+                  </Link>
+                </div>
               </div>
-              <div className="rise rise-3 mt-10 flex flex-wrap gap-4">
-                <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy">
-                  Découvrir nos services <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link href="/devis" className="rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky">
-                  Demander l&apos;estimation et quantitatifs
-                </Link>
-              </div>
-            </div>
-            <div className="rise rise-2 relative z-10 lg:self-center">
-              <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-vinci-navy shadow-2xl shadow-vinci-navy/40">
-                <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
+              <div className="lg:hidden relative aspect-[16/10] w-full">
+                <span className="absolute inset-0" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -288,19 +291,6 @@ export default async function Home() {
         </section>
 
         <StatsSection stats={stats} />
-
-        <section aria-label="Notre manifeste" className="relative isolate overflow-hidden py-28 text-white">
-          <Image src={manifestoImage.url} alt={manifestoImage.alt} fill sizes="100vw" className="object-cover" style={{ objectPosition: manifestoImage.focal }} />
-          <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,22,56,.55) 0%, rgba(10,22,56,.45) 50%, rgba(10,22,56,.65) 100%)" }} />
-          <div className="relative mx-auto max-w-4xl px-6 text-center lg:px-8">
-            <Reveal variant="zoom">
-              <h2 className="display text-3xl leading-[1.15] md:text-4xl">{home.manifestoTitle}</h2>
-              <p className="mx-auto mt-6 max-w-2xl text-sm leading-8 text-slate-100">
-                <CompanyBold text={home.manifestoText} />
-              </p>
-            </Reveal>
-          </div>
-        </section>
 
         <section aria-label="Notre présence" className="bg-vinci py-24 text-white">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1fr_1.6fr] lg:px-8">
