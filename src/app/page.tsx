@@ -56,7 +56,7 @@ export default async function Home() {
             <HeroSlideshow images={heroPool} />
             <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(3,31,115,.78) 0%, rgba(24,74,139,.62) 50%, rgba(10,24,86,.82) 100%)" }} />
           </div>
-          <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 pb-24 pt-36 text-center sm:px-8 lg:pb-28 lg:pt-44">
+          <div className="relative mx-auto flex max-w-5xl flex-col items-center px-6 pb-24 pt-36 text-center sm:px-8 lg:pb-28 lg:pt-44">
             <p className="rise text-xs font-bold tracking-[.24em] text-vinci-sky">#E.T.C.S Sarl — KINSHASA, RDC</p>
             <h1 className="rise rise-1 display mt-7 leading-[1.08] text-[clamp(1.9rem,4.4vw,3.6rem)]">
               {heroLines.map((line, index) => (
