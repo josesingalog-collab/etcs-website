@@ -42,29 +42,26 @@ export default async function Home() {
   return (
     <SiteShell>
       <main>
-        <section aria-label="Introduction" className="relative isolate bg-vinci text-white">
-          <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-0 pt-36 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:pt-40">
-            <div className="lg:pb-28">
-              <p className="rise text-xs font-bold tracking-[.24em] text-vinci-sky">#E.T.C.S Sarl — KINSHASA, RDC</p>
-              <h1 className="rise rise-1 display mt-7 leading-[1.1] text-[clamp(1.7rem,3.8vw,3.4rem)]">
-                {heroLines.map((line, index) => (
-                  <span key={index}>{index > 0 && <br />}{line}</span>
-                ))}
-              </h1>
-              <p className="rise rise-2 mt-8 max-w-xl text-justify text-base leading-8 text-slate-100">{intro}</p>
-              <div className="rise rise-3 mt-10 flex flex-wrap gap-4">
-                <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy">
-                  Découvrir nos services <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link href="/devis" className="rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky">
-                  Demander un devis
-                </Link>
-              </div>
-            </div>
-            <div className="rise rise-2 relative z-10 lg:self-center">
-              <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-vinci-navy shadow-2xl shadow-vinci-navy/40">
-                <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
-              </div>
+        <section aria-label="Introduction" className="relative isolate overflow-hidden bg-vinci text-white">
+          <div className="absolute inset-0" aria-hidden="true">
+            <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="100vw" className="kenburns object-cover" />
+            <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(3,31,115,.78) 0%, rgba(24,74,139,.62) 50%, rgba(10,24,86,.82) 100%)" }} />
+          </div>
+          <div className="relative mx-auto flex max-w-3xl flex-col items-center px-6 pb-24 pt-36 text-center sm:px-8 lg:pb-28 lg:pt-44">
+            <p className="rise text-xs font-bold tracking-[.24em] text-vinci-sky">#E.T.C.S Sarl — KINSHASA, RDC</p>
+            <h1 className="rise rise-1 display mt-7 leading-[1.08] text-[clamp(1.9rem,4.4vw,3.6rem)]">
+              {heroLines.map((line, index) => (
+                <span key={index}>{index > 0 && <br />}{line}</span>
+              ))}
+            </h1>
+            <p className="rise rise-2 mt-7 text-sm leading-7 text-slate-100 sm:text-base sm:leading-8">{intro}</p>
+            <div className="rise rise-3 mt-10 flex flex-wrap justify-center gap-4">
+              <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy">
+                Découvrir nos services <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link href="/devis" className="focus-ring rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky">
+                Demander un devis
+              </Link>
             </div>
           </div>
         </section>
