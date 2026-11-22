@@ -27,8 +27,6 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-
-
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -39,9 +37,9 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
   const solid = scrolled || open;
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 bg-white transition-all duration-300 ${solid ? "shadow-lg shadow-vinci-navy/10" : "shadow-none"}`}>
+    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${solid ? "bg-white shadow-lg shadow-vinci-navy/10" : "bg-transparent"}`}>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Logo light={false} companyName={companyName ?? "E.T.C.S Sarl"} logoUrl={logoUrl} />
+        <Logo light={!solid} companyName={companyName ?? "E.T.C.S Sarl"} logoUrl={logoUrl} />
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navigation principale">
           {links.map(([label, href]) => {
             const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -49,16 +47,16 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
               <Link
                 key={href}
                 href={href}
-                className={`relative text-sm font-bold transition ${active ? "text-vinci" : "text-vinci-navy hover:text-vinci-mid"}`}
+                className={`relative text-sm font-bold uppercase tracking-wide transition ${active ? (solid ? "text-vinci" : "text-white") : solid ? "text-vinci-navy hover:text-vinci-mid" : "text-white/80 hover:text-white"}`}
               >
                 {label}
-                {active && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-vinci" />}
+                {active && <span className={`absolute -bottom-2 left-0 h-0.5 w-full rounded-full ${solid ? "bg-vinci" : "bg-white"}`} />}
               </Link>
             );
           })}
         </nav>
         <div className="flex items-center gap-3">
-          <Link href="/devis" className="focus-ring inline-flex items-center gap-2 rounded-full bg-vinci px-6 py-2.5 text-sm font-bold text-white shadow-md shadow-vinci/30 transition hover:bg-vinci-navy sm:block">
+          <Link href="/devis" className={`focus-ring inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold transition sm:block ${solid ? "bg-vinci text-white shadow-md shadow-vinci/30 hover:bg-vinci-navy" : "bg-white/10 text-white ring-1 ring-white/40 backdrop-blur hover:bg-[var(--plan-accent)]"}`}>
             Demander un devis <ArrowRight className="h-4 w-4" />
           </Link>
           <button
@@ -66,7 +64,7 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            className={`focus-ring grid h-11 w-11 place-items-center rounded-lg border transition lg:hidden ${solid ? "border-slate-200 text-anthracite" : "border-vinci-navy/20 text-vinci-navy"}`}
+            className={`focus-ring grid h-11 w-11 place-items-center rounded-lg border transition lg:hidden ${solid ? "border-slate-200 text-anthracite" : "border-white/40 text-white"}`}
           >
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -78,7 +76,7 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
             {links.map(([label, href]) => {
               const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
               return (
-                <Link key={href} href={href} onClick={() => setOpen(false)} className={`flex items-center justify-between rounded-xl px-4 py-4 text-base font-bold ${active ? "bg-royal-50 text-royal" : "text-anthracite hover:bg-mist"}`}>
+                <Link key={href} href={href} onClick={() => setOpen(false)} className={`flex items-center justify-between rounded-xl px-4 py-4 text-base font-bold uppercase ${active ? "bg-royal-50 text-royal" : "text-anthracite hover:bg-mist"}`}>
                   {label}
                   <ArrowRight className={`h-4 w-4 ${active ? "text-royal" : "text-slate-300"}`} />
                 </Link>
