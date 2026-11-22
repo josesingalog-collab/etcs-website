@@ -58,7 +58,7 @@ export default async function Home() {
           </div>
           <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-32 text-center sm:px-6 lg:pb-24 lg:pt-36">
             <div className="rise rise-1 w-full px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
-              <p className="annotation text-[11px] text-vinci-sky lg:text-xs">#E.T.C.S Sarl — KINSHASA, RDC</p>
+              <p className="annotation text-sm text-vinci-sky lg:text-base">ETCS — MONDE « CONSTRUIRE AUTREMENT »</p>
               <h1 className="display mx-auto mt-6 max-w-4xl leading-[1.08] text-[clamp(2.1rem,4.8vw,4.2rem)] lg:mt-8 lg:max-w-none lg:text-[clamp(2.6rem,5vw,4.8rem)]">
                 {heroLines.map((line, index) => (
                   <span key={index}>{index > 0 && <br />}{line}</span>
