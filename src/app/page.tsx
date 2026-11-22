@@ -1,13 +1,13 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Building2, HardHat, DraftingCompass, Route, Droplets, BadgeCheck, Handshake, Target } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Building2, HardHat, DraftingCompass, Route, Droplets, BadgeCheck, Handshake, Target } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
 import { publishedProjects, publishedServices, publishedArticles } from "@/lib/public-content";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
 import { parseKeyStats } from "@/lib/key-stats";
 import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/components/public/sections";
-import { ProjectCard, ServiceCard, ArticleCard } from "@/components/public/cards";
+import { ProjectCard, ArticleCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
 import { HeroSlideshow } from "@/components/public/hero-slideshow";
 import { WorldMap } from "@/components/public/world-map";
@@ -16,6 +16,14 @@ export const instant = false;
 
 const featureIcons = [DraftingCompass, Route, Building2, HardHat, Droplets];
 const commitmentIcons = [DraftingCompass, BadgeCheck, Target, Handshake];
+const domainTags: Record<string, string> = {
+  "genie-civil-ouvrages-art": "Ouvrages d'art",
+  "ingenierie-routiere": "Routes",
+  "barrages-hydraulique": "Énergie & eau",
+  "aeroports-voies-ferrees": "Aéroports",
+  "batiments": "Bâtiments",
+  "etudes-conseils": "Études",
+};
 
 function lastRowOffset(count: number, index: number) {
   const lastRowStart = Math.floor((count - 1) / 3) * 3;
@@ -81,12 +89,31 @@ export default async function Home() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <Reveal><SectionHeading eyebrow={home.domainsEyebrow} title={home.domainsTitle} text={home.domainsText} /></Reveal>
             {services.length > 0 ? (
-              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
-                {services.slice(0, 5).map((service, index) => (
-                  <Reveal key={service.slug} delay={index * 0.05} className={`lg:col-span-2 ${lastRowOffset(services.slice(0, 5).length, index)}`}>
-                    <ServiceCard service={service} index={index} />
-                  </Reveal>
-                ))}
+              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {services.map((service, index) => {
+                  const tag = domainTags[service.slug] ?? "E.T.C.S Sarl";
+                  const notched = index % 2 === 1;
+                  return (
+                    <Reveal key={service.slug} delay={index * 0.05}>
+                      <Link href={`/services/${service.slug}`} className="group block h-full">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden" style={{ clipPath: notched ? "polygon(0 0, 100% 0, 100% 100%, 64px 100%, 0 calc(100% - 52px))" : "polygon(0 0, 100% 0, 100% calc(100% - 52px), calc(100% - 72px) 100%, 0 100%)" }}>
+                          {service.image ? (
+                            <Image src={service.image} alt={service.title} fill sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                          ) : (
+                            <div className="grid h-full place-items-center bg-slate-200"><span className="display text-5xl text-slate-400">{String(index + 1).padStart(2, "0")}</span></div>
+                          )}
+                          <span className="absolute left-4 top-4 rounded-md bg-[var(--plan-accent)] px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-white shadow-md">{tag}</span>
+                        </div>
+                        <div className="relative px-6 pb-9 pt-6" style={{ backgroundColor: notched ? "#1637b8" : "#101a33" }}>
+                          <span className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full bg-white/10 text-white transition duration-300 group-hover:bg-white group-hover:text-[var(--plan-accent)]" aria-hidden="true">
+                            <ArrowUpRight className="h-4 w-4" />
+                          </span>
+                          <h3 className="display max-w-[80%] text-xl leading-snug text-white">{service.title}</h3>
+                        </div>
+                      </Link>
+                    </Reveal>
+                  );
+                })}
               </div>
             ) : (
               <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
