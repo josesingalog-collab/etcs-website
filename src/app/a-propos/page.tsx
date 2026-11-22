@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { Eye, Target, Gem, BadgeCheck, TrainTrack, Building2, Zap, Sprout, Globe2, BookOpenCheck, DraftingCompass, HardHat, Settings, MessagesSquare, Award, HeartHandshake, Lightbulb } from "lucide-react";
+import { Eye, Target, Gem, BadgeCheck, TrainTrack, Building2, Zap, Sprout, Globe2 } from "lucide-react";
+import { ProcessTimeline, ValuesChips } from "@/components/public/process-values";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -18,8 +19,6 @@ const initialsOf = (name: string) => name.trim().split(/\s+/).slice(0, 2).map((p
 
 const pillarIcons = [Target, Eye, Gem];
 const competenceIcons = [TrainTrack, Building2, Zap, Sprout, Globe2];
-const processusIcons = [BookOpenCheck, DraftingCompass, HardHat, Settings, MessagesSquare];
-const valeurIcons = [Award, HeartHandshake, Lightbulb, BadgeCheck];
 
 export default async function About() {
   const [settings, members, about] = await Promise.all([
@@ -102,52 +101,9 @@ export default async function About() {
           </div>
         </section>
 
-        <section className="bg-mist py-24">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <Reveal><SectionHeading align="center" eyebrow={about.processusEyebrow} title={about.processusTitle} /></Reveal>
-            {about.processusIntro && (
-              <Reveal delay={0.05}>
-                <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-7 text-slate-600">{about.processusIntro}</p>
-              </Reveal>
-            )}
-            <div className="relative mt-16">
-              <div className="absolute left-[10%] right-[10%] top-10 hidden border-t-2 border-dashed border-royal/25 lg:block" aria-hidden="true" />
-              <div className="grid gap-10 sm:grid-cols-3 lg:grid-cols-5">
-                {about.processusSteps.map((step, index) => {
-                  const Icon = processusIcons[index % processusIcons.length];
-                  return (
-                    <Reveal key={step.label} delay={index * 0.07} className="flex flex-col items-center text-center">
-                      <span className="relative grid h-20 w-20 place-items-center rounded-full bg-royal text-white shadow-xl shadow-royal/30">
-                        <Icon className="h-8 w-8" aria-hidden="true" />
-                      </span>
-                      <p className="mt-4 max-w-[12rem] text-sm font-black uppercase leading-snug tracking-wide text-royal">{step.label}</p>
-                    </Reveal>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
+        <ProcessTimeline eyebrow={about.processusEyebrow} title={about.processusTitle} intro={about.processusIntro} steps={about.processusSteps} />
 
-        <section className="bg-white py-24">
-          <div className="mx-auto max-w-6xl px-6 lg:px-8">
-            <Reveal><SectionHeading align="center" eyebrow={about.valeursEyebrow} title={about.valeursTitle} /></Reveal>
-            <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-              {about.valeurs.map((valeur, index) => {
-                const Icon = valeurIcons[index % valeurIcons.length];
-                return (
-                  <Reveal key={valeur.title} delay={index * 0.06} className="text-center">
-                    <span className="mx-auto grid h-16 w-16 place-items-center rounded-full bg-royal text-white shadow-lg shadow-royal/30">
-                      <Icon className="h-7 w-7" aria-hidden="true" />
-                    </span>
-                    <p className="mt-4 text-base font-extrabold text-anthracite">{valeur.title}</p>
-                    <p className="mt-1 text-xs leading-5 text-slate-500">{valeur.text}</p>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+        <ValuesChips eyebrow={about.valeursEyebrow} title={about.valeursTitle} values={about.valeurs} />
 
         {members.length > 0 && (
           <section className="bg-white py-24">

@@ -20,7 +20,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-const listFields = (valueFields: { name: string; label: string; type?: "text" | "textarea" }[]) => valueFields;
+const listFields = (valueFields: { name: string; label: string; type?: "text" | "textarea" | "url" }[]) => valueFields;
 
 export default async function PageContentEditor({ params, searchParams }: Props) {
   const [{ page: rawPage }, query] = await Promise.all([params, searchParams]);
@@ -170,11 +170,11 @@ export default async function PageContentEditor({ params, searchParams }: Props)
               <Field label="Texte d'introduction"><textarea className={inputClass} name="competencesIntro" rows={3} defaultValue={value("competencesIntro")} /></Field>
               <RepeaterField
                 name="competences"
-                label="Domaines (une icône est attribuée automatiquement à chaque ligne)"
+                label="Domaines (icône automatique ; l'image s'affiche sur la page Services)"
                 addLabel="Ajouter un domaine"
                 itemTitleKey="title"
-                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Texte", type: "textarea" }])}
-                items={list("competences") as { title: string; text: string }[]}
+                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Texte", type: "textarea" }, { name: "image", label: "Image (URL HTTPS)", type: "url" }])}
+                items={list("competences") as { title: string; text: string; image?: string }[]}
               />
             </Section>
             <Section title="Frise du cycle de projet (NOS EXPERTISES)">

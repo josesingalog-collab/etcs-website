@@ -9,6 +9,7 @@ import { parseKeyStats } from "@/lib/key-stats";
 import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/components/public/sections";
 import { ProjectCard, ArticleCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
+import { ProcessTimeline, ValuesChips } from "@/components/public/process-values";
 import { WorldMap } from "@/components/public/world-map";
 import { CompanyBold } from "@/components/company-bold";
 
@@ -183,6 +184,10 @@ export default async function Home() {
             </div>
           </div>
         </section>
+
+        <ProcessTimeline eyebrow={about.processusEyebrow} title={about.processusTitle} intro={about.processusIntro} steps={about.processusSteps} />
+
+        <ValuesChips eyebrow={about.valeursEyebrow} title={about.valeursTitle} values={about.valeurs} />
 
         <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">

@@ -61,7 +61,7 @@ export type AboutContent = {
   competencesEyebrow: string;
   competencesTitle: string;
   competencesIntro: string;
-  competences: { title: string; text: string }[];
+  competences: { title: string; text: string; image?: string }[];
   processusEyebrow: string;
   processusTitle: string;
   processusIntro: string;
@@ -283,11 +283,11 @@ export const defaultAbout: AboutContent = {
   competencesTitle: "Nos domaines de compétences",
   competencesIntro: "E.T.C.S Sarl se distingue par son expertise pluridisciplinaire dans de nombreux domaines de l'ingénierie, notamment les transports et les infrastructures, les bâtiments, l'énergie, l'aménagement urbain, et l'environnement et le développement durable :",
   competences: [
-    { title: "Infrastructures de transport", text: "Conception, modernisation et élargissement des infrastructures de transport, y compris les systèmes routiers, ferroviaires, aéroportuaires et de transports urbains. Nous accompagnons nos clients de la planification à la mise en œuvre, avec une forte expérience dans la maintenance et la réparation des infrastructures existantes." },
-    { title: "Bâtiments complexes et IGH", text: "Conception et réalisation de bâtiments complexes et de grande hauteur (IGH), avec des compétences en architecture, structure et équipements techniques. Ces projets requièrent une coordination étroite et une maîtrise des enjeux techniques et environnementaux." },
-    { title: "Énergie et bâtiments industriels", text: "Des solutions pour les projets liés à l'énergie et aux bâtiments industriels, incluant la conception, la réalisation et la gestion des installations énergétiques et industrielles." },
-    { title: "Aménagement urbain", text: "Des projets d'aménagement urbain contribuant à la création de quartiers durables et à la réhabilitation de zones urbaines. Cela inclut la gestion de l'eau, des déchets et l'intégration de solutions de mobilité durable." },
-    { title: "Environnement et développement durable", text: "Notre expertise environnementale couvre l'évaluation des impacts, la gestion des risques et le développement de solutions pour la transition énergétique et écologique, afin d'atténuer les émissions de gaz à effet de serre et de promouvoir la résilience des territoires face aux changements climatiques." },
+    { title: "Infrastructures de transport", text: "Conception, modernisation et élargissement des infrastructures de transport, y compris les systèmes routiers, ferroviaires, aéroportuaires et de transports urbains. Nous accompagnons nos clients de la planification à la mise en œuvre, avec une forte expérience dans la maintenance et la réparation des infrastructures existantes.", image: "https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=1200&q=80" },
+    { title: "Bâtiments complexes et IGH", text: "Conception et réalisation de bâtiments complexes et de grande hauteur (IGH), avec des compétences en architecture, structure et équipements techniques. Ces projets requièrent une coordination étroite et une maîtrise des enjeux techniques et environnementaux.", image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80" },
+    { title: "Énergie et bâtiments industriels", text: "Des solutions pour les projets liés à l'énergie et aux bâtiments industriels, incluant la conception, la réalisation et la gestion des installations énergétiques et industrielles.", image: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1200&q=80" },
+    { title: "Aménagement urbain", text: "Des projets d'aménagement urbain contribuant à la création de quartiers durables et à la réhabilitation de zones urbaines. Cela inclut la gestion de l'eau, des déchets et l'intégration de solutions de mobilité durable.", image: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=1200&q=80" },
+    { title: "Environnement et développement durable", text: "Notre expertise environnementale couvre l'évaluation des impacts, la gestion des risques et le développement de solutions pour la transition énergétique et écologique, afin d'atténuer les émissions de gaz à effet de serre et de promouvoir la résilience des territoires face aux changements climatiques.", image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1200&q=80" },
   ],
   processusEyebrow: "NOS EXPERTISES",
   processusTitle: "Un accompagnement à chaque étape du projet",

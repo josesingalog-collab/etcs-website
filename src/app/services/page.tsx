@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, TrainTrack, Building2, Zap, Sprout, Globe2 } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
-import { publishedServices } from "@/lib/public-content";
-import { services as fallbackServices } from "@/lib/content";
 import { getPhoneList, getSiteSettings, splitPhone } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
 import { CtaSection } from "@/components/public/sections";
@@ -12,12 +10,11 @@ import { Reveal } from "@/components/public/reveal";
 export const metadata = { title: "Nos services" };
 export const instant = false;
 
+const competenceIcons = [TrainTrack, Building2, Zap, Sprout, Globe2];
+
 export default async function Services() {
-  const [published, services, settings] = await Promise.all([publishedServices(), getPageContent("services"), getSiteSettings()]);
+  const [services, settings, about] = await Promise.all([getPageContent("services"), getSiteSettings(), getPageContent("about")]);
   const phones = getPhoneList(settings);
-  const items = published.length > 0
-    ? published.map((service) => ({ title: service.title, description: service.description, image: service.image }))
-    : fallbackServices.map((service) => ({ title: service.title, description: service.excerpt, image: service.image }));
 
   return (
     <SiteShell>
@@ -56,34 +53,39 @@ export default async function Services() {
         <section className="bg-white py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid gap-10">
-              {items.map((item, index) => (
-                <Reveal key={`${item.title}-${index}`}>
-                  <article className="grid gap-10 border-t border-slate-200 pt-14 lg:grid-cols-2 lg:gap-16">
-                    <div className="flex flex-col justify-center">
-                      <p className="display text-sm tracking-[.2em] text-gold">{String(index + 1).padStart(2, "0")}</p>
-                      <h2 className="display mt-4 text-3xl leading-[1.12] text-anthracite md:text-4xl">{item.title}</h2>
-                      <p className="mt-6 text-base leading-8 text-slate-600">{item.description}</p>
-                      <Link
-                        href="/devis"
-                        className="mt-8 inline-flex w-fit items-center gap-2 border-b-2 border-gold pb-1 text-sm font-bold text-royal transition hover:gap-3.5 hover:text-royal-deep"
-                      >
-                        Discuter de ce besoin <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
-                    <div className="self-start lg:sticky lg:top-28">
-                      <div className="relative aspect-[3/2] overflow-hidden rounded-3xl bg-mist shadow-xl shadow-anthracite/10">
+              {about.competences.map((item, index) => {
+                const Icon = competenceIcons[index % competenceIcons.length];
+                return (
+                  <Reveal key={`${item.title}-${index}`}>
+                    <article className="grid gap-8 border-t border-slate-200 pt-12 lg:grid-cols-[auto_1fr_minmax(0,420px)] lg:items-center lg:gap-12">
+                      <div className="flex items-start gap-6">
+                        <span className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-royal text-white shadow-lg shadow-royal/30">
+                          <Icon className="h-7 w-7" aria-hidden="true" />
+                        </span>
+                        <div>
+                          <h2 className="display text-2xl leading-[1.12] text-royal md:text-3xl">{item.title}</h2>
+                          <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600">{item.text}</p>
+                          <Link
+                            href="/devis"
+                            className="mt-6 inline-flex w-fit items-center gap-2 border-b-2 border-gold pb-1 text-sm font-bold text-royal transition hover:gap-3.5 hover:text-royal-deep"
+                          >
+                            Discuter de ce besoin <ArrowRight className="h-4 w-4" />
+                          </Link>
+                        </div>
+                      </div>
+                      <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-mist shadow-xl shadow-anthracite/10 lg:aspect-[4/3]">
                         {item.image ? (
-                          <Image src={item.image} alt={item.title} fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover transition duration-700 hover:scale-[1.03]" />
+                          <Image src={item.image} alt={item.title} fill sizes="(max-width:1024px) 100vw, 420px" className="object-cover transition duration-700 hover:scale-[1.03]" />
                         ) : (
                           <span className="grid-lines absolute inset-0 grid place-items-center">
                             <span className="display text-5xl text-royal/30">{String(index + 1).padStart(2, "0")}</span>
                           </span>
                         )}
                       </div>
-                    </div>
-                  </article>
-                </Reveal>
-              ))}
+                    </article>
+                  </Reveal>
+                );
+              })}
             </div>
           </div>
         </section>
