@@ -1,31 +1,22 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Building2, HardHat, DraftingCompass, Route, Droplets, BadgeCheck, Compass, Handshake, Target, Layers } from "lucide-react";
+import { ArrowRight, DraftingCompass, BadgeCheck, Compass, Handshake, Target, Layers, TrainTrack, Building2, Zap, Sprout, Globe2 } from "lucide-react";
 import { SiteShell } from "@/components/site-shell";
-import { publishedProjects, publishedServices, publishedArticles } from "@/lib/public-content";
+import { publishedProjects, publishedArticles } from "@/lib/public-content";
 import { getSiteSettings } from "@/lib/site-settings";
 import { getPageContent, stringList } from "@/lib/page-content";
 import { parseKeyStats } from "@/lib/key-stats";
 import { SectionHeading, EmptyState, CtaSection, StatsSection } from "@/components/public/sections";
-import { ProjectCard, ServiceCard, ArticleCard } from "@/components/public/cards";
+import { ProjectCard, ArticleCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
 import { WorldMap } from "@/components/public/world-map";
 import { CompanyBold } from "@/components/company-bold";
 
 export const instant = false;
 
-const featureIcons = [DraftingCompass, Route, Building2, HardHat, Droplets];
+const competenceIcons = [TrainTrack, Building2, Zap, Sprout, Globe2];
 const strengthIcons = [Layers, Compass, Handshake];
 const commitmentIcons = [DraftingCompass, BadgeCheck, Target, Handshake];
-
-function lastRowOffset(count: number, index: number) {
-  const lastRowStart = Math.floor((count - 1) / 3) * 3;
-  if (count <= 3 || index < lastRowStart) return "";
-  const inLastRow = count - lastRowStart;
-  if (inLastRow === 2 && index === lastRowStart) return "lg:col-start-2";
-  if (inLastRow === 1) return "lg:col-start-3";
-  return "";
-}
 
 function FlagRDC() {
   return (
@@ -76,12 +67,12 @@ function IntroText({ text, justify = false }: { text: string; justify?: boolean 
 }
 
 export default async function Home() {
-  const [projects, services, articles, settings, home] = await Promise.all([
+  const [projects, articles, settings, home, about] = await Promise.all([
     publishedProjects(),
-    publishedServices(),
     publishedArticles(),
     getSiteSettings(),
     getPageContent("home"),
+    getPageContent("about"),
   ]);
   const stats = parseKeyStats(settings?.keyStats);
   const intro = settings?.aboutText || home.introText;
@@ -165,33 +156,26 @@ export default async function Home() {
         </section>
 
         <section className="bg-mist py-24">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl px-6 lg:px-8">
             <Reveal><SectionHeading eyebrow={home.domainsEyebrow} title={home.domainsTitle} text={home.domainsText} /></Reveal>
-            {services.length > 0 ? (
-              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
-                {services.map((service, index) => (
-                  <Reveal key={service.slug} delay={index * 0.05} className={`lg:col-span-2 ${lastRowOffset(services.length, index)}`}>
-                    <ServiceCard service={service} index={index} />
+            <div className="mt-12 grid gap-8">
+              {about.competences.map((item, index) => {
+                const Icon = competenceIcons[index % competenceIcons.length];
+                return (
+                  <Reveal key={item.title} delay={index * 0.05}>
+                    <div className="grid items-start gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:grid-cols-[auto_1fr] sm:p-7">
+                      <span className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-royal text-white shadow-lg shadow-royal/30">
+                        <Icon className="h-7 w-7" aria-hidden="true" />
+                      </span>
+                      <div>
+                        <h3 className="text-lg font-extrabold text-royal">{item.title}</h3>
+                        <p className="mt-2 text-sm leading-7 text-slate-600">{item.text}</p>
+                      </div>
+                    </div>
                   </Reveal>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-6">
-                {home.features.map((feature, index) => {
-                  const Icon = featureIcons[index % featureIcons.length];
-                  return (
-                    <Reveal key={feature.title} delay={index * 0.05} className={`lg:col-span-2 ${lastRowOffset(home.features.length, index)}`}>
-                      <article className="card-hover h-full rounded-2xl border border-slate-200 bg-white p-7 shadow-sm hover:border-royal/40">
-                        <span className="grid h-12 w-12 place-items-center rounded-xl bg-royal shadow-md shadow-royal/30"><Icon className="h-5 w-5 text-white" /></span>
-                        <h3 className="mt-5 text-base font-extrabold leading-snug text-anthracite">{feature.title}</h3>
-                        <span className="mt-3 block" aria-hidden="true" />
-                        <p className="mt-3 text-sm leading-6 text-slate-500">{feature.text}</p>
-                      </article>
-                    </Reveal>
-                  );
-                })}
-              </div>
-            )}
+                );
+              })}
+            </div>
             <div className="mt-12 text-center">
               <Link href="/services" className="inline-flex items-center gap-2 rounded-lg border border-royal px-7 py-3.5 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
                 Découvrir nos services et prestations <ArrowRight className="h-4 w-4" />
