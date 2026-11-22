@@ -1,7 +1,16 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Source_Serif_4 } from "next/font/google";
 import { company } from "@/lib/content";
 import "./globals.css";
+
+const serif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  display: "swap",
+  weight: ["600"],
+  style: ["italic"],
+});
 
 const poppins = localFont({
   src: [
@@ -60,7 +69,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="fr"
-      className={`${poppins.variable} ${encode.variable} h-full antialiased`}
+      className={`${poppins.variable} ${encode.variable} ${serif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />

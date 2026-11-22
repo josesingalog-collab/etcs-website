@@ -27,7 +27,7 @@ export default async function Contact() {
   return (
     <SiteShell>
       <main>
-        <PageHero eyebrow={contact.heroEyebrow} title={contact.heroTitle} text={contact.heroText} />
+        <PageHero eyebrow={contact.heroEyebrow} title={contact.heroTitle} accent="en contact." text={contact.heroText} />
         <section className="bg-white py-20">
           <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1fr_1.2fr] lg:px-8">
             <Reveal>

@@ -4,13 +4,16 @@ import type { KeyStat } from "@/lib/key-stats";
 import { Reveal } from "@/components/public/reveal";
 import { AnimatedStat } from "@/components/public/animated-stat";
 
-export function SectionHeading({ eyebrow, title, text, align = "left", light = false }: { eyebrow: string; title: string; text?: string; align?: "left" | "center"; light?: boolean }) {
+export function SectionHeading({ eyebrow, title, accent, text, align = "left", light = false }: { eyebrow: string; title: string; accent?: string; text?: string; align?: "left" | "center"; light?: boolean }) {
   return (
     <div className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
       <p className={`text-xs font-bold tracking-[.22em] text-royal ${light ? "!text-gold" : ""}`}>
         {eyebrow}
       </p>
-      <h2 className={`display mt-4 text-4xl leading-[1.12] md:text-5xl ${light ? "text-white" : "text-anthracite"}`}>{title}</h2>
+      <h2 className={`display mt-4 text-4xl leading-[1.12] md:text-5xl ${light ? "text-white" : "text-anthracite"}`}>
+        {title}
+        {accent && <span className={light ? "serif-accent-light" : "serif-accent"}> {accent}</span>}
+      </h2>
       {text && <p className={`mt-4 leading-7 ${light ? "text-slate-300" : "text-slate-600"}`}>{text}</p>}
     </div>
   );

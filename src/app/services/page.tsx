@@ -27,7 +27,7 @@ export default async function Services() {
               <span />{services.heroEyebrow}
             </p>
             <h1 className="rise rise-1 display mt-6 max-w-4xl text-4xl leading-[1.08] text-anthracite md:text-5xl lg:text-6xl">
-              {services.heroTitle}
+              {services.heroTitle} <span className="serif-accent">et bâtiments</span>
             </h1>
             <Reveal className="rise rise-2 mt-8 max-w-2xl">
               <p className="text-base leading-8 text-slate-600">

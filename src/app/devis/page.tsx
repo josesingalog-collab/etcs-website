@@ -22,6 +22,7 @@ export default async function Quote() {
         <PageHero
           eyebrow={quote.heroEyebrow}
           title={quote.heroTitle}
+          accent="un devis."
           text={quote.heroText}
           image={settings?.heroImageUrl || fallbackImage}
         />

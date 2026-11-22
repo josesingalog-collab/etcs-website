@@ -62,7 +62,7 @@ export default async function Home() {
               <h1 className="display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
                 <HeroTextTransition
                   phrases={[
-                    { lines: ["Construire autrement"], className: "text-white" },
+                    { lines: ["Construire autrement"], className: "serif-accent-light" },
                     { lines: ["Bâtir et Moderniser", "les Infrastructures."], className: "text-white" },
                   ]}
                 />
@@ -84,7 +84,7 @@ export default async function Home() {
 
         <section className="bg-mist py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <Reveal><SectionHeading eyebrow={home.domainsEyebrow} title={home.domainsTitle} text={home.domainsText} /></Reveal>
+            <Reveal><SectionHeading eyebrow={home.domainsEyebrow} title={home.domainsTitle} accent="complémentaires." text={home.domainsText} /></Reveal>
             {services.length > 0 ? (
               <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {services.map((service, index) => (
@@ -119,7 +119,7 @@ export default async function Home() {
         <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="flex flex-wrap items-end justify-between gap-6">
-              <Reveal><SectionHeading eyebrow={home.projectsEyebrow} title={home.projectsTitle} text={home.projectsText} /></Reveal>
+              <Reveal><SectionHeading eyebrow={home.projectsEyebrow} title={home.projectsTitle} accent="prennent forme." text={home.projectsText} /></Reveal>
               {latestProjects.length > 0 && (
                 <Link href="/realisations" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
                   Découvrir toutes nos réalisations <ArrowRight className="h-4 w-4" />
@@ -155,7 +155,7 @@ export default async function Home() {
             </Reveal>
             <Reveal delay={0.1} variant="right">
               <p className="text-xs font-bold tracking-[.22em] text-gold">NOTRE ENGAGEMENT</p>
-              <h2 className="display mt-4 text-4xl leading-[1.08] text-white md:text-5xl">{home.engagementTitle}</h2>
+              <h2 className="display mt-4 text-4xl leading-[1.08] text-white md:text-5xl">Pourquoi choisir <span className="serif-accent-light">E.T.C.S Sarl ?</span></h2>
               <p className="mt-5 max-w-xl text-sm leading-7 text-slate-300">
                 {home.engagementText}
               </p>
@@ -206,7 +206,7 @@ export default async function Home() {
         <section aria-label="Notre présence" className="bg-vinci py-24 text-white">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1fr_1.6fr] lg:px-8">
             <Reveal variant="left">
-              <h2 className="display text-4xl leading-[1.1] text-white md:text-5xl">{home.presenceTitle}</h2>
+              <h2 className="display text-4xl leading-[1.1] text-white md:text-5xl">Notre présence <span className="serif-accent-light">congolaise et internationale</span></h2>
               <p className="mt-8 max-w-md text-base leading-8 text-slate-100">
                 {home.presenceText}
               </p>
@@ -229,7 +229,7 @@ export default async function Home() {
         <section className="bg-mist py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="flex flex-wrap items-end justify-between gap-6">
-              <Reveal><SectionHeading eyebrow="ACTUALITÉS" title={home.newsTitle} /></Reveal>
+              <Reveal><SectionHeading eyebrow="ACTUALITÉS" title={home.newsTitle} accent="d'E.T.C.S Sarl" /></Reveal>
               {latestArticles.length > 0 && (
                 <Link href="/actualites" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
                   Toutes les actualités <ArrowRight className="h-4 w-4" />

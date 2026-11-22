@@ -31,7 +31,7 @@ export default async function About() {
   return (
     <SiteShell>
       <main>
-        <PageHero eyebrow={about.heroEyebrow || settings?.companyName || "E.T.C.S Sarl"} title={about.heroTitle} text={about.heroText} image={image} />
+        <PageHero eyebrow={about.heroEyebrow || settings?.companyName || "E.T.C.S Sarl"} title={about.heroTitle} accent="pour durer." text={about.heroText} image={image} />
 
         <section className="bg-white py-24">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-8">
@@ -41,7 +41,7 @@ export default async function About() {
               </div>
             </Reveal>
             <Reveal delay={0.1}>
-              <SectionHeading eyebrow={about.introEyebrow} title={about.introTitle} />
+              <SectionHeading eyebrow={about.introEyebrow} title={about.introTitle} accent="de vos projets." />
               <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600">{text}</p>
               <ul className="mt-8 divide-y divide-slate-100 border-y border-slate-100">
                 {about.strengths.map((label, index) => {
@@ -67,7 +67,7 @@ export default async function About() {
 
         <section className="bg-mist py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <Reveal><SectionHeading align="center" eyebrow={about.pillarsEyebrow} title={about.pillarsTitle} /></Reveal>
+            <Reveal><SectionHeading align="center" eyebrow={about.pillarsEyebrow} title={about.pillarsTitle} accent="et valeurs" /></Reveal>
             <div className="mt-14 grid gap-6 md:grid-cols-3">
               {about.pillars.map((pillar, index) => {
                 const Icon = pillarIcons[index % pillarIcons.length];
@@ -88,7 +88,7 @@ export default async function About() {
         {members.length > 0 && (
           <section className="bg-white py-24">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
-              <Reveal><SectionHeading align="center" eyebrow={about.teamEyebrow} title={about.teamTitle} /></Reveal>
+              <Reveal><SectionHeading align="center" eyebrow={about.teamEyebrow} title={about.teamTitle} accent="qui portent vos projets" /></Reveal>
               <div className="mt-14 grid gap-6 sm:grid-cols-2 md:grid-cols-3">
                 {members.map((member, index) => (
                   <Reveal key={member.id} delay={(index % 3) * 0.07}>
@@ -117,7 +117,7 @@ export default async function About() {
 
         <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <Reveal><SectionHeading align="center" eyebrow={about.partnersEyebrow} title={about.partnersTitle} /></Reveal>
+            <Reveal><SectionHeading align="center" eyebrow={about.partnersEyebrow} title={about.partnersTitle} accent="reconnu" /></Reveal>
             <p className="mx-auto mt-6 max-w-2xl text-center text-sm leading-7 text-slate-600">
               {about.partnersText}
             </p>
@@ -137,7 +137,7 @@ export default async function About() {
         <section className="bg-mist py-24">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-8">
             <Reveal>
-              <SectionHeading eyebrow={about.trainingEyebrow} title={about.trainingTitle} />
+              <SectionHeading eyebrow={about.trainingEyebrow} title={about.trainingTitle} accent="de formations" />
               <p className="mt-6 leading-8 text-slate-600">
                 {about.trainingText}
               </p>
@@ -162,7 +162,7 @@ export default async function About() {
         <section className="relative isolate overflow-hidden bg-vinci py-24 text-white">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-[1.2fr_1fr] lg:px-8">
             <Reveal>
-              <SectionHeading light eyebrow={about.qualityEyebrow} title={about.qualityTitle} />
+              <SectionHeading light eyebrow={about.qualityEyebrow} title={about.qualityTitle} accent="standard d'exécution" />
               {about.qualityText.split(/\r?\n\s*\r?\n/).map((paragraph, index) => (
                 <p key={index} className={`leading-8 text-slate-100 ${index === 0 ? "mt-6" : "mt-4"}`}>{paragraph}</p>
               ))}

@@ -18,8 +18,7 @@ export default async function Projects() {
           title="Nos réalisations"
           text="Découvrez les projets publiés par E.T.C.S Sarl : ouvrages, chantiers et infrastructures réalisés avec exigence."
           image={settings?.heroImageUrl}
-        />
-        <section className="bg-white py-20">
+        />        <section className="bg-white py-20">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             {projects.length > 0 ? (
               <ProjectGallery projects={projects} />

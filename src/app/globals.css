@@ -56,6 +56,26 @@ body {
   line-height: 1.08;
   text-wrap: balance;
 }
+
+/* Accent serif italique pour les grands titres (style maquette) */
+.serif-accent {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--plan-accent, #2176ff);
+}
+.serif-accent-light {
+  font-family: var(--font-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--plan-sky, #8cc1f0);
+}
+:root {
+  --plan-accent: #2176ff;
+  --plan-sky: #8cc1f0;
+}
 .grid-lines { background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px); background-size: 42px 42px; }
 .blueprint { background-image: linear-gradient(rgba(22,55,184,.07) 1px, transparent 1px), linear-gradient(90deg, rgba(22,55,184,.07) 1px, transparent 1px); background-size: 28px 28px; }
 
