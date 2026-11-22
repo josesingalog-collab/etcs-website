@@ -24,6 +24,7 @@ export type HomeContent = {
   heroImage: string;
   introText: string;
   phases: { title: string; text: string }[];
+  faq: { question: string; answer: string }[];
   testimonial: { quote: string; author: string; role: string };
   presentationTitle: string;
   presentationImage: string;
@@ -230,6 +231,13 @@ export const defaultHome: HomeContent = {
     { title: "Maîtrise d'œuvre", text: "Conception détaillée, direction et contrôle de l'exécution des travaux." },
   ],
   testimonial: { quote: "", author: "", role: "" },
+  faq: [
+    { question: "Quel type de projets réalise E.T.C.S Sarl ?", answer: "Des infrastructures de transport (routes, ouvrages d'art, aéroports), des bâtiments complexes et de grande hauteur, des ouvrages hydrauliques et énergétiques, ainsi que des études, de la faisabilité à la mise en service." },
+    { question: "Où intervient E.T.C.S Sarl ?", answer: "Le siège social est à Kinshasa (RDC) et un bureau d'études opère à Montrouge, dans la région parisienne. Nous intervenons en RDC et à l'international." },
+    { question: "Comment obtenir une estimation et des quantitatifs ?", answer: "Décrivez votre projet via le formulaire de devis et joignez vos plans (PDF, JPG, PNG). Nos ingénieurs analysent votre dossier et reviennent vers vous avec une proposition claire et documentée." },
+    { question: "Quels sont vos domaines de compétences ?", answer: "Infrastructures de transport, bâtiments complexes et IGH, énergie et bâtiments industriels, aménagement urbain, environnement et développement durable." },
+    { question: "E.T.C.S Sarl forme-t-elle des techniciens ?", answer: "Oui, notre centre de formations propose des modules adaptés au génie civil, au BTP et à l'architecture, dispensés par des intervenants agréés." },
+  ],
   presentationTitle: "L'expertise au service de vos projets.",
   presentationImage: IMAGES.presentation.src,
   strengths: [

@@ -75,6 +75,16 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 items={list("phases") as { title: string; text: string }[]}
               />
             </Section>
+            <Section title="FAQ — questions fréquentes (accueil)">
+              <RepeaterField
+                name="faq"
+                label="Questions/réponses"
+                addLabel="Ajouter une question"
+                itemTitleKey="question"
+                fields={listFields([{ name: "question", label: "Question" }, { name: "answer", label: "Réponse", type: "textarea" }])}
+                items={list("faq") as { question: string; answer: string }[]}
+              />
+            </Section>
             <Section title="Témoignage client (masqué si vide)">
               <Field label="Témoignage" hint="Laisser vide pour masquer la section. Renseignez uniquement de vrais témoignages.">
                 <textarea className={inputClass} name="testimonial[quote]" rows={3} defaultValue={value2("testimonial", "quote")} />
