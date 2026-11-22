@@ -1,33 +1,20 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
+import { Archivo, IBM_Plex_Mono } from "next/font/google";
 import { company } from "@/lib/content";
 import "./globals.css";
 
-const poppins = localFont({
-  src: [
-    { path: "../fonts/Poppins-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../fonts/Poppins-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../fonts/Poppins-SemiBold.ttf", weight: "600", style: "normal" },
-    { path: "../fonts/Poppins-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../fonts/Poppins-ExtraBold.ttf", weight: "800", style: "normal" },
-  ],
-  variable: "--font-poppins",
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-archivo",
   display: "swap",
-  fallback: ["Arial", "sans-serif"],
-  adjustFontFallback: false,
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const encode = localFont({
-  src: [
-    { path: "../fonts/expanded/EncodeSansExpanded-Regular.ttf", weight: "400", style: "normal" },
-    { path: "../fonts/expanded/EncodeSansExpanded-Medium.ttf", weight: "500", style: "normal" },
-    { path: "../fonts/expanded/EncodeSansExpanded-Bold.ttf", weight: "700", style: "normal" },
-    { path: "../fonts/expanded/EncodeSansExpanded-ExtraBold.ttf", weight: "800", style: "normal" },
-  ],
-  variable: "--font-encode",
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  variable: "--font-plex",
   display: "swap",
-  fallback: ["Arial", "sans-serif"],
-  adjustFontFallback: false,
+  weight: ["400", "600"],
 });
 
 export const instant = false;
@@ -82,7 +69,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="fr"
-      className={`${poppins.variable} ${encode.variable} h-full antialiased`}
+      className={`${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }} />
