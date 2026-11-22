@@ -55,6 +55,9 @@ export default async function PageContentEditor({ params, searchParams }: Props)
               <Field label="Titre principal" hint="Un retour à la ligne crée un saut de ligne visuel">
                 <textarea className={inputClass} name="heroTitle" rows={3} defaultValue={value("heroTitle")} />
               </Field>
+              <Field label="Phrase d'accroche du hero" hint="Une phrase courte. Le texte complet de présentation se règle dans les Paramètres et s'affiche sur la page À propos.">
+                <textarea className={inputClass} name="heroHook" rows={2} defaultValue={value("heroHook")} />
+              </Field>
               <UploadField name="heroImage" label="Image de la bannière" hint="Importez un fichier (PNG/JPEG/WebP, 5 Mo max.) ou collez une URL HTTPS." defaultValue={value("heroImage")} />
               <Field label="Texte d'introduction" hint="Affiché sous le titre. Laisser vide pour utiliser le texte de présentation des Paramètres.">
                 <textarea className={inputClass} name="introText" rows={4} defaultValue={value("introText")} />

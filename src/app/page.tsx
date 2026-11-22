@@ -84,7 +84,8 @@ export default async function Home() {
     getPageContent("home"),
   ]);
   const stats = parseKeyStats(settings?.keyStats);
-  const intro = settings?.aboutText || home.introText;
+  const intro = home.introText;
+  const heroHook = home.heroHook;
   const latestProjects = projects.slice(0, 3);
   const latestArticles = articles.slice(0, 3);
   const heroLines = home.heroTitle.split(/\r?\n/);
@@ -102,7 +103,7 @@ export default async function Home() {
                 ))}
               </h1>
               <div className="rise rise-2 mt-8 max-w-xl text-base leading-8 text-slate-100">
-                <IntroText text={intro} justify />
+                <IntroText text={heroHook} justify />
               </div>
               <div className="rise rise-3 mt-10 flex flex-wrap gap-4">
                 <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy">
