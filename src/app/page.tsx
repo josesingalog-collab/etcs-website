@@ -51,12 +51,13 @@ export default async function Home() {
   return (
     <SiteShell>
       <main>
-        <section aria-label="Introduction" className="relative isolate overflow-hidden bg-vinci text-white">
+        <section aria-label="Introduction" className="relative isolate overflow-hidden bg-anthracite text-white">
           <div className="absolute inset-0" aria-hidden="true">
-            <HeroSlideshow images={heroPool} />
+            <HeroSlideshow images={heroPool} dimmed />
+            <div className="absolute inset-0 bg-anthracite/55" />
           </div>
           <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-32 text-center sm:px-6 lg:pb-24 lg:pt-36">
-            <div className="rise rise-1 w-full rounded-[2rem] border-2 border-white/30 bg-[rgba(3,20,70,.55)] px-6 py-10 shadow-2xl shadow-black/30 backdrop-blur-md sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+            <div className="rise rise-1 w-full px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
               <p className="annotation text-[11px] text-vinci-sky lg:text-xs">#E.T.C.S Sarl — KINSHASA, RDC</p>
               <h1 className="display mx-auto mt-6 max-w-4xl leading-[1.08] text-[clamp(2.1rem,4.8vw,4.2rem)] lg:mt-8 lg:max-w-none lg:text-[clamp(2.6rem,5vw,4.8rem)]">
                 {heroLines.map((line, index) => (
