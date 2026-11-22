@@ -69,8 +69,10 @@ export function Footer({ settings, aboutText }: { settings: SiteSettings | null;
             )}
             {getPhoneList(settings).map((raw) => {
               const { number, note } = splitPhone(raw);
+              const isWhatsapp = note ? /whatsapp/i.test(note) : false;
+              const href = isWhatsapp ? `https://wa.me/${number.replace(/[^\d]/g, "")}` : `tel:${number.replace(/\s/g, "")}`;
               return (
-                <li key={number} className="flex items-center gap-3"><Phone className="h-4 w-4 shrink-0 text-vinci-sky" /><a href={`tel:${number.replace(/\s/g, "")}`} className="transition hover:text-vinci-sky">{number}{note && <span className="ml-2 text-[10px] font-bold uppercase tracking-wider text-vinci-sky/80">{note}</span>}</a></li>
+                <li key={number} className="flex items-center gap-3"><Phone className="h-4 w-4 shrink-0 text-vinci-sky" /><a href={href} className="transition hover:text-vinci-sky">{number}{note && <span className="ml-2 text-[10px] font-bold uppercase tracking-wider text-vinci-sky/80">{note}</span>}</a></li>
               );
             })}
             {settings?.email && (

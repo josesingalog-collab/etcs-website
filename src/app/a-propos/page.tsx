@@ -9,11 +9,14 @@ import { SectionHeading, CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 import { prisma } from "@/lib/prisma";
 import { CompanyBold } from "@/components/company-bold";
+import { IMAGES } from "@/lib/images";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata = { title: "À propos" };
+export const metadata = pageMetadata({ title: "À propos", description: "E.T.C.S Sarl, bureau d'études et entreprise générale de génie civil : mission, vision, valeurs, équipe et centre de formations à Kinshasa et Montrouge.", path: "/a-propos" });
+
 export const instant = false;
 
-const fallbackImage = "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85";
+const fallbackImage = IMAGES.engagement.src;
 
 const initialsOf = (name: string) => name.trim().split(/\s+/).slice(0, 2).map((part) => part[0] ?? "").join("").toUpperCase();
 
@@ -39,7 +42,7 @@ export default async function About() {
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-8">
             <Reveal>
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl shadow-anthracite/20">
-                <Image src={sectionImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+                <Image src={sectionImage} alt={IMAGES.aproposIntro.alt} fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
               </div>
             </Reveal>
             <Reveal delay={0.1}>

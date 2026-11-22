@@ -12,6 +12,7 @@ import { Reveal } from "@/components/public/reveal";
 import { ProcessTimeline, ValuesChips } from "@/components/public/process-values";
 import { WorldMap } from "@/components/public/world-map";
 import { CompanyBold } from "@/components/company-bold";
+import { IMAGES } from "@/lib/images";
 
 export const instant = false;
 
@@ -101,13 +102,13 @@ export default async function Home() {
                   Découvrir nos services <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link href="/devis" className="rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky">
-                  Demander l&apos;estimation et quantitatifs
+                  Demander une estimation et des quantitatifs
                 </Link>
               </div>
             </div>
             <div className="rise rise-2 relative z-10 lg:self-center">
               <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-vinci-navy shadow-2xl shadow-vinci-navy/40">
-                <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
+                <Image src={settings?.heroImageUrl || home.heroImage} alt={IMAGES.hero.alt} fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
               </div>
             </div>
           </div>
@@ -118,7 +119,7 @@ export default async function Home() {
             <Reveal variant="left">
               <div className="relative">
                 <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-mist shadow-xl shadow-anthracite/10">
-                  <Image src={home.presentationImage} alt="Chantier E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
+                  <Image src={home.presentationImage} alt={IMAGES.presentation.alt} fill sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
                 </div>
                 <div className="absolute -bottom-8 right-6 hidden bg-vinci-navy px-8 py-6 text-white shadow-xl sm:block">
                   <p className="display text-2xl leading-none">E.T.C.S Sarl</p>
@@ -189,35 +190,31 @@ export default async function Home() {
 
         <ValuesChips eyebrow={about.valeursEyebrow} title={about.valeursTitle} values={about.valeurs} />
 
+        {latestProjects.length > 0 && (
         <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <Reveal><SectionHeading eyebrow={home.projectsEyebrow} title={home.projectsTitle} text={home.projectsText} /></Reveal>
-              {latestProjects.length > 0 && (
-                <Link href="/realisations" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
-                  Découvrir toutes nos réalisations <ArrowRight className="h-4 w-4" />
-                </Link>
-              )}
+              <Link href="/realisations" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
+                Découvrir toutes nos réalisations <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
-            {latestProjects.length > 0 ? (
-              <div className="mt-12 grid gap-6 md:grid-cols-2">
-                {latestProjects.map((project, index) => (
-                  <Reveal key={project.slug} delay={index * 0.05} className={index === 0 ? "md:col-span-2 lg:col-span-1 lg:row-span-2" : ""}>
-                    <ProjectCard project={project} priority={index === 0} featured={index === 0} ctaLabel="Découvrir le projet" />
-                  </Reveal>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-12"><EmptyState illustration ctaHref="/contact" ctaLabel="Parler de votre projet" title="Nos réalisations seront bientôt présentées ici." text="Cette rubrique accueillera prochainement une sélection de projets et d'ouvrages de E.T.C.S Sarl." /></div>
-            )}
+            <div className="mt-12 grid gap-6 md:grid-cols-2">
+              {latestProjects.map((project, index) => (
+                <Reveal key={project.slug} delay={index * 0.05} className={index === 0 ? "md:col-span-2 lg:col-span-1 lg:row-span-2" : ""}>
+                  <ProjectCard project={project} priority={index === 0} featured={index === 0} ctaLabel="Découvrir le projet" />
+                </Reveal>
+              ))}
+            </div>
           </div>
         </section>
+        )}
 
         <section aria-label="Pourquoi choisir E.T.C.S Sarl" className="relative isolate bg-royal-deep py-24 text-white">
           <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1.05fr_1.25fr] lg:px-8">
             <Reveal variant="left">
               <div className="relative h-[380px] overflow-hidden rounded-3xl shadow-2xl shadow-black/30 lg:h-full">
-                <Image src={home.engagementImage} alt="Chantier génie civil E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+                <Image src={home.engagementImage} alt={IMAGES.engagement.alt} fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-royal-deep via-anthracite/25 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-7">
                   <span className="block" aria-hidden="true" />
@@ -257,7 +254,7 @@ export default async function Home() {
 
         <section aria-label="Notre conviction" className="relative isolate overflow-hidden bg-anthracite text-white">
           <div className="absolute inset-0">
-            <Image src={home.convictionImage} alt="Équipes E.T.C.S Sarl sur le chantier" fill sizes="100vw" className="kenburns object-cover opacity-55" />
+            <Image src={home.convictionImage} alt={IMAGES.conviction.alt} fill sizes="100vw" className="kenburns object-cover opacity-55" />
             <div className="absolute inset-0 bg-anthracite/55" />
           </div>
           <div className="relative mx-auto max-w-4xl px-6 py-28 text-center lg:px-8">
@@ -299,27 +296,23 @@ export default async function Home() {
           </div>
         </section>
 
+        {latestArticles.length > 0 && (
         <section className="bg-mist py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <Reveal><SectionHeading eyebrow="ACTUALITÉS" title={home.newsTitle} /></Reveal>
-              {latestArticles.length > 0 && (
-                <Link href="/actualites" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
-                  Toutes les actualités <ArrowRight className="h-4 w-4" />
-                </Link>
-              )}
+              <Link href="/actualites" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
+                Toutes les actualités <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
-            {latestArticles.length > 0 ? (
-              <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {latestArticles.map((article, index) => (
-                  <Reveal key={article.slug} delay={index * 0.05}><ArticleCard article={article} /></Reveal>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-12"><EmptyState title="Aucune actualité publiée" text="Les annonces et nouvelles de l'entreprise apparaîtront ici une fois publiées par l'équipe E.T.C.S Sarl." /></div>
-            )}
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {latestArticles.map((article, index) => (
+                <Reveal key={article.slug} delay={index * 0.05}><ArticleCard article={article} /></Reveal>
+              ))}
+            </div>
           </div>
         </section>
+        )}
 
         <CtaSection title={home.ctaTitle} text={home.ctaText} />
       </main>

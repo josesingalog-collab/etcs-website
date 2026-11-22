@@ -1,7 +1,9 @@
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 
-export const metadata = { title: "Politique de confidentialité" };
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({ title: "Politique de confidentialité", description: "Politique de confidentialité du site d'E.T.C.S Sarl : traitement et protection de vos données personnelles.", path: "/politique-confidentialite" });
 export const instant = false;
 
 export default function Privacy() {

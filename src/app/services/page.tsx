@@ -7,7 +7,9 @@ import { getPageContent } from "@/lib/page-content";
 import { CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 
-export const metadata = { title: "Nos services" };
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata = pageMetadata({ title: "Nos services", description: "Domaines d'expertise d'E.T.C.S Sarl : infrastructures de transport, bâtiments complexes et IGH, énergie, aménagement urbain, environnement et développement durable.", path: "/services" });
 export const instant = false;
 
 const competenceIcons = [TrainTrack, Building2, Zap, Sprout, Globe2];
@@ -34,7 +36,7 @@ export default async function Services() {
             </Reveal>
             <Reveal delay={0.1} className="rise rise-3 mt-12">
               <div className="relative aspect-[3/2] overflow-hidden rounded-3xl bg-mist shadow-2xl shadow-anthracite/15">
-                <Image src={services.heroImage} alt="Chantier E.T.C.S Sarl — génie civil" fill priority sizes="100vw" className="object-cover" />
+                <Image src={services.heroImage} alt="Chantier de génie civil : grues et structure en béton" fill priority sizes="100vw" className="object-cover" />
               </div>
             </Reveal>
           </div>
