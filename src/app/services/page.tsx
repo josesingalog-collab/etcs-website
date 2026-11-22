@@ -5,6 +5,7 @@ import { SiteShell } from "@/components/site-shell";
 import { getPhoneList, getSiteSettings, splitPhone } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
 import { CtaSection } from "@/components/public/sections";
+import { SectionLabel } from "@/components/plan/plan-section";
 import { Reveal } from "@/components/public/reveal";
 
 import { pageMetadata } from "@/lib/seo";
@@ -54,6 +55,7 @@ export default async function Services() {
 
         <section className="bg-white py-16">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <SectionLabel code="COUPE B-B" label="NOS DOMAINES D'EXPERTISE" />
             <div className="grid gap-10">
               {about.competences.map((item, index) => {
                 const Icon = competenceIcons[index % competenceIcons.length];

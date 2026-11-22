@@ -10,6 +10,7 @@ import { Reveal } from "@/components/public/reveal";
 import { prisma } from "@/lib/prisma";
 import { CompanyBold } from "@/components/company-bold";
 import { IMAGES } from "@/lib/images";
+import { SectionLabel } from "@/components/plan/plan-section";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({ title: "À propos", description: "E.T.C.S Sarl, bureau d'études et entreprise générale de génie civil : mission, vision, valeurs, équipe et centre de formations à Kinshasa et Montrouge.", path: "/a-propos" });
@@ -46,6 +47,7 @@ export default async function About() {
               </div>
             </Reveal>
             <Reveal delay={0.1}>
+              <SectionLabel code="AXE A" label="NOTRE ENGAGEMENT" />
               <SectionHeading eyebrow={about.introEyebrow} title={about.introTitle} />
               <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600"><CompanyBold text={text} /></p>
               <div className="mt-10 grid gap-6 border-t border-slate-200 pt-8 sm:grid-cols-3">
@@ -59,6 +61,7 @@ export default async function About() {
 
         <section className="bg-mist py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <SectionLabel code="COUPE B-B" label="MISSION, VISION, VALEURS" />
             <Reveal><SectionHeading align="center" eyebrow={about.pillarsEyebrow} title={about.pillarsTitle} /></Reveal>
             <div className="mt-14 grid gap-6 md:grid-cols-3">
               {about.pillars.map((pillar, index) => {
@@ -79,6 +82,7 @@ export default async function About() {
 
         <section className="bg-white py-24">
           <div className="mx-auto max-w-5xl px-6 lg:px-8">
+            <SectionLabel code="DÉTAIL 02" label="DOMAINES DE COMPÉTENCES" />
             <Reveal><SectionHeading align="center" eyebrow={about.competencesEyebrow} title={about.competencesTitle} /></Reveal>
             <Reveal delay={0.05}>
               <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-7 text-slate-600">{about.competencesIntro}</p>
