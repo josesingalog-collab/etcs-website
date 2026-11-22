@@ -20,8 +20,11 @@ export const pageMetas: PageMeta[] = [
 export type HomeContent = {
   heroEyebrow: string;
   heroTitle: string;
+  heroHook: string;
   heroImage: string;
   introText: string;
+  phases: { title: string; text: string }[];
+  testimonial: { quote: string; author: string; role: string };
   presentationTitle: string;
   presentationImage: string;
   strengths: string[];
@@ -216,10 +219,17 @@ export type AllPageContent = {
 };
 
 export const defaultHome: HomeContent = {
-  heroEyebrow: "E.T.C.S Sarl — MONDE « CONSTRUIRE AUTREMENT »",
-  heroTitle: "Bâtir Moderniser les infrastructures.",
+  heroEyebrow: "CONSTRUIRE AUTREMENT",
+  heroTitle: "Bâtir et moderniser les infrastructures.",
+  heroHook: "Bureau d'études et entreprise générale de génie civil, au service des grandes infrastructures en RDC et à l'international.",
   heroImage: IMAGES.hero.src,
   introText: "E.T.C.S Sarl (Etudes Techniques Conceptions des Structures) est une entreprise congolaise d'ingénierie et une entreprise générale, dont le siège social est établi à Kinshasa, Avenue du Port, Nouvelles Galeries Présidentielles, 5e étage, Bureau 504, commune de la Gombe.\n\nÀ l'international, une filiale établie en France, dans la région parisienne, opère comme bureau d'études de génie civil, de bâtiments et de travaux publics.\n\nE.T.C.S Sarl a pour vocation d'assurer l'ensemble des missions que comportent les études : la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil.\n\nPorteuse d'une synergie de compétences et d'un élan d'innovation, E.T.C.S Sarl fournit les solutions nécessaires pour réussir à bâtir et à rénover la République.",
+  phases: [
+    { title: "Études préliminaires", text: "Faisabilité, avant-projets et dimensionnement des ouvrages." },
+    { title: "Assistance à maîtrise d'ouvrage", text: "Programmation, études économiques et conseil au maître d'ouvrage." },
+    { title: "Maîtrise d'œuvre", text: "Conception détaillée, direction et contrôle de l'exécution des travaux." },
+  ],
+  testimonial: { quote: "", author: "", role: "" },
   presentationTitle: "L'expertise au service de vos projets.",
   presentationImage: IMAGES.presentation.src,
   strengths: [
