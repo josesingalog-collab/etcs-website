@@ -1,15 +1,15 @@
 export const company = {
-  name: "ETCS SARL",
+  name: "E.T.C.S Sarl",
   fullName: "Etudes Techniques Conceptions des Structures",
   tagline: "Entreprise générale",
-  phone: "+243 824 074 869",
-  phoneAlt: "+243 854 859 784",
-  phoneFixed: "+243 815 112 827",
-  email: "etsinfo@etcs-ingenierie.com",
+  phone: "+243 854 859 784",
+  phoneAlt: "+33 7 44 25 51 68",
+  phoneFixed: "+33 6 31 01 09 12",
+  email: "etcsinfo@etcs-ingenierie.com",
   emailAlt: "etcscin@etcs-ingenierie.com",
   website: "www.etcs-ingenierie.com",
-  address: "14, Avenue du Marché, Commune de la Gombe, Kinshasa, RDC",
-  office: "Galeries Présidentielles, Kinshasa, RD-Congo",
+  address: "Avenue du Port, Nouvelles Galeries Présidentielles, 5e étage, Bureau 504, Gombe-Kinshasa, RDC",
+  office: "Nouvelles Galeries Présidentielles, Kinshasa, RD-Congo",
   rccm: "CD/KIN/RCCM/14-B-6272",
   idNat: "01-403-N44539F",
   tax: "A0700086C",
@@ -25,13 +25,13 @@ export const services = [
 ];
 
 export const projects = [
-  { slug: "projet-demonstration-urbanisme", title: "Projet de démonstration", category: "À confirmer", location: "Kinshasa, RDC", status: "Contenu de démonstration", image: "https://images.unsplash.com/photo-1542621334-a254cf47733d?auto=format&fit=crop&w=1400&q=85", description: "Cette réalisation illustrative sera remplacée par un projet ETCS validé." },
-  { slug: "projet-demonstration-structure", title: "Structure contemporaine", category: "À confirmer", location: "Kinshasa, RDC", status: "Contenu de démonstration", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85", description: "Visuel de démonstration en attendant la documentation des projets ETCS." },
+  { slug: "projet-demonstration-urbanisme", title: "Projet de démonstration", category: "À confirmer", location: "Kinshasa, RDC", status: "Contenu de démonstration", image: "https://images.unsplash.com/photo-1542621334-a254cf47733d?auto=format&fit=crop&w=1400&q=85", description: "Cette réalisation illustrative sera remplacée par un projet E.T.C.S Sarl validé." },
+  { slug: "projet-demonstration-structure", title: "Structure contemporaine", category: "À confirmer", location: "Kinshasa, RDC", status: "Contenu de démonstration", image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1400&q=85", description: "Visuel de démonstration en attendant la documentation des projets E.T.C.S Sarl." },
   { slug: "projet-demonstration-site", title: "Site en développement", category: "À confirmer", location: "RDC", status: "Contenu de démonstration", image: "https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1400&q=85", description: "Référence visuelle provisoire, ne représentant pas une réalisation confirmée." },
 ];
 
 export const articles = [
-  { slug: "lancement-site-etcs", title: "ETCS prépare son espace de présentation", date: "À paraître", excerpt: "Les actualités publiées seront validées par l'équipe ETCS.", image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80" },
+  { slug: "lancement-site-etcs", title: "E.T.C.S Sarl prépare son espace de présentation", date: "À paraître", excerpt: "Les actualités publiées seront validées par l'équipe E.T.C.S Sarl.", image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=80" },
 ];
 
 export const partners = ["DICOMEX", "MATIERE", "SETEC", "RASEL", "IOSIS", "XELIS", "SYSTRA"];

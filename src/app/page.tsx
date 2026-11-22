@@ -46,7 +46,7 @@ export default async function Home() {
         <section aria-label="Introduction" className="relative isolate bg-vinci text-white">
           <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-0 pt-36 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:pt-40">
             <div className="lg:pb-28">
-              <p className="rise text-xs font-bold tracking-[.24em] text-vinci-sky">#ETCS — KINSHASA, RDC</p>
+              <p className="rise text-xs font-bold tracking-[.24em] text-vinci-sky">#E.T.C.S Sarl — KINSHASA, RDC</p>
               <h1 className="rise rise-1 display mt-7 leading-[1.1] text-[clamp(1.7rem,3.8vw,3.4rem)]">
                 {heroLines.map((line, index) => (
                   <span key={index}>{index > 0 && <br />}{line}</span>
@@ -64,21 +64,21 @@ export default async function Home() {
             </div>
             <div className="rise rise-2 relative z-10 lg:self-center">
               <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-vinci-navy shadow-2xl shadow-vinci-navy/40">
-                <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier ETCS" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
+                <Image src={settings?.heroImageUrl || home.heroImage} alt="Chantier E.T.C.S Sarl" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
               </div>
             </div>
           </div>
         </section>
 
-        <section aria-label="Présentation de ETCS SARL" className="bg-white py-24 lg:pt-40">
+        <section aria-label="Présentation de E.T.C.S Sarl" className="bg-white py-24 lg:pt-40">
           <div className="mx-auto grid max-w-7xl items-center gap-16 px-6 lg:grid-cols-2 lg:gap-20 lg:px-8">
             <Reveal variant="left">
               <div className="relative">
                 <div className="kenburns-wrap relative aspect-[3/2] overflow-hidden bg-mist shadow-xl shadow-anthracite/10">
-                  <Image src={home.presentationImage} alt="Chantier ETCS SARL" fill sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
+                  <Image src={home.presentationImage} alt="Chantier E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 50vw" className="kenburns object-cover" />
                 </div>
                 <div className="absolute -bottom-8 right-6 hidden bg-vinci-navy px-8 py-6 text-white shadow-xl sm:block">
-                  <p className="display text-2xl leading-none">ETCS SARL</p>
+                  <p className="display text-2xl leading-none">E.T.C.S Sarl</p>
                   <p className="mt-2 text-[10px] font-bold uppercase tracking-[.2em] text-vinci-sky">Etudes Techniques<br />Conceptions des Structures</p>
                 </div>
               </div>
@@ -168,20 +168,20 @@ export default async function Home() {
                 ))}
               </div>
             ) : (
-              <div className="mt-12"><EmptyState illustration ctaHref="/contact" ctaLabel="Parler de votre projet" title="Nos réalisations seront bientôt présentées ici." text="Cette rubrique accueillera prochainement une sélection de projets et d'ouvrages de ETCS SARL." /></div>
+              <div className="mt-12"><EmptyState illustration ctaHref="/contact" ctaLabel="Parler de votre projet" title="Nos réalisations seront bientôt présentées ici." text="Cette rubrique accueillera prochainement une sélection de projets et d'ouvrages de E.T.C.S Sarl." /></div>
             )}
           </div>
         </section>
 
-        <section aria-label="Pourquoi choisir ETCS SARL" className="relative isolate bg-royal-deep py-24 text-white">
+        <section aria-label="Pourquoi choisir E.T.C.S Sarl" className="relative isolate bg-royal-deep py-24 text-white">
           <div className="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-[1.05fr_1.25fr] lg:px-8">
             <Reveal variant="left">
               <div className="relative h-[380px] overflow-hidden rounded-3xl shadow-2xl shadow-black/30 lg:h-full">
-                <Image src={home.engagementImage} alt="Chantier génie civil ETCS SARL" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+                <Image src={home.engagementImage} alt="Chantier génie civil E.T.C.S Sarl" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-royal-deep via-anthracite/25 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-7">
                   <span className="block" aria-hidden="true" />
-                  <p className="display mt-3 text-2xl uppercase leading-none text-white">ETCS SARL</p>
+                  <p className="display mt-3 text-2xl uppercase leading-none text-white">E.T.C.S Sarl</p>
                   <p className="mt-1 text-[10px] font-bold uppercase tracking-[.2em] text-slate-300">Etudes Techniques Conceptions des Structures — Kinshasa, RDC</p>
                 </div>
               </div>
@@ -217,7 +217,7 @@ export default async function Home() {
 
         <section aria-label="Notre conviction" className="relative isolate overflow-hidden bg-anthracite text-white">
           <div className="absolute inset-0">
-            <Image src={home.convictionImage} alt="Équipes ETCS sur le chantier" fill sizes="100vw" className="kenburns object-cover opacity-55" />
+            <Image src={home.convictionImage} alt="Équipes E.T.C.S Sarl sur le chantier" fill sizes="100vw" className="kenburns object-cover opacity-55" />
             <div className="absolute inset-0 bg-anthracite/55" />
           </div>
           <div className="relative mx-auto max-w-4xl px-6 py-28 text-center lg:px-8">
@@ -276,7 +276,7 @@ export default async function Home() {
                 ))}
               </div>
             ) : (
-              <div className="mt-12"><EmptyState title="Aucune actualité publiée" text="Les annonces et nouvelles de l'entreprise apparaîtront ici une fois publiées par l'équipe ETCS." /></div>
+              <div className="mt-12"><EmptyState title="Aucune actualité publiée" text="Les annonces et nouvelles de l'entreprise apparaîtront ici une fois publiées par l'équipe E.T.C.S Sarl." /></div>
             )}
           </div>
         </section>

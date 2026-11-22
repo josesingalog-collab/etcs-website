@@ -34,7 +34,7 @@ export default async function Legal() {
           </p>
           <h2 className="display mt-10 text-xl uppercase text-royal">Présence internationale</h2>
           <p className="mt-4 text-sm leading-8 text-slate-600">
-            À l&apos;international, ETCS dispose d&apos;une filiale en Europe, précisément en France dans la région parisienne, immatriculée au registre du commerce et des sociétés et fonctionnant en tant que bureau d&apos;études de génie civil, de bâtiments et de travaux publics.
+            À l&apos;international, E.T.C.S Sarl dispose d&apos;une filiale en Europe, précisément en France dans la région parisienne, immatriculée au registre du commerce et des sociétés et fonctionnant en tant que bureau d&apos;études de génie civil, de bâtiments et de travaux publics.
           </p>
         </section>
       </article>

@@ -16,7 +16,7 @@ export default function Privacy() {
           </p>
           <h2 className="display mt-10 text-xl uppercase text-royal">Vos droits</h2>
           <p className="mt-4 text-sm leading-8 text-slate-600">
-            Pour demander l&apos;accès, la rectification ou la suppression de vos informations, contactez ETCS à l&apos;adresse électronique indiquée sur ce site.
+            Pour demander l&apos;accès, la rectification ou la suppression de vos informations, contactez E.T.C.S Sarl à l&apos;adresse électronique indiquée sur ce site.
           </p>
         </section>
       </article>

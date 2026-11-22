@@ -34,7 +34,7 @@ export function Footer({ settings, aboutText }: { settings: SiteSettings | null;
     <footer className="bg-vinci text-white">
       <div className="mx-auto grid max-w-7xl gap-12 px-6 pb-16 pt-20 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.2fr] lg:px-8">
         <div>
-          <Logo light companyName={settings?.companyName ?? "ETCS SARL"} logoUrl={settings?.logoUrl} />
+          <Logo light companyName={settings?.companyName ?? "E.T.C.S Sarl"} logoUrl={settings?.logoUrl} />
           <p className="mt-6 max-w-sm text-sm leading-7 text-slate-100">
             {aboutText}
           </p>
@@ -77,7 +77,7 @@ export function Footer({ settings, aboutText }: { settings: SiteSettings | null;
       </div>
       <div className="border-t border-white/20">
         <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-2 px-6 py-6 text-xs text-slate-100 lg:justify-between lg:px-8">
-          <p>© {year} {settings?.companyName ?? "ETCS SARL"}. Tous droits réservés.</p>
+          <p>© {year} {settings?.companyName ?? "E.T.C.S Sarl"}. Tous droits réservés.</p>
           <p className="flex gap-5">
             <Link href="/mentions-legales" className="transition hover:text-vinci-sky">Mentions légales</Link>
             <Link href="/politique-confidentialite" className="transition hover:text-vinci-sky">Confidentialité</Link>
