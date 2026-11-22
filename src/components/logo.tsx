@@ -11,7 +11,7 @@ export function Logo({ light = false, companyName = "E.T.C.S Sarl", logoUrl }: {
           width={160}
           height={80}
           priority
-          className={`h-16 w-auto shrink-0 ${light ? "rounded-lg bg-white px-3 py-2 shadow-md" : ""}`}
+          className="h-16 w-auto shrink-0"
         />
       </Link>
     );
