@@ -11,7 +11,6 @@ import { ProjectCard, ArticleCard } from "@/components/public/cards";
 import { DomainCard } from "@/components/public/domain-card";
 import { Reveal } from "@/components/public/reveal";
 import { HeroSlideshow } from "@/components/public/hero-slideshow";
-import { HeroTextTransition } from "@/components/public/hero-text-transition";
 import { WorldMap } from "@/components/public/world-map";
 
 export const instant = false;
@@ -58,14 +57,10 @@ export default async function Home() {
           </div>
           <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-32 text-center sm:px-6 lg:pb-24 lg:pt-36">
             <div className="rise rise-1 w-full px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
-              <p className="annotation text-base font-black tracking-[.18em] text-vinci-sky lg:text-xl">ETCS — MONDE</p>
-              <h1 className="display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
-                <HeroTextTransition
-                  phrases={[
-                    { lines: ["Construire autrement"], className: "serif-accent-light" },
-                    { lines: ["Bâtir et Moderniser", "les Infrastructures."], className: "text-white" },
-                  ]}
-                />
+              <p className="annotation text-base font-black tracking-[.18em] text-vinci-sky lg:text-xl">ETCS — MONDE « CONSTRUIRE AUTREMENT »</p>
+              <h1 className="rise rise-1 display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
+                <span className="block">Bâtir et Moderniser</span>
+                <span className="block">les Infrastructures.</span>
               </h1>
               <p className="mx-auto mt-9 max-w-2xl text-sm leading-7 text-slate-100 sm:text-base sm:leading-8 lg:mt-11 lg:text-lg lg:leading-9">
                 E.T.C.S Sarl, bureau d&apos;études et entreprise générale de génie civil — de la maîtrise d&apos;œuvre à la réalisation des grandes infrastructures, en RDC et à l&apos;international.
