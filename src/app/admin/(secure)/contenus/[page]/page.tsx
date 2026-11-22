@@ -120,15 +120,10 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 <Field label="Titre"><input className={inputClass} name="introTitle" defaultValue={value("introTitle")} /></Field>
               </div>
               <Field label="Texte" hint="Un saut de ligne simple conserve le retour à la ligne"><textarea className={inputClass} name="introText" rows={6} defaultValue={value("introText")} /></Field>
+              <Field label="Vocation (encadré sous le texte)" hint="La mission et l'engagement de l'entreprise, affichés dans l'encadré doré.">
+                <textarea className={inputClass} name="introVocation" rows={5} defaultValue={value("introVocation")} />
+              </Field>
               <UploadField name="introImage" label="Photo de la section" defaultValue={value("introImage")} />
-              <RepeaterField
-                name="strengths"
-                label="Points forts (liste sous le texte)"
-                addLabel="Ajouter un point fort"
-                itemTitleKey="label"
-                fields={listFields([{ name: "label", label: "Intitulé" }])}
-                items={labelList(list("strengths"))}
-              />
               <RepeaterField
                 name="introValues"
                 label="Valeurs mises en avant"

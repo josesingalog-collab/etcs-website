@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Eye, Target, Gem, BadgeCheck, Layers, Compass, Handshake } from "lucide-react";
+import { Eye, Target, Gem, BadgeCheck } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -16,7 +16,6 @@ const fallbackImage = "https://images.unsplash.com/photo-1541625602330-2277a4c46
 const initialsOf = (name: string) => name.trim().split(/\s+/).slice(0, 2).map((part) => part[0] ?? "").join("").toUpperCase();
 
 const pillarIcons = [Target, Eye, Gem];
-const strengthIcons = [Layers, Compass, Handshake];
 
 export default async function About() {
   const [settings, members, about] = await Promise.all([
@@ -43,19 +42,7 @@ export default async function About() {
             <Reveal delay={0.1}>
               <SectionHeading eyebrow={about.introEyebrow} title={about.introTitle} accent="de vos projets." />
               <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600">{text}</p>
-              <ul className="mt-8 divide-y divide-slate-100 border-y border-slate-100">
-                {about.strengths.map((label, index) => {
-                  const Icon = strengthIcons[index % strengthIcons.length];
-                  return (
-                    <li key={label} className="flex items-center gap-4 py-3.5">
-                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-royal-50 text-royal">
-                        <Icon className="h-4 w-4" aria-hidden="true" />
-                      </span>
-                      <span className="text-sm font-semibold text-anthracite">{label}</span>
-                    </li>
-                  );
-                })}
-              </ul>
+              <p className="mt-8 border-l-4 border-gold bg-mist p-6 text-justify leading-8 text-slate-700">{about.introVocation}</p>
               <div className="mt-10 grid gap-6 border-t border-slate-200 pt-8 sm:grid-cols-3">
                 {about.introValues.map((value) => (
                   <div key={value.title}><p className="text-sm font-black uppercase tracking-wide text-royal">{value.title}</p><p className="mt-1 text-sm text-slate-500">{value.text}</p></div>

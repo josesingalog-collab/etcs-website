@@ -51,8 +51,8 @@ export type AboutContent = {
   introEyebrow: string;
   introTitle: string;
   introText: string;
+  introVocation: string;
   introImage: string;
-  strengths: string[];
   introValues: { title: string; text: string }[];
   pillarsEyebrow: string;
   pillarsTitle: string;
@@ -247,12 +247,8 @@ export const defaultAbout: AboutContent = {
   heroImage: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85",
   introEyebrow: "QUI SOMMES-NOUS ?",
   introTitle: "L'expertise au service",
-  strengths: [
-    "Tous les métiers pour une approche globale",
-    "Ingénieurs et techniciens supérieurs expérimentés",
-    "Un engagement sur les performances et la qualité",
-  ],
-  introText: "Etudes Techniques Conceptions des Structures (E.T.C.S Sarl) est l'une des sociétés d'ingénierie congolaises les plus importantes. Composée d'ingénieurs et de techniciens supérieurs de formation en constructions civiles et travaux publics, l'entreprise porte une grande expérience et assure la maîtrise d'œuvre, la vérification et la conduite des opérations pour les grandes infrastructures.",
+  introText: "E.T.C.S Sarl — Etudes Techniques Conceptions des Structures — est une entreprise congolaise d'ingénierie dont le siège est installé à Kinshasa, au 5e étage (Bureau 504) des Nouvelles Galeries Présidentielles, Avenue du Port, dans la commune de la Gombe. À l'international, sa filiale implantée à Montrouge, en région parisienne, assure des missions de bureau d'études en génie civil, bâtiments et travaux publics.",
+  introVocation: "E.T.C.S Sarl a pour vocation d'assurer l'ensemble des missions que comportent les études : la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil. Porteuse d'une synergie de compétences et d'un élan d'innovation, E.T.C.S Sarl fournit les solutions nécessaires pour réussir à bâtir et à rénover la République.",
   introImage: "https://images.unsplash.com/photo-1516216628859-9bccecab13ca?auto=format&fit=crop&w=1600&q=85",
   introValues: [
     { title: "Rigueur", text: "à chaque étape du chantier" },
