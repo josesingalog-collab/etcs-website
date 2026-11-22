@@ -1,7 +1,6 @@
 import { connection } from "next/server";
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { IMAGES } from "@/lib/images";
 
 export const pageKeys = ["home", "about", "services", "contact", "quote", "footer", "typography"] as const;
 export type PageKey = (typeof pageKeys)[number];
@@ -18,13 +17,9 @@ export const pageMetas: PageMeta[] = [
 ];
 
 export type HomeContent = {
-  heroEyebrow: string;
   heroTitle: string;
-  heroHook: string;
   heroImage: string;
   introText: string;
-  phases: { title: string; text: string }[];
-  testimonial: { quote: string; author: string; role: string };
   presentationTitle: string;
   presentationImage: string;
   strengths: string[];
@@ -62,17 +57,6 @@ export type AboutContent = {
   pillarsEyebrow: string;
   pillarsTitle: string;
   pillars: { title: string; text: string }[];
-  competencesEyebrow: string;
-  competencesTitle: string;
-  competencesIntro: string;
-  competences: { title: string; text: string; image?: string }[];
-  processusEyebrow: string;
-  processusTitle: string;
-  processusIntro: string;
-  processusSteps: { label: string }[];
-  valeursEyebrow: string;
-  valeursTitle: string;
-  valeurs: { title: string; text: string }[];
   teamEyebrow: string;
   teamTitle: string;
   partnersEyebrow: string;
@@ -219,19 +203,11 @@ export type AllPageContent = {
 };
 
 export const defaultHome: HomeContent = {
-  heroEyebrow: "CONSTRUIRE AUTREMENT",
-  heroTitle: "Bâtir et moderniser les infrastructures.",
-  heroHook: "Bureau d'études et entreprise générale de génie civil, au service des grandes infrastructures en RDC et à l'international.",
-  heroImage: IMAGES.hero.src,
-  introText: "E.T.C.S Sarl (Etudes Techniques Conceptions des Structures) est une entreprise congolaise d'ingénierie et une entreprise générale, dont le siège social est établi à Kinshasa, Avenue du Port, Nouvelles Galeries Présidentielles, 5e étage, Bureau 504, commune de la Gombe.\n\nÀ l'international, une filiale établie en France, dans la région parisienne, opère comme bureau d'études de génie civil, de bâtiments et de travaux publics.\n\nE.T.C.S Sarl a pour vocation d'assurer l'ensemble des missions que comportent les études : la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil.\n\nPorteuse d'une synergie de compétences et d'un élan d'innovation, E.T.C.S Sarl fournit les solutions nécessaires pour réussir à bâtir et à rénover la République.",
-  phases: [
-    { title: "Études préliminaires", text: "Faisabilité, avant-projets et dimensionnement des ouvrages." },
-    { title: "Assistance à maîtrise d'ouvrage", text: "Programmation, études économiques et conseil au maître d'ouvrage." },
-    { title: "Maîtrise d'œuvre", text: "Conception détaillée, direction et contrôle de l'exécution des travaux." },
-  ],
-  testimonial: { quote: "", author: "", role: "" },
+  heroTitle: "Bâtir et rénover\nles infrastructures\nde la République.",
+  heroImage: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=2400&q=90",
+  introText: "ETCS SARL, Etudes Techniques Conceptions des Structures, assure l'ensemble des missions que comportent les études : maîtrise d'œuvre, vérification et conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil.",
   presentationTitle: "L'expertise au service de vos projets.",
-  presentationImage: IMAGES.presentation.src,
+  presentationImage: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1600&q=85",
   strengths: [
     "Tous les métiers pour une approche globale",
     "Ingénieurs et techniciens supérieurs expérimentés",
@@ -249,35 +225,35 @@ export const defaultHome: HomeContent = {
   ],
   projectsEyebrow: "NOS RÉALISATIONS",
   projectsTitle: "Des projets qui prennent forme.",
-  projectsText: "Découvrez notre approche à travers les projets et les ouvrages réalisés par E.T.C.S Sarl. Chaque réalisation témoigne de notre engagement envers la qualité et la rigueur technique.",
-  engagementTitle: "Pourquoi choisir E.T.C.S Sarl ?",
-  engagementText: "La réussite d'un projet dans le domaine de la construction civile, des bâtiments et des travaux publics repose sur une bonne préparation, une approche technique rigoureuse et un engagement constant envers la qualité.",
-  engagementImage: IMAGES.engagement.src,
+  projectsText: "Découvrez notre approche à travers les projets et les ouvrages réalisés par ETCS SARL. Chaque réalisation témoigne de notre engagement envers la qualité et la rigueur technique.",
+  engagementTitle: "Pourquoi choisir ETCS SARL ?",
+  engagementText: "La réussite d'un projet repose sur une bonne préparation, une approche technique rigoureuse et un engagement constant envers la qualité.",
+  engagementImage: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85",
   commitments: [
     { title: "Une approche sur mesure", text: "Chaque projet a ses contraintes propres : nous mettons en œuvre des procédés techniques spécifiques à chaque chantier, en parfaite adéquation avec les exigences du maître d'ouvrage." },
-    { title: "Qualité de service", text: "E.T.C.S Sarl, bureau d'études et entreprise générale, accepte le risque de s'engager sur les performances et assure la qualité de son service, du dimensionnement à la réception des travaux." },
+    { title: "Qualité de service", text: "Entreprise congolaise d'abord et multinationale, ETCS accepte le risque de s'engager sur les performances et assure la qualité de son service." },
     { title: "Innovation continue", text: "Être toujours en avance sur l'innovation : faire plus beau, plus vite, moins coûteux, et tenir nos objectifs de qualité." },
     { title: "Harmonie des talents", text: "Nos équipes couvrent l'ensemble des enjeux techniques, économiques, juridiques et financiers, de l'étude de faisabilité à la mise en service." },
   ],
-  quote: "E.T.C.S Sarl est porteuse et promotrice d'une synergie de compétences et d'un élan d'innovation pour fournir les solutions nécessaires pour réussir à bâtir et à moderniser les infrastructures.",
+  quote: "ETCS est porteuse et promotrice d'une synergie de compétences et d'un élan d'innovation pour fournir les solutions nécessaires pour réussir à bâtir et à rénover la République.",
   quoteAuthor: "Etudes Techniques Conceptions des Structures",
-  convictionImage: IMAGES.conviction.src,
+  convictionImage: "https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?auto=format&fit=crop&w=1600&q=85",
   presenceTitle: "Notre présence congolaise et internationale",
-  presenceText: "E.T.C.S Sarl, entreprise congolaise avec une filiale en France : le siège social est établi à Kinshasa, dans la commune de la Gombe, et un bureau d'études opère à Montrouge, dans la région parisienne, en tant que bureau d'études de génie civil, de bâtiments et de travaux publics.",
-  newsTitle: "Les actualités d'E.T.C.S Sarl",
+  presenceText: "ETCS, entreprise congolaise d'abord et multinationale : le siège social est établi à Kinshasa, dans la commune de la Gombe, et une filiale opère en Europe, dans la région parisienne, en tant que bureau d'études de génie civil, de bâtiments et de travaux publics.",
+  newsTitle: "Les dernières nouvelles de ETCS",
   ctaTitle: "Un projet ? Construisons-le ensemble.",
   ctaText: "Expliquez-nous votre besoin : nos ingénieurs vous accompagneront de l'étude de faisabilité à la mise en service de l'ouvrage.",
 };
 
 export const defaultAbout: AboutContent = {
-  heroEyebrow: "E.T.C.S Sarl",
+  heroEyebrow: "ETCS SARL",
   heroTitle: "Une vision construite pour durer",
   heroText: "Ingénierie, génie civil et travaux publics — de l'étude de faisabilité à la mise en service.",
-  heroImage: IMAGES.engagement.src,
+  heroImage: "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85",
   introEyebrow: "NOTRE ENGAGEMENT",
   introTitle: "Faire avancer chaque projet avec exigence",
-  introText: "Etudes Techniques Conceptions des Structures (E.T.C.S Sarl) est l'une des sociétés d'ingénierie congolaises les plus importantes. Composée d'ingénieurs et de techniciens supérieurs de formation en constructions civiles et travaux publics, l'entreprise porte une grande expérience et assure la maîtrise d'œuvre, la vérification et la conduite des opérations pour les grandes infrastructures.",
-  introImage: IMAGES.aproposIntro.src,
+  introText: "Etudes Techniques Conceptions des Structures (ETCS SARL) est l'une des sociétés d'ingénierie congolaises les plus importantes. Composée d'ingénieurs et de techniciens supérieurs de formation en constructions civiles et travaux publics, l'entreprise porte une grande expérience et assure la maîtrise d'œuvre, la vérification et la conduite des opérations pour les grandes infrastructures.",
+  introImage: "https://images.unsplash.com/photo-1516216628859-9bccecab13ca?auto=format&fit=crop&w=1600&q=85",
   introValues: [
     { title: "Rigueur", text: "à chaque étape du chantier" },
     { title: "Écoute", text: "de chaque besoin exprimé" },
@@ -287,43 +263,15 @@ export const defaultAbout: AboutContent = {
   pillarsTitle: "Mission, vision et valeurs",
   pillars: [
     { title: "Notre mission", text: "Assurer l'ensemble des missions que comportent les études : la maîtrise d'œuvre, la vérification et la conduite des opérations pour la réalisation des grandes infrastructures de travaux publics et de génie civil." },
-    { title: "Notre vision", text: "Être l'une des sociétés d'ingénierie congolaises de référence : une entreprise congolaise avec une filiale en France, reconnue pour ses grandes infrastructures en RDC et au-delà." },
+    { title: "Notre vision", text: "Être l'une des sociétés d'ingénierie congolaises les plus importantes : une entreprise congolaise d'abord et multinationale, reconnue pour ses grandes infrastructures en RDC et au-delà." },
     { title: "Nos valeurs", text: "S'engager sur les performances, assurer la qualité de son service, progresser chaque jour dans notre savoir-faire : harmonie des talents, construire autrement." },
-  ],
-  competencesEyebrow: "NOS DOMAINES",
-  competencesTitle: "Nos domaines de compétences",
-  competencesIntro: "E.T.C.S Sarl se distingue par son expertise pluridisciplinaire dans de nombreux domaines de l'ingénierie, notamment les transports et les infrastructures, les bâtiments, l'énergie, l'aménagement urbain, et l'environnement et le développement durable :",
-  competences: [
-    { title: "Infrastructures de transport", text: "Conception, modernisation et élargissement des infrastructures de transport, y compris les systèmes routiers, ferroviaires, aéroportuaires et de transports urbains. Nous accompagnons nos clients de la planification à la mise en œuvre, avec une forte expérience dans la maintenance et la réparation des infrastructures existantes.", image: IMAGES.transport.src },
-    { title: "Bâtiments complexes et IGH", text: "Conception et réalisation de bâtiments complexes et de grande hauteur (IGH), avec des compétences en architecture, structure et équipements techniques. Ces projets requièrent une coordination étroite et une maîtrise des enjeux techniques et environnementaux.", image: IMAGES.batiments.src },
-    { title: "Énergie et bâtiments industriels", text: "Des solutions pour les projets liés à l'énergie et aux bâtiments industriels, incluant la conception, la réalisation et la gestion des installations énergétiques et industrielles.", image: IMAGES.energie.src },
-    { title: "Aménagement urbain", text: "Des projets d'aménagement urbain contribuant à la création de quartiers durables et à la réhabilitation de zones urbaines. Cela inclut la gestion de l'eau, des déchets et l'intégration de solutions de mobilité durable.", image: IMAGES.urbanisme.src },
-    { title: "Environnement et développement durable", text: "Notre expertise environnementale couvre l'évaluation des impacts, la gestion des risques et le développement de solutions pour la transition énergétique et écologique, afin d'atténuer les émissions de gaz à effet de serre et de promouvoir la résilience des territoires face aux changements climatiques.", image: IMAGES.environnement.src },
-  ],
-  processusEyebrow: "NOS EXPERTISES",
-  processusTitle: "Un accompagnement à chaque étape du projet",
-  processusIntro: "Par sa diversité, E.T.C.S Sarl rassemble toutes les compétences nécessaires pour assurer la totalité des prestations couvrant toute la vie d'un projet, depuis les études de faisabilité jusqu'à la mise en service.",
-  processusSteps: [
-    { label: "Études préliminaires" },
-    { label: "Assistance à maîtrise d'ouvrage" },
-    { label: "Maîtrise d'œuvre" },
-    { label: "Gestion de projet" },
-    { label: "Conseil & expertise" },
-  ],
-  valeursEyebrow: "NOS VALEURS",
-  valeursTitle: "Nos engagements au quotidien",
-  valeurs: [
-    { title: "Excellence", text: "La qualité comme standard d'exécution" },
-    { title: "L'humain d'abord", text: "Des équipes au service de nos clients" },
-    { title: "Libres d'oser", text: "L'innovation au service des projets" },
-    { title: "Engagés, intègres et responsables", text: "Des engagements tenus, en toute transparence" },
   ],
   teamEyebrow: "NOTRE ÉQUIPE",
   teamTitle: "Les femmes et hommes qui portent vos projets",
   partnersEyebrow: "PARTENARIAT",
   partnersTitle: "Un réseau de compétences reconnu",
-  partnersText: "E.T.C.S Sarl s'appuie sur des partenariats solides avec des acteurs de référence de l'ingénierie et de la construction.",
-  partners: ["DICOMEX", "MATIERE", "SETEC", "RASEL-BEC", "SYSTRA", "EGIS", "ARTELIA", "EIFFAGE", "COLAS", "TECHNOVIA", "TOPEDEC", "DTA", "JADE", "MAP", "VINCI"],
+  partnersText: "ETCS s'appuie sur des partenariats solides avec des acteurs de référence de l'ingénierie et de la construction.",
+  partners: ["DICOMEX", "MATIERE", "SETEC", "RASEL", "IOSIS", "XELIS", "SYSTRA"],
   trainingEyebrow: "TRANSMISSION DES SAVOIRS",
   trainingTitle: "Notre centre de formations",
   trainingText: "Nos programmes d'enseignement se déclinent en modules adaptés à votre corps de métiers : génie civil, BTP et architecture. Les formations sont dispensées par des intervenants agréés, dans nos locaux ou directement chez le client.",
@@ -352,11 +300,11 @@ export const defaultServices: ServicesContent = {
   heroEyebrow: "NOS DOMAINES",
   heroTitle: "Ingénierie, génie civil, travaux publics et bâtiments",
   heroText: "Nous rassemblons un ensemble d'expertises complémentaires pour mener vos projets de l'étude de faisabilité à la mise en service, avec une approche globale de tous les métiers du secteur.",
-  heroImage: IMAGES.etudes.src,
+  heroImage: "https://images.unsplash.com/photo-1429497419816-9ca5cfb4571a?auto=format&fit=crop&w=2400&q=90",
   statement: "Nous assurons l'ensemble des missions que comportent les études : la maîtrise d'œuvre, la vérification et la conduite des opérations, dans les domaines de la route, des ouvrages d'art, des voies ferrées, des aéroports, des bâtiments et des transports.",
   customEyebrow: "UNE APPROCHE SUR MESURE",
   customTitle: "Chaque projet a ses contraintes propres.",
-  customText: "E.T.C.S Sarl met en œuvre des procédés techniques spécifiques à chaque chantier, pour apporter une réponse en parfaite adéquation avec les exigences du maître d'ouvrage.",
+  customText: "ETCS met en œuvre des procédés techniques spécifiques à chaque chantier, pour apporter une réponse en parfaite adéquation avec les exigences du maître d'ouvrage.",
   ctaTitle: "Besoin d'une prestation précise ?",
   ctaText: "Décrivez votre besoin : nous vous répondrons avec une offre claire et adaptée à votre projet.",
 };
@@ -375,7 +323,7 @@ export const defaultContact: ContactContent = {
 export const defaultQuote: QuoteContent = {
   heroEyebrow: "PARLONS DE VOTRE PROJET",
   heroTitle: "Demander un devis",
-  heroText: "Décrivez votre besoin : les informations transmises sont destinées uniquement à E.T.C.S Sarl pour traiter votre demande.",
+  heroText: "Décrivez votre besoin : les informations transmises sont destinées uniquement à ETCS pour traiter votre demande.",
   stepsTitle: "Un processus simple en trois étapes",
   stepsText: "Ce formulaire est protégé contre les envois automatisés. Vos informations restent confidentielles et ne sont utilisées que pour traiter votre demande de devis.",
   steps: [
@@ -389,7 +337,7 @@ export const defaultQuote: QuoteContent = {
 };
 
 export const defaultFooter: FooterContent = {
-  aboutText: "E.T.C.S Sarl — Etudes Techniques Conceptions des Structures. Ingénierie, génie civil, travaux publics et bâtiments : de l'étude de faisabilité à la mise en service.",
+  aboutText: "ETCS SARL — Etudes Techniques Conceptions des Structures. Ingénierie, génie civil, travaux publics et bâtiments : de l'étude de faisabilité à la mise en service.",
 };
 
 export const defaultTypography: TypographyContent = {

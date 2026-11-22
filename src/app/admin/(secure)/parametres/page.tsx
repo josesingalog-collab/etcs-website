@@ -17,7 +17,7 @@ export default async function Settings({ searchParams }: { searchParams: Promise
         <section>
           <h2 className="text-sm font-black uppercase tracking-wider text-royal">Identité</h2>
           <div className="mt-5 grid gap-5 sm:grid-cols-2">
-            <Field label="Nom commercial"><input className={inputClass} name="companyName" required defaultValue={settings?.companyName ?? "E.T.C.S Sarl"} /></Field>
+            <Field label="Nom commercial"><input className={inputClass} name="companyName" required defaultValue={settings?.companyName ?? "ETCS SARL"} /></Field>
             <Field label="Adresse"><input className={inputClass} name="address" required defaultValue={settings?.address ?? ""} /></Field>
             <Field label="Email"><input className={inputClass} name="email" type="email" required defaultValue={settings?.email ?? ""} /></Field>
           </div>

@@ -3,7 +3,7 @@ import { Building2, FileText, FolderKanban, Mail, Newspaper, PenLine, Plus, Send
 import { prisma } from "@/lib/prisma";
 import { AdminHeader, StatCard, RequestStatusBadge } from "@/components/admin/ui";
 
-export const metadata = { title: "Administration E.T.C.S Sarl", robots: { index: false, follow: false } };
+export const metadata = { title: "Administration ETCS", robots: { index: false, follow: false } };
 
 export default async function Admin() {
   const [projects, publishedProjects, services, articles, quotes, messages, newQuotes, latestQuotes, latestMessages] = await Promise.all([

@@ -5,9 +5,7 @@ import { getSiteSettings } from "@/lib/site-settings";
 import { EmptyState, CtaSection } from "@/components/public/sections";
 import { ProjectGallery } from "@/components/public/project-filters";
 
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({ title: "Réalisations", description: "Projets et ouvrages réalisés par E.T.C.S Sarl : routes, ouvrages d'art, bâtiments et infrastructures.", path: "/realisations" });
+export const metadata = { title: "Réalisations" };
 export const instant = false;
 
 export default async function Projects() {
@@ -18,7 +16,7 @@ export default async function Projects() {
         <PageHero
           eyebrow="RÉFÉRENCES"
           title="Nos réalisations"
-          text="Découvrez les projets publiés par E.T.C.S Sarl : ouvrages, chantiers et infrastructures réalisés avec exigence."
+          text="Découvrez les projets publiés par ETCS : ouvrages, chantiers et infrastructures réalisés avec exigence."
           image={settings?.heroImageUrl}
         />
         <section className="bg-white py-20">
@@ -26,7 +24,7 @@ export default async function Projects() {
             {projects.length > 0 ? (
               <ProjectGallery projects={projects} />
             ) : (
-              <EmptyState title="Aucune réalisation publiée pour le moment" text="Le portfolio E.T.C.S Sarl sera alimenté dès que des projets auront été publiés dans l'espace d'administration. Revenez bientôt." />
+              <EmptyState title="Aucune réalisation publiée pour le moment" text="Le portfolio ETCS sera alimenté dès que des projets auront été publiés dans l'espace d'administration. Revenez bientôt." />
             )}
           </div>
         </section>

@@ -6,9 +6,7 @@ import { EmptyState } from "@/components/public/sections";
 import { ArticleCard } from "@/components/public/cards";
 import { Reveal } from "@/components/public/reveal";
 
-import { pageMetadata } from "@/lib/seo";
-
-export const metadata = pageMetadata({ title: "Actualités", description: "Les actualités d'E.T.C.S Sarl : projets, annonces et nouvelles de l'entreprise.", path: "/actualites" });
+export const metadata = { title: "Actualités" };
 export const instant = false;
 
 export default async function News() {
@@ -18,7 +16,7 @@ export default async function News() {
       <main>
         <PageHero
           eyebrow="JOURNAL"
-          title="Les actualités de E.T.C.S Sarl"
+          title="Les actualités de ETCS"
           text="Vie de l'entreprise, chantiers en cours et annonces institutionnelles."
           image={settings?.heroImageUrl}
         />
@@ -43,7 +41,7 @@ export default async function News() {
                 </div>
               )
             ) : (
-              <EmptyState title="Aucune actualité publiée" text="Les communiqués et nouvelles de l'entreprise seront publiés ici par l'équipe E.T.C.S Sarl." />
+              <EmptyState title="Aucune actualité publiée" text="Les communiqués et nouvelles de l'entreprise seront publiés ici par l'équipe ETCS." />
             )}
           </div>
         </section>

@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { Eye, Target, Gem, BadgeCheck, TrainTrack, Building2, Zap, Sprout, Globe2 } from "lucide-react";
-import { ProcessTimeline, ValuesChips } from "@/components/public/process-values";
+import { Eye, Target, Gem, BadgeCheck } from "lucide-react";
 import { PageHero } from "@/components/page-hero";
 import { SiteShell } from "@/components/site-shell";
 import { getSiteSettings } from "@/lib/site-settings";
@@ -8,21 +7,15 @@ import { getPageContent, stringList } from "@/lib/page-content";
 import { SectionHeading, CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
 import { prisma } from "@/lib/prisma";
-import { CompanyBold } from "@/components/company-bold";
-import { IMAGES } from "@/lib/images";
-import { SectionLabel } from "@/components/plan/plan-section";
-import { pageMetadata } from "@/lib/seo";
 
-export const metadata = pageMetadata({ title: "À propos", description: "E.T.C.S Sarl, bureau d'études et entreprise générale de génie civil : mission, vision, valeurs, équipe et centre de formations à Kinshasa et Montrouge.", path: "/a-propos" });
-
+export const metadata = { title: "À propos" };
 export const instant = false;
 
-const fallbackImage = IMAGES.engagement.src;
+const fallbackImage = "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85";
 
 const initialsOf = (name: string) => name.trim().split(/\s+/).slice(0, 2).map((part) => part[0] ?? "").join("").toUpperCase();
 
 const pillarIcons = [Target, Eye, Gem];
-const competenceIcons = [TrainTrack, Building2, Zap, Sprout, Globe2];
 
 export default async function About() {
   const [settings, members, about] = await Promise.all([
@@ -37,19 +30,18 @@ export default async function About() {
   return (
     <SiteShell>
       <main>
-        <PageHero eyebrow={about.heroEyebrow || settings?.companyName || "E.T.C.S Sarl"} title={about.heroTitle} text={about.heroText} image={image} />
+        <PageHero eyebrow={about.heroEyebrow || settings?.companyName || "ETCS SARL"} title={about.heroTitle} text={about.heroText} image={image} />
 
         <section className="bg-white py-24">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-8">
             <Reveal>
               <div className="relative aspect-[4/3] overflow-hidden rounded-3xl shadow-2xl shadow-anthracite/20">
-                <Image src={sectionImage} alt={IMAGES.aproposIntro.alt} fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+                <Image src={sectionImage} alt="Chantier ETCS" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
               </div>
             </Reveal>
             <Reveal delay={0.1}>
-              <SectionLabel code="AXE A" label="NOTRE ENGAGEMENT" />
               <SectionHeading eyebrow={about.introEyebrow} title={about.introTitle} />
-              <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600"><CompanyBold text={text} /></p>
+              <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600">{text}</p>
               <div className="mt-10 grid gap-6 border-t border-slate-200 pt-8 sm:grid-cols-3">
                 {about.introValues.map((value) => (
                   <div key={value.title}><p className="text-sm font-black uppercase tracking-wide text-royal">{value.title}</p><p className="mt-1 text-sm text-slate-500">{value.text}</p></div>
@@ -61,7 +53,6 @@ export default async function About() {
 
         <section className="bg-mist py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <SectionLabel code="COUPE B-B" label="MISSION, VISION, VALEURS" />
             <Reveal><SectionHeading align="center" eyebrow={about.pillarsEyebrow} title={about.pillarsTitle} /></Reveal>
             <div className="mt-14 grid gap-6 md:grid-cols-3">
               {about.pillars.map((pillar, index) => {
@@ -79,38 +70,6 @@ export default async function About() {
             </div>
           </div>
         </section>
-
-        <section className="bg-white py-24">
-          <div className="mx-auto max-w-5xl px-6 lg:px-8">
-            <SectionLabel code="DÉTAIL 02" label="DOMAINES DE COMPÉTENCES" />
-            <Reveal><SectionHeading align="center" eyebrow={about.competencesEyebrow} title={about.competencesTitle} /></Reveal>
-            <Reveal delay={0.05}>
-              <p className="mx-auto mt-6 max-w-3xl text-center text-sm leading-7 text-slate-600">{about.competencesIntro}</p>
-            </Reveal>
-            <div className="mt-14 grid gap-10">
-              {about.competences.map((item, index) => {
-                const Icon = competenceIcons[index % competenceIcons.length];
-                return (
-                  <Reveal key={item.title} delay={index * 0.05}>
-                    <div className="grid items-start gap-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:grid-cols-[auto_1fr] sm:p-8">
-                      <span className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-royal text-white shadow-lg shadow-royal/30">
-                        <Icon className="h-7 w-7" aria-hidden="true" />
-                      </span>
-                      <div>
-                        <h3 className="text-lg font-extrabold text-royal">{item.title}</h3>
-                        <p className="mt-2 text-sm leading-7 text-slate-600">{item.text}</p>
-                      </div>
-                    </div>
-                  </Reveal>
-                );
-              })}
-            </div>
-          </div>
-        </section>
-
-        <ProcessTimeline eyebrow={about.processusEyebrow} title={about.processusTitle} intro={about.processusIntro} steps={about.processusSteps} />
-
-        <ValuesChips eyebrow={about.valeursEyebrow} title={about.valeursTitle} values={about.valeurs} />
 
         {members.length > 0 && (
           <section className="bg-white py-24">

@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, Award, Building2, Compass, Coins, DraftingCompass, Globe2, HardHat, ShieldCheck, Trophy, Users } from "lucide-react";
+import { ArrowRight, Compass, HardHat, DraftingCompass } from "lucide-react";
 import type { KeyStat } from "@/lib/key-stats";
 import { Reveal } from "@/components/public/reveal";
 import { AnimatedStat } from "@/components/public/animated-stat";
-
-const statIcons = [Building2, Coins, Users, Trophy, ShieldCheck, Globe2, Award];
 
 export function SectionHeading({ eyebrow, title, text, align = "left", light = false }: { eyebrow: string; title: string; text?: string; align?: "left" | "center"; light?: boolean }) {
   return (
@@ -80,23 +78,15 @@ export function StatsSection({ stats }: { stats: KeyStat[] }) {
     <section className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <Reveal><h2 className="display text-4xl leading-[1.1] text-anthracite md:text-5xl">Chiffres clés</h2></Reveal>
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {stats.map((stat, index) => {
-            const Icon = statIcons[index % statIcons.length];
-            return (
-              <Reveal key={stat.label} delay={Math.min(index, 5) * 0.06}>
-                <div className="card-hover flex h-full items-center gap-5 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-                  <span className="grid h-16 w-16 shrink-0 place-items-center rounded-full bg-royal text-white shadow-lg shadow-royal/30">
-                    <Icon className="h-7 w-7" aria-hidden="true" />
-                  </span>
-                  <div className="min-w-0">
-                    <p className="display text-3xl leading-none text-vinci md:text-4xl"><AnimatedStat value={stat.value} /></p>
-                    <p className="mt-2 text-xs font-bold uppercase leading-snug tracking-wide text-slate-500">{stat.label}</p>
-                  </div>
-                </div>
-              </Reveal>
-            );
-          })}
+        <div className="mt-14 grid gap-x-16 gap-y-12 sm:grid-cols-2">
+          {stats.map((stat, index) => (
+            <Reveal key={stat.label} delay={Math.min(index, 3) * 0.06}>
+              <div className="border-b-2 border-slate-200 pb-10 transition hover:border-vinci">
+                <p className="display text-6xl leading-none text-vinci md:text-7xl"><AnimatedStat value={stat.value} /></p>
+                <p className="mt-4 text-base font-bold text-anthracite">{stat.label}</p>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

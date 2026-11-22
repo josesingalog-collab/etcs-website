@@ -6,21 +6,19 @@ import { usePathname } from "next/navigation";
 import { Menu, X, ArrowRight } from "lucide-react";
 import { Logo } from "@/components/logo";
 
-type NavLink = { label: string; href: string; when?: boolean };
+const links: [string, string][] = [
+  ["Accueil", "/"],
+  ["À propos", "/a-propos"],
+  ["Services", "/services"],
+  ["Réalisations", "/realisations"],
+  ["Actualités", "/actualites"],
+  ["Contact", "/contact"],
+];
 
-export function SiteHeader({ companyName, logoUrl, hasProjects = true, hasArticles = true }: { companyName?: string | null; logoUrl?: string | null; hasProjects?: boolean; hasArticles?: boolean }) {
+export function SiteHeader({ companyName, logoUrl }: { companyName?: string | null; logoUrl?: string | null }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  const links: NavLink[] = [
-    { label: "Accueil", href: "/" },
-    { label: "À propos", href: "/a-propos" },
-    { label: "Services", href: "/services" },
-    { label: "Réalisations", href: "/realisations", when: hasProjects },
-    { label: "Actualités", href: "/actualites", when: hasArticles },
-    { label: "Contact", href: "/contact" },
-  ].filter((link) => link.when !== false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 32);
@@ -43,9 +41,9 @@ export function SiteHeader({ companyName, logoUrl, hasProjects = true, hasArticl
   return (
     <header className={`fixed inset-x-0 top-0 z-50 bg-white transition-all duration-300 ${solid ? "shadow-lg shadow-vinci-navy/10" : "shadow-none"}`}>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Logo light={false} companyName={companyName ?? "E.T.C.S Sarl"} logoUrl={logoUrl} />
+        <Logo light={false} companyName={companyName ?? "ETCS SARL"} logoUrl={logoUrl} />
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navigation principale">
-            {links.map(({ label, href }) => {
+          {links.map(([label, href]) => {
             const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
             return (
               <Link
@@ -77,7 +75,7 @@ export function SiteHeader({ companyName, logoUrl, hasProjects = true, hasArticl
       {open && (
         <div className="fixed inset-0 top-20 z-40 overflow-y-auto border-t border-slate-100 bg-white lg:hidden">
           <nav className="mx-auto grid max-w-7xl gap-1 px-4 py-6 sm:px-6" aria-label="Navigation mobile">
-          {links.map(({ label, href }) => {
+            {links.map(([label, href]) => {
               const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
               return (
                 <Link key={href} href={href} onClick={() => setOpen(false)} className={`flex items-center justify-between rounded-xl px-4 py-4 text-base font-bold ${active ? "bg-royal-50 text-royal" : "text-anthracite hover:bg-mist"}`}>

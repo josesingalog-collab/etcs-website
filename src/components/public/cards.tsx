@@ -43,7 +43,8 @@ export function ServiceCard({ service, index }: { service: Service; index: numbe
         )}
       </div>
       <div className="flex grow flex-col p-6">
-      <h3 className="text-lg font-extrabold leading-snug text-anthracite transition group-hover:text-royal">{service.title}</h3>
+        <span className="text-[10px] font-bold uppercase tracking-[.18em] text-royal">EXPERTISE {String(index + 1).padStart(2, "0")}</span>
+      <h3 className="mt-2 text-lg font-extrabold leading-snug text-anthracite transition group-hover:text-royal">{service.title}</h3>
       <span className="mt-3 block" aria-hidden="true" />
       <p className="mt-3 line-clamp-3 grow text-sm leading-6 text-slate-500">{service.excerpt}</p>
         <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-royal">

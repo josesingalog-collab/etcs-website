@@ -20,7 +20,7 @@ function Section({ title, children }: { title: string; children: React.ReactNode
   );
 }
 
-const listFields = (valueFields: { name: string; label: string; type?: "text" | "textarea" | "url" }[]) => valueFields;
+const listFields = (valueFields: { name: string; label: string; type?: "text" | "textarea" }[]) => valueFields;
 
 export default async function PageContentEditor({ params, searchParams }: Props) {
   const [{ page: rawPage }, query] = await Promise.all([params, searchParams]);
@@ -32,11 +32,6 @@ export default async function PageContentEditor({ params, searchParams }: Props)
   const value = (key: string) => {
     const current = (content as unknown as Record<string, unknown>)[key];
     return typeof current === "string" ? current : String(defaults[key] ?? "");
-  };
-  const value2 = (key: string, sub: string) => {
-    const current = (content as unknown as Record<string, unknown>)[key];
-    const nested = current && typeof current === "object" && !Array.isArray(current) ? (current as Record<string, unknown>)[sub] : undefined;
-    return typeof nested === "string" ? nested : "";
   };
   const list = (key: string) => (content as unknown as Record<string, unknown>)[key];
 
@@ -54,35 +49,13 @@ export default async function PageContentEditor({ params, searchParams }: Props)
         {page === "home" && (
           <>
             <Section title="Bannière d'accueil">
-              <Field label="Sur-titre" hint="Slogan court, ex. « CONSTRUIRE AUTREMENT »">
-                <input className={inputClass} name="heroEyebrow" defaultValue={value("heroEyebrow")} />
-              </Field>
               <Field label="Titre principal" hint="Un retour à la ligne crée un saut de ligne visuel">
-                <textarea className={inputClass} name="heroTitle" rows={2} defaultValue={value("heroTitle")} />
-              </Field>
-              <Field label="Phrase d'accroche" hint="Une seule phrase courte sous le titre — le texte long de présentation se règle dans les Paramètres">
-                <textarea className={inputClass} name="heroHook" rows={2} defaultValue={value("heroHook")} />
+                <textarea className={inputClass} name="heroTitle" rows={3} defaultValue={value("heroTitle")} />
               </Field>
               <UploadField name="heroImage" label="Image de la bannière" hint="Importez un fichier (PNG/JPEG/WebP, 5 Mo max.) ou collez une URL HTTPS." defaultValue={value("heroImage")} />
-            </Section>
-            <Section title="Phases d'accompagnement (frise de l'accueil)">
-              <RepeaterField
-                name="phases"
-                label="Phases (3 recommandées, icône automatique)"
-                addLabel="Ajouter une phase"
-                itemTitleKey="title"
-                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Description courte", type: "textarea" }])}
-                items={list("phases") as { title: string; text: string }[]}
-              />
-            </Section>
-            <Section title="Témoignage client (masqué si vide)">
-              <Field label="Témoignage" hint="Laisser vide pour masquer la section. Renseignez uniquement de vrais témoignages.">
-                <textarea className={inputClass} name="testimonial[quote]" rows={3} defaultValue={value2("testimonial", "quote")} />
+              <Field label="Texte d'introduction" hint="Affiché sous le titre. Laisser vide pour utiliser le texte de présentation des Paramètres.">
+                <textarea className={inputClass} name="introText" rows={4} defaultValue={value("introText")} />
               </Field>
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Nom du client"><input className={inputClass} name="testimonial[author]" defaultValue={value2("testimonial", "author")} /></Field>
-                <Field label="Fonction / projet" hint="Ex. Maître d'ouvrage — Route national 1"><input className={inputClass} name="testimonial[role]" defaultValue={value2("testimonial", "role")} /></Field>
-              </div>
             </Section>
             <Section title="Présentation (qui sommes-nous ?)">
               <Field label="Titre de section"><input className={inputClass} name="presentationTitle" defaultValue={value("presentationTitle")} /></Field>
@@ -184,50 +157,6 @@ export default async function PageContentEditor({ params, searchParams }: Props)
                 itemTitleKey="title"
                 fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Texte", type: "textarea" }])}
                 items={list("pillars") as { title: string; text: string }[]}
-              />
-            </Section>
-            <Section title="Domaines de compétences (liste avec icônes)">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Sur-titre"><input className={inputClass} name="competencesEyebrow" defaultValue={value("competencesEyebrow")} /></Field>
-                <Field label="Titre"><input className={inputClass} name="competencesTitle" defaultValue={value("competencesTitle")} /></Field>
-              </div>
-              <Field label="Texte d'introduction"><textarea className={inputClass} name="competencesIntro" rows={3} defaultValue={value("competencesIntro")} /></Field>
-              <RepeaterField
-                name="competences"
-                label="Domaines (icône automatique ; l'image s'affiche sur la page Services)"
-                addLabel="Ajouter un domaine"
-                itemTitleKey="title"
-                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Texte", type: "textarea" }, { name: "image", label: "Image (URL HTTPS)", type: "url" }])}
-                items={list("competences") as { title: string; text: string; image?: string }[]}
-              />
-            </Section>
-            <Section title="Frise du cycle de projet (NOS EXPERTISES)">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Sur-titre"><input className={inputClass} name="processusEyebrow" defaultValue={value("processusEyebrow")} /></Field>
-                <Field label="Titre"><input className={inputClass} name="processusTitle" defaultValue={value("processusTitle")} /></Field>
-              </div>
-              <Field label="Texte d'introduction"><textarea className={inputClass} name="processusIntro" rows={2} defaultValue={value("processusIntro")} /></Field>
-              <RepeaterField
-                name="processusSteps"
-                label="Étapes (de gauche à droite, icône attribuée automatiquement)"
-                addLabel="Ajouter une étape"
-                itemTitleKey="label"
-                fields={listFields([{ name: "label", label: "Intitulé de l'étape" }])}
-                items={labelList(list("processusSteps"))}
-              />
-            </Section>
-            <Section title="Valeurs (pastilles avec icônes)">
-              <div className="grid gap-5 sm:grid-cols-2">
-                <Field label="Sur-titre"><input className={inputClass} name="valeursEyebrow" defaultValue={value("valeursEyebrow")} /></Field>
-                <Field label="Titre"><input className={inputClass} name="valeursTitle" defaultValue={value("valeursTitle")} /></Field>
-              </div>
-              <RepeaterField
-                name="valeurs"
-                label="Valeurs (icône attribuée automatiquement)"
-                addLabel="Ajouter une valeur"
-                itemTitleKey="title"
-                fields={listFields([{ name: "title", label: "Titre" }, { name: "text", label: "Sous-titre" }])}
-                items={list("valeurs") as { title: string; text: string }[]}
               />
             </Section>
             <Section title="Équipe">
