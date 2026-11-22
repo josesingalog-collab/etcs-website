@@ -62,7 +62,7 @@ export default async function Home() {
               <h1 className="display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
                 <HeroTextTransition
                   phrases={[
-                    { lines: ["Construire autrement"], className: "text-vinci-sky" },
+                    { lines: ["Construire autrement"], className: "text-white" },
                     { lines: ["Bâtir et Moderniser", "les Infrastructures."], className: "text-white" },
                   ]}
                 />
