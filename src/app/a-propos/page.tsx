@@ -189,7 +189,7 @@ export default async function About() {
                 <BadgeCheck className="h-8 w-8 text-vinci-sky" />
                 <p className="mt-5 text-lg font-extrabold">{about.qualityAsideTitle}</p>
                 <ul className="mt-5 grid gap-3 text-sm leading-6 text-slate-100">
-                  {about.qualityPoints.map((point) => (
+                  {stringList(about.qualityPoints).map((point) => (
                     <li key={point} className="flex gap-3"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-vinci-sky" />{point}</li>
                   ))}
                 </ul>
