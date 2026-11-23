@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export function Logo({ light = false, companyName = "E.T.C.S Sarl", logoUrl }: { light?: boolean; companyName?: string; logoUrl?: string | null }) {
+export function Logo({ light = false, companyName = "E.T.C.S Sarl", logoUrl, logoClass = "h-16 w-auto shrink-0" }: { light?: boolean; companyName?: string; logoUrl?: string | null; logoClass?: string }) {
   if (logoUrl) {
     return (
       <Link href="/" aria-label={`${companyName} — Accueil`} className="flex min-w-0 items-center">
@@ -11,7 +11,7 @@ export function Logo({ light = false, companyName = "E.T.C.S Sarl", logoUrl }: {
           width={160}
           height={80}
           priority
-          className="h-16 w-auto shrink-0"
+          className={logoClass}
         />
       </Link>
     );

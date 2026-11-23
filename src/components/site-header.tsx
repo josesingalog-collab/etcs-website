@@ -16,16 +16,8 @@ const links: [string, string][] = [
 ];
 
 export function SiteHeader({ companyName, logoUrl }: { companyName?: string | null; logoUrl?: string | null }) {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -34,12 +26,10 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
     };
   }, [open]);
 
-  const solid = scrolled || open;
-
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${solid ? "bg-white shadow-lg shadow-vinci-navy/10" : "bg-transparent"}`}>
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <Logo light={!solid} companyName={companyName ?? "E.T.C.S Sarl"} logoUrl={logoUrl} />
+    <header className="fixed inset-x-0 top-0 z-50 bg-white shadow-lg shadow-vinci-navy/10">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:h-24 lg:px-8">
+        <Logo light={false} logoClass="h-16 w-auto shrink-0 lg:h-20" companyName={companyName ?? "E.T.C.S Sarl"} logoUrl={logoUrl} />
         <nav className="hidden items-center gap-8 lg:flex" aria-label="Navigation principale">
           {links.map(([label, href]) => {
             const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -47,26 +37,26 @@ export function SiteHeader({ companyName, logoUrl }: { companyName?: string | nu
               <Link
                 key={href}
                 href={href}
-                className={`relative text-sm font-bold uppercase tracking-wide transition ${active ? (solid ? "text-vinci" : "text-white") : solid ? "text-vinci-navy hover:text-vinci-mid" : "text-white/80 hover:text-white"}`}
+                className={`relative text-base font-bold uppercase tracking-wide transition ${active ? "text-vinci" : "text-vinci-navy hover:text-vinci-mid"}`}
               >
                 {label}
-                {active && <span className={`absolute -bottom-2 left-0 h-0.5 w-full rounded-full ${solid ? "bg-vinci" : "bg-white"}`} />}
+                {active && <span className="absolute -bottom-2 left-0 h-0.5 w-full rounded-full bg-vinci" />}
               </Link>
             );
           })}
         </nav>
         <div className="flex items-center gap-3">
-          <Link href="/devis" className={`focus-ring inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-sm font-bold transition sm:block ${solid ? "bg-vinci text-white shadow-md shadow-vinci/30 hover:bg-vinci-navy" : "bg-white/10 text-white ring-1 ring-white/40 backdrop-blur hover:bg-[var(--plan-accent)]"}`}>
-            Demander un devis <ArrowRight className="h-4 w-4" />
+          <Link href="/devis" className="focus-ring inline-flex items-center gap-2 rounded-full bg-vinci px-7 py-3 text-base font-bold text-white shadow-md shadow-vinci/30 transition hover:bg-vinci-navy sm:block">
+            Demander un devis <ArrowRight className="h-5 w-5" />
           </Link>
           <button
             type="button"
             onClick={() => setOpen(!open)}
             aria-expanded={open}
             aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
-            className={`focus-ring grid h-11 w-11 place-items-center rounded-lg border transition lg:hidden ${solid ? "border-slate-200 text-anthracite" : "border-white/40 text-white"}`}
+            className="focus-ring grid h-12 w-12 place-items-center rounded-lg border border-slate-200 text-anthracite transition lg:hidden"
           >
-            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </div>
