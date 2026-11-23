@@ -1,10 +1,10 @@
-import Image from "next/image";
 import { SiteShell } from "@/components/site-shell";
 import { publishedServices } from "@/lib/public-content";
 import { services as fallbackServices } from "@/lib/content";
 import { getPhoneList, getSiteSettings } from "@/lib/site-settings";
 import { getPageContent } from "@/lib/page-content";
 import { domainServices } from "@/lib/domain-services";
+import { HeroSlideshow } from "@/components/public/hero-slideshow";
 import { MockEyebrow } from "@/components/public/mock-eyebrow";
 import { CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
@@ -12,6 +12,15 @@ import { DomainCard } from "@/components/public/domain-card";
 
 export const metadata = { title: "Nos services" };
 export const instant = false;
+
+const heroPool = [
+  { src: "/images/hero.jpg", alt: "Chantier d'infrastructure en cours de réalisation avec engins de terrassement" },
+  { src: "/images/transport.jpg", alt: "Route et chaussée en construction avec véhicules d'entreprise" },
+  { src: "/images/batiments.jpg", alt: "Immeuble de grande hauteur en construction, structure béton apparente" },
+  { src: "/images/engagement.jpg", alt: "Ouvrage de génie civil en béton armé en cours de construction" },
+  { src: "/images/conviction.jpg", alt: "Grue de chantier et structure en construction à l'aube" },
+  { src: "/images/etudes.jpg", alt: "Bureau d'études : plans de coffrage et dessins techniques sur table de travail" },
+];
 
 export default async function Services() {
   const [published, services, settings] = await Promise.all([publishedServices(), getPageContent("services"), getSiteSettings()]);
@@ -23,24 +32,16 @@ export default async function Services() {
   return (
     <SiteShell>
       <main>
-        <section className="bg-white pt-32">
-          <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <p className="rise flex items-center gap-3 text-xs font-bold tracking-[.22em] text-royal">
-              <span />{services.heroEyebrow}
-            </p>
-            <h1 className="rise rise-1 display mt-6 max-w-4xl text-4xl leading-[1.08] text-anthracite md:text-5xl lg:text-6xl">
-              {services.heroTitle} <span className="serif-accent">et bâtiments</span>
-            </h1>
-            <Reveal className="rise rise-2 mt-8 max-w-2xl">
-              <p className="text-base leading-8 text-slate-600">
-                {services.heroText}
-              </p>
-            </Reveal>
-            <Reveal delay={0.1} className="rise rise-3 mt-12">
-              <div className="relative aspect-[3/2] overflow-hidden rounded-3xl bg-mist shadow-2xl shadow-anthracite/15">
-                <Image src={services.heroImage} alt="Chantier E.T.C.S Sarl — génie civil" fill priority sizes="100vw" className="object-cover" />
-              </div>
-            </Reveal>
+        {/* Hero plein écran, même traitement que la section « QUI SOMMES-NOUS ? » */}
+        <section aria-label="Nos services" className="relative isolate overflow-hidden bg-anthracite text-white">
+          <div className="absolute inset-0" aria-hidden="true">
+            <HeroSlideshow images={heroPool} dimmed />
+            <div className="absolute inset-0 bg-anthracite/55" />
+          </div>
+          <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-40 text-center sm:px-6 lg:pb-24 lg:pt-48">
+            <div className="rise rise-1 w-full px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+              <h1 className="display leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:text-[clamp(3rem,6vw,5.6rem)]">NOS SERVICES</h1>
+            </div>
           </div>
         </section>
 
