@@ -1,6 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, Eye, Target, Gem, BadgeCheck } from "lucide-react";
+import { Eye, Target, Gem, BadgeCheck } from "lucide-react";
 import { HeroSlideshow } from "@/components/public/hero-slideshow";
 import { SiteShell } from "@/components/site-shell";
 import { getPageContent, stringList } from "@/lib/page-content";
@@ -41,24 +40,9 @@ export default async function About() {
             <HeroSlideshow images={heroPool} dimmed />
             <div className="absolute inset-0 bg-anthracite/55" />
           </div>
-          <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-40 text-center sm:px-6 lg:pb-24 lg:pt-44">
+          <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-40 text-center sm:px-6 lg:pb-24 lg:pt-48">
             <div className="rise rise-1 w-full px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
-              <p className="annotation text-base font-black tracking-[.18em] text-vinci-sky lg:text-xl">QUI SOMMES-NOUS ?</p>
-              <h1 className="display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
-                L&apos;expertise au service
-                <span className="serif-accent-light"> de vos projets.</span>
-              </h1>
-              <p className="mx-auto mt-9 max-w-2xl text-sm leading-7 text-slate-100 sm:text-base sm:leading-8 lg:mt-11 lg:text-lg lg:leading-9">
-                E.T.C.S Sarl, bureau d&apos;études et entreprise générale de génie civil — de la maîtrise d&apos;œuvre à la réalisation des grandes infrastructures, en RDC et à l&apos;international.
-              </p>
-              <div className="mt-10 flex flex-wrap justify-center gap-4 lg:mt-12 lg:gap-5">
-                <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy lg:px-9 lg:py-4 lg:text-base">
-                  Découvrir nos services <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5" />
-                </Link>
-                <Link href="/devis" className="focus-ring rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky lg:px-9 lg:py-4 lg:text-base">
-                  Demander un devis
-                </Link>
-              </div>
+              <h1 className="display leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:text-[clamp(3rem,6vw,5.6rem)]">QUI SOMMES-NOUS ?</h1>
             </div>
           </div>
         </section>
