@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { Eye, Target, Gem, BadgeCheck } from "lucide-react";
-import { PageHero } from "@/components/page-hero";
+import Link from "next/link";
+import { ArrowRight, Eye, Target, Gem, BadgeCheck } from "lucide-react";
+import { HeroSlideshow } from "@/components/public/hero-slideshow";
 import { SiteShell } from "@/components/site-shell";
-import { getSiteSettings } from "@/lib/site-settings";
 import { getPageContent, stringList } from "@/lib/page-content";
 import { SectionHeading, CtaSection } from "@/components/public/sections";
 import { Reveal } from "@/components/public/reveal";
@@ -11,26 +11,57 @@ import { prisma } from "@/lib/prisma";
 export const metadata = { title: "À propos" };
 export const instant = false;
 
-const fallbackImage = "https://images.unsplash.com/photo-1541625602330-2277a4c46182?auto=format&fit=crop&w=1600&q=85";
+const heroPool = [
+  { src: "/images/hero.jpg", alt: "Chantier d'infrastructure en cours de réalisation avec engins de terrassement" },
+  { src: "/images/transport.jpg", alt: "Route et chaussée en construction avec véhicules d'entreprise" },
+  { src: "/images/batiments.jpg", alt: "Immeuble de grande hauteur en construction, structure béton apparente" },
+  { src: "/images/engagement.jpg", alt: "Ouvrage de génie civil en béton armé en cours de construction" },
+  { src: "/images/conviction.jpg", alt: "Grue de chantier et structure en construction à l'aube" },
+  { src: "/images/etudes.jpg", alt: "Bureau d'études : plans de coffrage et dessins techniques sur table de travail" },
+];
 
 const initialsOf = (name: string) => name.trim().split(/\s+/).slice(0, 2).map((part) => part[0] ?? "").join("").toUpperCase();
 
 const pillarIcons = [Target, Eye, Gem];
 
 export default async function About() {
-  const [settings, members, about] = await Promise.all([
-    getSiteSettings(),
+  const [members, about] = await Promise.all([
     prisma.teamMember.findMany({ where: { publicationStatus: "PUBLISHED" }, orderBy: [{ position: "asc" }, { name: "asc" }] }),
     getPageContent("about"),
   ]);
   const text = about.introText;
-  const image = about.heroImage || settings?.heroImageUrl || fallbackImage;
   const sectionImage = about.introImage;
 
   return (
     <SiteShell>
       <main>
-        <PageHero eyebrow={about.heroEyebrow || settings?.companyName || "E.T.C.S Sarl"} title={about.heroTitle} accent="pour durer." text={about.heroText} image={image} />
+        {/* Hero plein écran, copie de la première section de l'accueil */}
+        <section aria-label="Qui sommes-nous" className="relative isolate overflow-hidden bg-anthracite text-white">
+          <div className="absolute inset-0" aria-hidden="true">
+            <HeroSlideshow images={heroPool} dimmed />
+            <div className="absolute inset-0 bg-anthracite/55" />
+          </div>
+          <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-40 text-center sm:px-6 lg:pb-24 lg:pt-44">
+            <div className="rise rise-1 w-full px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
+              <p className="annotation text-base font-black tracking-[.18em] text-vinci-sky lg:text-xl">QUI SOMMES-NOUS ?</p>
+              <h1 className="display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
+                L&apos;expertise au service
+                <span className="serif-accent-light"> de vos projets.</span>
+              </h1>
+              <p className="mx-auto mt-9 max-w-2xl text-sm leading-7 text-slate-100 sm:text-base sm:leading-8 lg:mt-11 lg:text-lg lg:leading-9">
+                E.T.C.S Sarl, bureau d&apos;études et entreprise générale de génie civil — de la maîtrise d&apos;œuvre à la réalisation des grandes infrastructures, en RDC et à l&apos;international.
+              </p>
+              <div className="mt-10 flex flex-wrap justify-center gap-4 lg:mt-12 lg:gap-5">
+                <Link href="/services" className="focus-ring inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold text-vinci shadow-lg shadow-vinci-navy/30 transition hover:bg-vinci-sky hover:text-vinci-navy lg:px-9 lg:py-4 lg:text-base">
+                  Découvrir nos services <ArrowRight className="h-4 w-4 lg:h-5 lg:w-5" />
+                </Link>
+                <Link href="/devis" className="focus-ring rounded-full border-2 border-white px-7 py-3.5 text-sm font-bold backdrop-blur-sm transition hover:border-vinci-sky hover:bg-white/10 hover:text-vinci-sky lg:px-9 lg:py-4 lg:text-base">
+                  Demander un devis
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
 
         <section className="bg-white py-24">
           <div className="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:px-8">
@@ -40,7 +71,6 @@ export default async function About() {
               </div>
             </Reveal>
             <Reveal delay={0.1}>
-              <SectionHeading eyebrow={about.introEyebrow} title={about.introTitle} accent="de vos projets." />
               <p className="mt-6 whitespace-pre-wrap text-justify leading-8 text-slate-600">{text}</p>
               <p className="mt-8 border-l-4 border-gold bg-mist p-6 text-justify leading-8 text-slate-700">{about.introVocation}</p>
               <div className="mt-10 grid gap-6 border-t border-slate-200 pt-8 sm:grid-cols-3">
