@@ -58,7 +58,7 @@ export default async function Home() {
           <div className="relative mx-auto flex w-full max-w-7xl flex-col items-center px-4 pb-20 pt-32 text-center sm:px-6 lg:pb-24 lg:pt-36">
             <div className="rise rise-1 w-full px-6 py-10 sm:px-10 sm:py-14 lg:px-16 lg:py-16">
               <p className="annotation text-base font-black tracking-[.18em] text-vinci-sky lg:text-xl">ETCS — MONDE « CONSTRUIRE AUTREMENT »</p>
-              <h1 className="rise rise-1 display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
+              <h1 className="rise rise-1 display mx-auto mt-8 max-w-5xl leading-[1.06] text-[clamp(2.4rem,5.6vw,5rem)] uppercase lg:mt-10 lg:text-[clamp(3rem,6vw,5.6rem)]">
                 <span className="block">Bâtir et Moderniser</span>
                 <span className="block">les Infrastructures.</span>
               </h1>
