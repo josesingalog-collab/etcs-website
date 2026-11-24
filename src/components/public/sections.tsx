@@ -4,7 +4,7 @@ import type { KeyStat } from "@/lib/key-stats";
 import { Reveal } from "@/components/public/reveal";
 import { AnimatedStat } from "@/components/public/animated-stat";
 
-export function SectionHeading({ eyebrow, title, accent, text, align = "left", light = false }: { eyebrow: string; title: string; accent?: string; text?: string; align?: "left" | "center"; light?: boolean }) {
+export function SectionHeading({ eyebrow, title, accent, text, align = "left", light = false }: { eyebrow?: string; title: string; accent?: string; text?: string; align?: "left" | "center"; light?: boolean }) {
   return (
     <div className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
       {eyebrow && (
