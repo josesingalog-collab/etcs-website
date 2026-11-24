@@ -19,6 +19,8 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "app.js",
+    // Outils AI (skills) — scripts CJS non lintables
+    ".opencode/**",
   ]),
 ]);
 
