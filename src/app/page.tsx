@@ -79,7 +79,7 @@ export default async function Home() {
 
         <section className="bg-mist py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <Reveal><SectionHeading title="NOS DOMAINES" /></Reveal>
+            <Reveal><SectionHeading title="NOS DOMAINES" text={home.domainsText} align="center" /></Reveal>
             {services.length > 0 ? (
               <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {services.map((service, index) => (
@@ -114,7 +114,7 @@ export default async function Home() {
         <section className="bg-white py-24">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="flex flex-wrap items-end justify-between gap-6">
-              <Reveal><SectionHeading title="NOS RÉALISATIONS" /></Reveal>
+              <Reveal><SectionHeading title="NOS RÉALISATIONS" text={home.projectsText} align="center" /></Reveal>
               {latestProjects.length > 0 && (
                 <Link href="/realisations" className="inline-flex items-center gap-2 rounded-lg border border-royal px-6 py-3 text-sm font-bold text-royal transition hover:bg-royal hover:text-white">
                   Découvrir toutes nos réalisations <ArrowRight className="h-4 w-4" />
