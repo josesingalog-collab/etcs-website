@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { CheckCircle2, Send, AlertCircle, Loader2 } from "lucide-react";
 
-const inputClass = "focus-ring w-full rounded-lg border border-slate-300 bg-white px-3.5 py-3 text-sm font-normal text-anthracite outline-none placeholder:text-slate-400";
+const inputClass = "focus-ring w-full rounded-lg border border-slate-300 bg-white px-3.5 py-3 text-sm font-normal text-anthracite outline-none placeholder:text-slate-500";
 
 function Field({ label, name, type = "text", required = true }: { label: string; name: string; type?: string; required?: boolean }) {
   return (

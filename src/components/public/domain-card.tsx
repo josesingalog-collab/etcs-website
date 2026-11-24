@@ -25,7 +25,7 @@ export function DomainCard({ service, index }: { service: ServiceCardData; index
           {service.image ? (
             <Image src={service.image} alt={service.title} fill sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" />
           ) : (
-            <div className="grid h-full place-items-center bg-slate-200"><span className="display text-5xl text-slate-400">{String(index + 1).padStart(2, "0")}</span></div>
+            <div className="grid h-full place-items-center bg-slate-200"><span className="display text-5xl text-slate-500">{String(index + 1).padStart(2, "0")}</span></div>
           )}
           <span className="absolute left-4 top-4 rounded-md bg-[var(--plan-accent)] px-3 py-1.5 text-[10px] font-black uppercase tracking-wider text-white shadow-md">{tag}</span>
         </div>

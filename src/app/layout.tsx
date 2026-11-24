@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import { Source_Serif_4 } from "next/font/google";
 import { company } from "@/lib/content";
@@ -43,12 +43,16 @@ export const instant = false;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://etcs-ingenierie.com"),
-  title: { default: "E.T.C.S Sarl | Etudes Techniques Conceptions des Structures", template: "%s | E.T.C.S Sarl" },
-  description: "E.T.C.S Sarl (Etudes Techniques Conceptions des Structures), entreprise générale d'ingénierie, de génie civil et de travaux publics à Kinshasa, RDC.",
+  title: { default: "E.T.C.S Sarl | Bureau d'études et entreprise générale de génie civil", template: "%s | E.T.C.S Sarl" },
+  description: "E.T.C.S Sarl, bureau d'études et entreprise générale de génie civil : ingénierie, bâtiments et travaux publics à Kinshasa (RDC) et à Montrouge (France).",
   alternates: { canonical: "/" },
-  openGraph: { type: "website", locale: "fr_CD", siteName: "E.T.C.S Sarl", title: "E.T.C.S Sarl | Etudes Techniques Conceptions des Structures", description: "Entreprise générale d'ingénierie, de génie civil et de travaux publics à Kinshasa, RDC." },
+  openGraph: { type: "website", locale: "fr_CD", siteName: "E.T.C.S Sarl", title: "E.T.C.S Sarl | Bureau d'études et entreprise générale de génie civil", description: "Ingénierie, génie civil, bâtiments et travaux publics à Kinshasa (RDC) et à Montrouge (France)." },
   twitter: { card: "summary_large_image" },
   ...(process.env.GOOGLE_SITE_VERIFICATION ? { verification: { google: process.env.GOOGLE_SITE_VERIFICATION } } : {}),
+};
+
+export const viewport: Viewport = {
+  themeColor: "#184a8b",
 };
 
 const organization = {
